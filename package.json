@@ -1,0 +1,32 @@
+{
+  "name": "zlagoda",
+  "packageManager": "yarn@3.4.1",
+  "private": true,
+  "workspaces": [
+    "./*"
+  ],
+  "scripts": {
+    "postinstall": "husky install",
+    "prettify": "prettier --write ./",
+    "web:run": "cd web/ && yarn preview",
+    "web:build": "cd web/ && yarn build"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^1.4.1",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
+    "eslint": "^8.33.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.1",
+    "prettier": "^2.8.3",
+    "typescript": "^4.9.5"
+  },
+  "lint-staged": {
+    "*.ts": "eslint --fix",
+    "*.{ts,json,yml,md}": "prettier --write"
+  }
+}

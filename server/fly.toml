@@ -1,0 +1,36 @@
+# fly.toml app configuration file generated for monfi-server on 2023-05-17T03:28:02+03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "zlagoda-server"
+primary_region = "ams"
+
+[env]
+  PORT = "8080"
+  SMTP_HOST = "mail.privateemail.com"
+  SMTP_PORT = 587
+  SMTP_SECURE = false
+  SMTP_FROM = "no-reply@monfi.io"
+  NODE_ENV = "production"
+  REDIS_IP_FAMILY = "6"
+  BULL_DASHBOARD_PORT = 4327
+  BULL_DASHBOARD_HOST = "fly-local-6pn"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 8080
+  processes = ["app"]
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 25
+    soft_limit = 20
