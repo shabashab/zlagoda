@@ -4,7 +4,9 @@ import ConfirmPopup from 'primevue/confirmpopup'
 
 <template>
   <ConfirmPopup />
-  <RouterView />
+  <div class="container">
+    <RouterView />
+  </div>
 </template>
 
 <style lang="scss">

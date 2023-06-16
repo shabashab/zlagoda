@@ -5,6 +5,12 @@ export default {
     './src/**/*.{vue,js,ts,jsx,tsx}'
   ],
   theme: {
+    container: {
+      center: true,
+      screens: {
+        lg: '1800px'
+      }
+    },
     extend: {
       colors: {
         dark: '#6278F7',

@@ -1,5 +1,6 @@
 import './style.css'
-import './themes/light/theme.scss'
+// import './themes/light/theme.scss'
+import 'primevue/resources/themes/soho-light/theme.css'
 import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
 
