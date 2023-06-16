@@ -5,7 +5,7 @@ import CabinetCashireNavbar from '../componets/cabinet-cashire-navbar.vue';
 <template>
   <div class="grid grid-cols-[1fr,5fr] gap-10 py-5 h-screen">
     <CabinetCashireNavbar />
-    <div class="bg-green-500">
+    <div>
       <RouterView />
     </div>
   </div>

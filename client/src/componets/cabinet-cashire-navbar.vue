@@ -12,9 +12,10 @@ const buttons = ref<NavButton[]>([
     icon: 'pi pi-home'
   },
   {
-    to: '/cabinet/cashire/test',
-    label: 'Test'
-  }
+    to: 'test',
+    label: 'Log out',
+    severity: 'danger'
+  },
 ])
 </script>
 <template>
@@ -23,7 +24,7 @@ const buttons = ref<NavButton[]>([
       v-for="button in buttons"
       :key="button.to"
       style="width: 100%;"
-      severity="info"
+      :severity="button.severity ? button.severity : 'info'"
       :label="button.label"
       :icon="button.icon"
       @click="router.push(button.to)"

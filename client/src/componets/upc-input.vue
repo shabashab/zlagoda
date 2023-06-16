@@ -31,6 +31,7 @@ const onInputBlur = (e: Event) => {
   <InputText
     v-model="upcValue"
     autofocus
+    style="width: 160px !important"
     @blur="onInputBlur"
   />
 </template>

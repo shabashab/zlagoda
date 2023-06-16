@@ -3,6 +3,7 @@ import './style.css'
 import 'primevue/resources/themes/soho-light/theme.css'
 import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
+import ToastService from 'primevue/toastservice'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -22,6 +23,7 @@ app.use(router)
 app.use(i18n)
 app.use(createPinia())
 app.use(PrimeVue)
+app.use(ToastService)
 app.use(ConfirmationService)
 
 app.mount('#app')
