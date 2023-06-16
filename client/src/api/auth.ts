@@ -1,7 +1,5 @@
-import { TwoFactorInfoDto } from '../models/two-factor-info.model'
 import { User } from '../models/user.model'
 import { SignInDto } from './dto/sign-in.dto'
-import { SignUpDto } from './dto/sign-up.dto'
 import { defineActionEndpoint, defineDataEndpoint } from './use-api'
 
 export interface SignInResponse {

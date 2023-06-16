@@ -3,6 +3,7 @@
     "redirect": "/auth/login"
   }
 </route>
+
 <template>
   <div />
 </template>

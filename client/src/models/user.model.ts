@@ -1,5 +1,3 @@
-import { Profile } from './profile.model'
-
 export interface User {
   id: number
   email: string
@@ -9,6 +7,4 @@ export interface User {
   updatedAt: Date
   withdrawBalance: number
   isActivityCheckComplete: boolean
-
-  profile?: Profile
 }

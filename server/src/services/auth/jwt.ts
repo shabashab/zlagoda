@@ -1,4 +1,3 @@
-import { User } from '@prisma/client'
 import * as jwt from 'jsonwebtoken'
 import { JWT_SECRET } from '../../config'
 import { getUserWithProfile } from '../user/repository'
