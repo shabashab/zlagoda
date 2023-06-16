@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import CabinetCashireNavbar from '../componets/cabinet-cashire-navbar.vue';
+
 </script>
 <template>
-  <div class="grid grid-cols-[1fr,5fr] gap-10">
-    <div
-      class="bg-red-500 h-[100vh]"
-    />
-    <div class="bg-green-500 h-[100vh]">
+  <div class="grid grid-cols-[1fr,5fr] gap-10 py-5 h-screen">
+    <CabinetCashireNavbar />
+    <div class="bg-green-500">
       <RouterView />
     </div>
   </div>
