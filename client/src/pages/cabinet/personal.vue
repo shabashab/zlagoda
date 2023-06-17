@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Calendar from 'primevue/calendar';
+
 import { Employee } from '../../models/employee.model';
 
 const fetchPersonalData = async () : Promise<Employee> => {
@@ -7,7 +9,7 @@ const fetchPersonalData = async () : Promise<Employee> => {
     name: 'Artem',
     surname: 'Tarasenko',
     role: 'cashier',
-    dateOfBirth: new Date(2004,9,20),
+    dateOfBirth: new Date(2004,8,20),
     dateOfStart: new Date(2022,5,13),
     city: 'Brovari',
     street: 'Govna',
@@ -50,7 +52,12 @@ onMounted(async () => {
             class="mt-10"
           >
             <div v-if="key ==='dateOfBirth' || key === 'dateOfStart'">
-              {{ key }}: {{ personalData[key].getDate().toString() }}-{{ personalData[key].getMonth().toString() }}-{{ personalData[key].getFullYear().toString() }}
+              {{ key }}: <Calendar
+                v-model="personalData[key]"
+                disabled
+                text
+                date-format="dd/mm/yy"
+              />
             </div>
             <div v-else>
               {{ key }}: {{ personalData[key as keyof typeof personalData] }}

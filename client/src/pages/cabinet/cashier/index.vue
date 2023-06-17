@@ -19,7 +19,10 @@ const upc = ref<string>('');
 const product = ref<Product>();
 
 const check = ref<Check>({
-  items: []
+  items: [],
+  printDate: new Date(),
+  sumTotatal: 0,
+  VAT: 0
 });
 
 const fetchProduct = async (productUpc: string): Promise<Product> => {

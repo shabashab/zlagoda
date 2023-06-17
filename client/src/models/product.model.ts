@@ -4,4 +4,5 @@ export interface Product {
   manufacture?: string
   price: number
   promoPrice?: number
+  characteristics?: string
 }

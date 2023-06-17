@@ -12,6 +12,11 @@ const buttons = ref<NavButton[]>([
     icon: 'pi pi-home'
   },
   {
+    to: '/cabinet/cashier/history',
+    label: 'History',
+    icon: 'pi pi-history'
+  },
+  {
     to: '/cabinet/personal',
     label: 'Personal cabinet',
     icon: 'pi pi-user',

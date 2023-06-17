@@ -7,4 +7,7 @@ export interface Check {
     number: number
   }[]
   customerCard?: CustomerCard
+  printDate: Date
+  sumTotatal: number
+  VAT: number
 }
