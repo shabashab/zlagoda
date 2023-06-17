@@ -6,6 +6,7 @@ import CabinetCashireCheckTable from '../../../componets/cabinet-cashire-check-t
 import UpcInput from '../../../componets/upc-input.vue';
 import { Check } from '../../../models/check.model';
 import { Product } from '../../../models/product.model';
+import InputText from 'primevue/inputtext';
 
 
 const confirm = useConfirm();
@@ -19,13 +20,14 @@ const check = ref<Check>({
   items: []
 });
 
-const fetchProduct = async (productUpc: string) : Promise<Product> => {
+const fetchProduct = async (productUpc: string): Promise<Product> => {
   return {
     upc: productUpc,
     name: 'Test',
-    manufacture: 'TestManufacture'
+    manufacture: 'TestManufacture',
+    price: (Math.random() * 100).toFixed(2) as unknown as number,
   }
-} 
+}
 
 const addProductToCheck = (product: Product) => {
   const findedItemRef = check.value.items.find(item => {
@@ -62,7 +64,6 @@ const checkOut = async () => {
 }
 
 const confirmCloseCheck = (event: any) => {
-
   confirm.require({
     target: event.currentTarget,
     message: 'Are you sure you want to close check?',
@@ -72,17 +73,45 @@ const confirmCloseCheck = (event: any) => {
       setDefaultValues();
     }
   });
-
-  
 }
+
+const sum = computed(() => {
+  const sum = ref<number>(0);
+  for (let item of check.value.items) {
+    if (item.product.promoPrice) {
+      sum.value += item.product.promoPrice * item.number;
+    } else {
+      sum.value += item.product.price * item.number;
+    }
+
+  }
+  return sum.value.toFixed(2) as unknown as number;
+})
+
+const customerDiscountPersent = computed(() => {
+  if (check.value.customerCard) {
+    return check.value.customerCard.persent
+  } else {
+    return 5;
+  }
+})
+
+const totalToPay = computed(() => {
+  return (sum.value - sum.value * (customerDiscountPersent.value / 100)).toFixed(2) as unknown as number;
+})
+
+const vat = computed(() => {
+  return (totalToPay.value * 0.2).toFixed(2) as unknown as number;
+})
 
 </script>
 
 <template>
-  <div class="flex flex-col gap-10">
+  <div class="flex flex-col gap-10 h-[95vh]">
     <div class="flex justify-between">
       <UpcInput
         v-model:upc="upc"
+        :max-length="13"
         @submit="onUpcSubmit"
       />
       <div class="flex justify-end gap-10">
@@ -101,5 +130,24 @@ const confirmCloseCheck = (event: any) => {
       </div>
     </div>
     <CabinetCashireCheckTable v-model:check="check" />
+    <div class="flex justify-between">
+      <div class="text-6xl font-extrabold text-green-700">
+        {{ totalToPay }} UAH
+      </div>
+      <div class="flex flex-col">
+        <span>
+          Total sum: {{ sum }} UAH
+        </span>
+        <span>
+          Customer discount: {{ customerDiscountPersent }} %
+        </span>
+        <span>
+          Total to pay: {{ totalToPay }}
+        </span>
+        <span>
+          Vat(20%): {{ vat }} UAH
+        </span>
+      </div>
+    </div>
   </div>
 </template>

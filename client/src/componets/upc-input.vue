@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import InputText from 'primevue/inputtext';
 
-const props = defineProps<{
-  upc: string
-}>();
+const props = withDefaults(defineProps<{
+  upc: string,
+  maxLength: number
+}>(), {
+  maxLength: 100000,
+});
 
 const emits = defineEmits(['update:upc', 'submit'])
 
