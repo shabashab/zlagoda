@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import InputText from 'primevue/inputtext';
+import { Icon } from '@iconify/vue';
 
 const props = withDefaults(defineProps<{
   upc: string,
@@ -31,9 +32,17 @@ const upcValue = computed({
 </script>
 
 <template>
-  <InputText
-    v-model="upcValue"
-    autofocus
-    style="width: 160px !important"
-  />
+  <span class="p-input-icon-right">
+    <Icon
+      icon="ant-design:scan-outlined"
+      class="font-extrabold"
+    />
+    <!-- <i class="pi pi-spin pi-spinner" /> -->
+    <InputText
+      v-model="upcValue"
+      icon="pi pi-user"
+      autofocus
+      style="width: 165px !important"
+    />
+  </span>
 </template>

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { CustomerCard } from '../models/customer-card.model';
 import Button from 'primevue/button';
+import Dialog from 'primevue/dialog';
+import CabinetCashierCutomerForm from './cabinet-cashier-cutomer-form.vue';
 
 const props = defineProps<{
   customer: CustomerCard;
@@ -15,7 +17,9 @@ const customerCard = computed({
   set(value) {
     emits('update:customer', value)
   }
-})
+});
+
+const isEditCustomerCardDiaglogVisible = ref<boolean>(false);
 </script>
 <template>
   <div class="flex flex-start gap-8 items-center font-bold">
@@ -30,9 +34,19 @@ const customerCard = computed({
     <Button
       icon="pi pi-pencil"
       severity="secondary"
-      disabled
       rounded
       text
+      @click="isEditCustomerCardDiaglogVisible = true"
     />
+    <Dialog
+      v-model:visible="isEditCustomerCardDiaglogVisible"
+      modal
+      header="Edit customer"
+    >
+      <CabinetCashierCutomerForm
+        v-model:customer="customerCard"
+        @close="isEditCustomerCardDiaglogVisible = false"
+      />
+    </Dialog>
   </div>
 </template>

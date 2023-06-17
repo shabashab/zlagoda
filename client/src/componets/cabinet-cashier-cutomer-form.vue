@@ -19,7 +19,12 @@ const customerCard = computed({
   }
 });
 
-const onFormSubmit = () => {
+const sendCustomerEditRequestToBackend = async () => {
+  return
+}
+
+const onFormSubmit = async () => {
+  await sendCustomerEditRequestToBackend();
   emits('close');
 }
 
@@ -29,7 +34,7 @@ const onFormSubmit = () => {
     <div class="text-2xl">
       {{ customerCard.name }} {{ customerCard.surname }}
     </div>
-    <div class="grid grid-cols-2 gap-y-5 gap-x-8">
+    <div class="grid grid-cols-2 gap-y-5 gap-x-8 mt-10">
       <div 
         v-for="key in Object.keys(customerCard)"
         :key="key"
