@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import Button from 'primevue/button';
+import Dialog from 'primevue/dialog';
+
 import { useConfirm } from 'primevue/useconfirm';
 import { useToast } from 'primevue/usetoast';
 import CabinetCashireCheckTable from '../../../componets/cabinet-cashire-check-table.vue';
 import UpcInput from '../../../componets/upc-input.vue';
 import { Check } from '../../../models/check.model';
 import { Product } from '../../../models/product.model';
-import InputText from 'primevue/inputtext';
-
+import CabinetCashireCustomerScanDialog from '../../../componets/cabinet-cashire-customer-scan-dialog.vue';
+import CabinetCashireCustomerCard from '../../../componets/cabinet-cashire-customer-card.vue';
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -92,7 +94,7 @@ const customerDiscountPersent = computed(() => {
   if (check.value.customerCard) {
     return check.value.customerCard.persent
   } else {
-    return 5;
+    return 0;
   }
 })
 
@@ -104,6 +106,7 @@ const vat = computed(() => {
   return (totalToPay.value * 0.2).toFixed(2) as unknown as number;
 })
 
+const showScanCustomerDialog = ref<boolean>(false);
 </script>
 
 <template>
@@ -111,10 +114,31 @@ const vat = computed(() => {
     <div class="flex justify-between">
       <UpcInput
         v-model:upc="upc"
-        :max-length="13"
         @submit="onUpcSubmit"
       />
+      <CabinetCashireCustomerCard
+        v-if="check.customerCard"
+        v-model:customer="check.customerCard"
+      />
       <div class="flex justify-end gap-10">
+        <Dialog
+          v-model:visible="showScanCustomerDialog"
+          header="Scan customer card"
+          modal
+          style="width: 15vw;"
+        >
+          <CabinetCashireCustomerScanDialog
+            v-model:customer-card="check.customerCard" 
+            @close="showScanCustomerDialog = false"
+          />
+        </Dialog>
+        <Button
+          v-if="!check.customerCard"
+          label="card"
+          icon="pi pi-user"
+          severity="warning"
+          @click="showScanCustomerDialog = true"
+        />
         <Button
           label="Check out"
           icon="pi pi-check"

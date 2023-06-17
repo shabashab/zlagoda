@@ -5,7 +5,7 @@ const props = withDefaults(defineProps<{
   upc: string,
   maxLength: number
 }>(), {
-  maxLength: 100000,
+  maxLength: 13,
 });
 
 const emits = defineEmits(['update:upc', 'submit'])
@@ -25,9 +25,9 @@ const upcValue = computed({
   }
 })
 
-const onInputBlur = (e: Event) => {
-  (e.target as HTMLInputElement).focus()
-}
+// const onInputBlur = (e: Event) => {
+//   (e.target as HTMLInputElement).focus()
+// }
 </script>
 
 <template>
@@ -35,6 +35,5 @@ const onInputBlur = (e: Event) => {
     v-model="upcValue"
     autofocus
     style="width: 160px !important"
-    @blur="onInputBlur"
   />
 </template>

@@ -1,0 +1,38 @@
+<script setup lang="ts">
+import { CustomerCard } from '../models/customer-card.model';
+import Button from 'primevue/button';
+
+const props = defineProps<{
+  customer: CustomerCard;
+}>();
+
+const emits = defineEmits(['update:customer']);
+
+const customerCard = computed({
+  get() {
+    return props.customer;
+  },
+  set(value) {
+    emits('update:customer', value)
+  }
+})
+</script>
+<template>
+  <div class="flex flex-start gap-8 items-center font-bold">
+    <span>
+      <i class="pi pi-user" />
+      {{ customerCard.name }} {{ customerCard.surname }}
+    </span>
+    <span>
+      <i class="pi pi-percentage" />
+      {{ customerCard.persent }}
+    </span>
+    <Button
+      icon="pi pi-pencil"
+      severity="secondary"
+      disabled
+      rounded
+      text
+    />
+  </div>
+</template>
