@@ -50,7 +50,7 @@ const logModuleInitialization = (
 const loadInit = async () => {
   const glob = new Glob(`${path.join(__dirname, 'init')}/*.{ts,js}`, {})
 
-  let dependantModules = [] as [string, DependantInitModule][]
+  const dependantModules = [] as [string, DependantInitModule][]
   const initializedModules = [] as string[]
 
   for await (const initPath of glob) {
@@ -67,7 +67,15 @@ const loadInit = async () => {
       continue
     }
 
-    await initModule.init()
+    try {
+      await initModule.init()
+    } catch (e) {
+      globalThis.logger.error(
+        e,
+        `[init]: error while initializing module ${initPathName}`
+      )
+      throw e
+    }
 
     logModuleInitialization(initPathName, initModule)
 
@@ -83,20 +91,54 @@ const loadInit = async () => {
       if (
         lazyInitModule[1].dependencies.findIndex(
           (dependencyName) => !initializedModules.includes(dependencyName)
-        ) > 0
+        ) >= 0
       ) {
         continue
       }
 
-      await lazyInitModule[1].init()
-      dependantModules = dependantModules.splice(i, i)
-      logModuleInitialization(lazyInitModule[0], lazyInitModule[1])
+      try {
+        await lazyInitModule[1].init()
+      } catch (e) {
+        globalThis.logger.error(
+          e,
+          `[init]: error while initializing module ${lazyInitModule[0]}`
+        )
+        throw e
+      }
 
-      break
+      dependantModules.splice(i, 1)
+      if (lazyInitModule[1].name) {
+        initializedModules.push(lazyInitModule[1].name)
+      }
+      logModuleInitialization(lazyInitModule[0], lazyInitModule[1])
     }
   }
 }
 
-initServer()
-  .then(() => loadInit())
-  .then(() => startServer())
+const start = async () => {
+  try {
+    await initServer()
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('Error initializing server', e)
+
+    process.exit(1)
+  }
+
+  try {
+    await loadInit()
+  } catch (e) {
+    process.exit(1)
+  }
+
+  await startServer()
+}
+
+start()
+  .then(() => {
+    // nothing
+  })
+  .catch((reason) => {
+    // eslint-disable-next-line no-console
+    console.error('Server closed unexpetadly', reason)
+  })

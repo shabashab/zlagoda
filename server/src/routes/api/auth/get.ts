@@ -1,7 +1,8 @@
 import { RouteOptions } from 'fastify'
+
 import { requireAuth } from '@hooks/require-auth.pre-handler'
 import { getRequestUserOrThrow } from '@helpers/getRequestUserOrThrow'
-import { omit } from 'lodash'
+import { findFullUserById } from '@services/users/repository'
 
 export const options: RouteOptions = {
   url: '/',
@@ -9,14 +10,6 @@ export const options: RouteOptions = {
   preHandler: [requireAuth],
   handler: async (request) => {
     const user = getRequestUserOrThrow(request)
-
-    return omit(
-      user,
-      'signUpIpAddress',
-      'activityLogged',
-      'arbitrageBonusBan',
-      'isActiveUser',
-      'password'
-    )
+    return await findFullUserById(user.employeeId)
   }
 }

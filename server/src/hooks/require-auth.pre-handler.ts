@@ -1,28 +1,30 @@
 import { preHandlerAsyncHookHandler } from 'fastify'
 import { UnauthorizedException } from '@exceptions/unauthorized.exception'
-import { UserNotVerifiedException } from '@exceptions/user-not-verified.exception'
-import { verifyAndResolveUser } from '@services/auth/jwt'
+import { verifyAndResolveAuthUser } from '@services/auth/jwt'
 
 const extractJwtFromHeader = (authorizationHeader: string) =>
   authorizationHeader.substring('Bearer '.length)
 
-export const requireAuth: preHandlerAsyncHookHandler = async (request) => {
-  const authHeader = request.headers.authorization
+export const requireAuth =
+  (role?: 'cashier' | 'manager'): preHandlerAsyncHookHandler =>
+    async (request) => {
+      const authHeader = request.headers.authorization
 
-  if (!authHeader || !authHeader.startsWith('Bearer')) {
-    throw new UnauthorizedException()
-  }
+      if (!authHeader || !authHeader.startsWith('Bearer')) {
+        throw new UnauthorizedException()
+      }
 
-  const jwt = extractJwtFromHeader(authHeader)
-  const user = await verifyAndResolveUser(jwt)
+      const jwt = extractJwtFromHeader(authHeader)
 
-  if (!user) {
-    throw new UnauthorizedException()
-  }
+      try {
+        const user = await verifyAndResolveAuthUser(jwt)
 
-  if (!user.isVerified) {
-    throw new UserNotVerifiedException()
-  }
+        if (role && user.role !== role) {
+          throw new UnauthorizedException()
+        }
 
-  request.user = user
-}
+        request.user = user
+      } catch (e) {
+        throw new UnauthorizedException()
+      }
+    }

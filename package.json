@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^1.4.1",
+    "@types/glob": "^8.1.0",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
     "eslint": "^8.33.0",
@@ -28,5 +29,9 @@
   "lint-staged": {
     "*.ts": "eslint --fix",
     "*.{ts,json,yml,md}": "prettier --write"
+  },
+  "dependencies": {
+    "glob": "^10.2.7",
+    "pg-connection-string": "^2.6.0"
   }
 }

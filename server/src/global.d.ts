@@ -1,11 +1,11 @@
-import type { User } from '@prisma/client'
+import type { AuthUser } from './models/user.model'
 
 export {}
 
 declare module 'fastify' {
   // eslint-disable-next-line no-unused-vars
   interface FastifyRequest {
-    user?: User
+    user?: AuthUser
   }
 }
 

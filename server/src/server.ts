@@ -1,7 +1,7 @@
 import Fastify, { FastifyBaseLogger, FastifyInstance } from 'fastify'
 import fastifyCors from '@fastify/cors'
 
-import { BULL_DASHBOARD_HOST, BULL_DASHBOARD_PORT, PORT } from './config'
+import { PORT } from './config'
 import { routesPlugin } from './routes'
 
 // import * as bullBoardPluginModule from './routes/bull-board'
@@ -42,30 +42,5 @@ export const startServer = async () => {
   } catch (e) {
     fastify.log.error(e)
     process.exit(1)
-  }
-
-  await startBullBoardServer()
-}
-
-const startBullBoardServer = async () => {
-  const pluginModule = await import('./routes/bull-board')
-
-  const fastify = Fastify({
-    logger: {
-      msgPrefix: '[bull_board]: '
-    }
-  })
-
-  fastify.register(pluginModule.plugin, {
-    prefix: pluginModule.prefix
-  })
-
-  try {
-    await fastify.listen({
-      port: BULL_DASHBOARD_PORT,
-      host: BULL_DASHBOARD_HOST
-    })
-  } catch (e) {
-    fastify.log.error(e)
   }
 }
