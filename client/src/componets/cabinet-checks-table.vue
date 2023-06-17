@@ -12,7 +12,7 @@ import InputText from 'primevue/inputtext';
 import { FilterMatchMode } from 'primevue/api';
 
 const filters = ref({
-  id: { value: null , matchMode: FilterMatchMode.STARTS_WITH },
+  id: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
 });
 
 const props = defineProps<{
@@ -27,8 +27,8 @@ const isItemsDialogVisible = ref<boolean>(false);
 const checkToDisplayInDialog = ref<Check>(checks.value[0]);
 
 const openCheckDialog = (check: Check) => {
-  isItemsDialogVisible.value = true;
   checkToDisplayInDialog.value = check;
+  isItemsDialogVisible.value = true;
 }
 
 const isUserDialogVisible = ref<boolean>(false);
@@ -54,7 +54,7 @@ const fetchChecks = async (cashireId: string) => {
             name: 'Соус гамбургер',
             price: 200,
             manufacture: 'Develey',
-            characteristics: '410г'            
+            characteristics: '410г'
           },
           number: 3
         }
@@ -71,6 +71,48 @@ watch(() => props.datesRange, () => {
 }, {
   immediate: true
 });
+
+const isCheckUpcSearchDialogVisible = ref<boolean>(false);
+
+const idSearchInput = ref<string>('');
+
+const fetchCheck = async () : Promise<Check> => {
+  return {
+    id: (Math.random() * 128312327).toFixed(0),
+    items: [
+      {
+        product: {
+          upc: '4779038123734',
+          name: 'Напій газ.',
+          price: 100,
+          manufacture: 'Scotty west',
+          characteristics: 'Імбир малина2'
+        },
+        number: 2
+      },
+      {
+        product: {
+          upc: '5449064244221',
+          name: 'Соус гамбургер2',
+          price: 200,
+          manufacture: 'Develey',
+          characteristics: '410г'
+        },
+        number: 3
+      }
+    ],
+    printDate: new Date(),
+    sumTotatal: 802,
+    VAT: 160,
+
+  }
+}
+
+const searchCheckById = async () => {
+  console.log(1);
+  checkToDisplayInDialog.value = await fetchCheck();
+  isItemsDialogVisible.value = true;
+}
 </script>
 <template>
   <DataTable
@@ -82,9 +124,24 @@ watch(() => props.datesRange, () => {
     filter-display="row"
   >
     <template #header>
-      <h2 class="text-xl text-black">
-        Checks
-      </h2>
+      <div class="flex justify-between items-center">
+        <h2 class="text-xl text-black">
+          Checks
+        </h2>
+        <div class="flex gap-5">
+          <InputText
+            v-model="idSearchInput"
+            placeholder="Search check by id"
+            :maxlength="10"
+          />
+          <Button
+            severity="success"
+            icon="pi pi-search"
+            :disabled="idSearchInput.length !== 10"
+            @click="searchCheckById()"
+          />
+        </div>
+      </div>
     </template>
     <template #empty>
       <h2 class="text-2xl text-blue-900 w-full text-center">
@@ -100,7 +157,7 @@ watch(() => props.datesRange, () => {
       <template #filter="{ filterModel, filterCallback }">
         <InputText
           v-model="filterModel.value"
-          :placeholder="`Search by id { ${filterModel.matchMode} }`"
+          :placeholder="`Filter by id { ${filterModel.matchMode} }`"
           @input="filterCallback"
         />
       </template>
@@ -153,7 +210,7 @@ watch(() => props.datesRange, () => {
     :header="'Check: №' + checkToDisplayInDialog.id"
     style="min-width: 30vw;"
     modal
-  > 
+  >
     <div>
       <Calendar
         v-model="checkToDisplayInDialog.printDate"
