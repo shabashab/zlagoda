@@ -7,7 +7,13 @@ import CabinetCheckTableItem from './cabinet-check-table-item.vue';
 import Calendar from 'primevue/calendar';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
 
+import { FilterMatchMode } from 'primevue/api';
+
+const filters = ref({
+  id: { value: null , matchMode: FilterMatchMode.STARTS_WITH },
+});
 
 const props = defineProps<{
   cashireId: string,
@@ -30,7 +36,7 @@ const isUserDialogVisible = ref<boolean>(false);
 const fetchChecks = async (cashireId: string) => {
   for (let i = 0; i < 100; i++) {
     checks.value.push({
-      id: '0213898192938',
+      id: (Math.random() * 128312327).toFixed(0),
       items: [
         {
           product: {
@@ -68,20 +74,37 @@ watch(() => props.datesRange, () => {
 </script>
 <template>
   <DataTable
+    v-model:filters="filters"
     :value="checks"
     paginator
     :rows="6"
+    data-key="id"
+    filter-display="row"
   >
     <template #header>
       <h2 class="text-xl text-black">
         Checks
       </h2>
     </template>
+    <template #empty>
+      <h2 class="text-2xl text-blue-900 w-full text-center">
+        No checks found!
+      </h2>
+    </template>
     <Column
+      style="width: 350px;"
       sortable
       header="ID"
       field="id"
-    />
+    >
+      <template #filter="{ filterModel, filterCallback }">
+        <InputText
+          v-model="filterModel.value"
+          :placeholder="`Search by id { ${filterModel.matchMode} }`"
+          @input="filterCallback"
+        />
+      </template>
+    </Column>
     <Column
       header="Print date"
       field="printData"
@@ -97,46 +120,55 @@ watch(() => props.datesRange, () => {
       </template>
     </Column>
     <Column
-      header="Products"
       field="sumTotal"
+      header="Sum total"
       sortable
     >
       <template #body="slotProps">
-        <div class="grid grid-cols-2">
-          <div>
-            <Button
-              label="Products"
-              icon="pi pi-bars"
-              rounded
-              text
-              @click="openCheckDialog(slotProps.data)"
-            />
+        <div class="flex flex-col text-end">
+          <div class="text-2xl font-extrabold">
+            SUM: {{ slotProps.data.sumTotatal }}
           </div>
-          <div class="flex flex-col text-end">
-            <div class="text-2xl font-extrabold">
-              SUM: {{ slotProps.data.sumTotatal }}
-            </div>
-            <div class="text-xs">
-              VAT(20%): {{ slotProps.data.VAT }}
-            </div>
+          <div class="text-xs">
+            VAT(20%): {{ slotProps.data.VAT }}
           </div>
         </div>
       </template>
     </Column>
+    <Column>
+      <template #body="slotProps">
+        <Button
+          label="All info"
+          icon="pi pi-bars"
+          rounded
+          text
+          @click="openCheckDialog(slotProps.data)"
+        />
+      </template>
+    </Column>
   </DataTable>
   <Dialog
+    v-if="isItemsDialogVisible"
     v-model:visible="isItemsDialogVisible"
-    header="Products"
+    :header="'Check: №' + checkToDisplayInDialog.id"
     style="min-width: 30vw;"
     modal
-  >
-    <div class="flex flex-col gap-2">
+  > 
+    <div>
+      <Calendar
+        v-model="checkToDisplayInDialog.printDate"
+        style="width: 120px; margin-bottom: 10px;"
+        date-format="dd/mm/yy"
+        disabled
+      />
+    </div>
+    <div class="flex flex-col gap-2 mt-5">
       <CabinetCheckTableItem
         v-for="(item, key) in checkToDisplayInDialog.items"
         :key="key"
         :item="item"
       />
-      <div class="flex justify-end mt-5">
+      <div class="flex justify-end mt-10">
         <div class="flex flex-col text-end">
           <div class="text-2xl font-extrabold">
             SUM: {{ checkToDisplayInDialog.sumTotatal }}

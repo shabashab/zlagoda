@@ -12,7 +12,7 @@ const props = defineProps<{
   <div class="flex justify-between items-end border-b border-dashed border-black/30">
     <div class="flex flex-col">
       <div>
-        UPC: {{ item.product.upc }}
+        UPC: {{ props.item.product.upc }}
       </div>
       <div>
         {{ item.product.name }} {{ item.product.manufacture }}

@@ -33,6 +33,10 @@ const presetedOptions = ref<DatePreset[]>([
   {
     label: 'Yesterday',
     datesRange: [getYesterday() , getYesterday()]
+  },
+  {
+    label: 'All time',
+    datesRange: [new Date(0,0,1900), new Date]
   }
 ])
 
