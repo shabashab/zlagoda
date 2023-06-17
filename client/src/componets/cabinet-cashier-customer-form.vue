@@ -6,6 +6,7 @@ import { CustomerCard } from '../models/customer-card.model';
 
 const props = defineProps<{
   customer: CustomerCard;
+  newCustomer: boolean;
 }>();
 
 const emits = defineEmits(['update:customer', 'close']);
@@ -23,14 +24,23 @@ const sendCustomerEditRequestToBackend = async () => {
   return
 }
 
-const onFormSubmit = async () => {
+const sendNewCustomerRequestToBackend = async () => {
+  return
+}
+
+const onEditFormSubmit = async () => {
+  await sendCustomerEditRequestToBackend();
+  emits('close');
+}
+
+const onNewCustomerFormSubmit = async () => {
   await sendCustomerEditRequestToBackend();
   emits('close');
 }
 
 </script>
 <template>
-  <div @keyup.enter="onFormSubmit()">
+  <div @keyup.enter="onEditFormSubmit()">
     <div class="text-2xl">
       {{ customerCard.name }} {{ customerCard.surname }}
     </div>
@@ -47,9 +57,18 @@ const onFormSubmit = async () => {
     </div>
     <div class="w-full mt-10 flex justify-center">
       <Button
+        v-if="!props.newCustomer"
         label="Submit"
         :autofocus="true"
-        @click="onFormSubmit"
+        @click="onEditFormSubmit"
+      />
+      <Button
+        v-else
+        label="Submit"
+        severity="success"
+        icon="pi pi-plus"
+        :autofocus="true"
+        @click="onNewCustomerFormSubmit"
       />
     </div>
   </div>

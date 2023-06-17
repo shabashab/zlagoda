@@ -2,7 +2,7 @@
 import { CustomerCard } from '../models/customer-card.model';
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
-import CabinetCashierCutomerForm from './cabinet-cashier-cutomer-form.vue';
+import CabinetCashierCustomerForm from './cabinet-cashier-customer-form.vue';
 
 const props = defineProps<{
   customer: CustomerCard;
@@ -43,8 +43,9 @@ const isEditCustomerCardDiaglogVisible = ref<boolean>(false);
       modal
       header="Edit customer"
     >
-      <CabinetCashierCutomerForm
+      <CabinetCashierCustomerForm
         v-model:customer="customerCard"
+        :new-customer="false"
         @close="isEditCustomerCardDiaglogVisible = false"
       />
     </Dialog>

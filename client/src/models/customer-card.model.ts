@@ -1,8 +1,8 @@
 export interface CustomerCard {
-  customerUpc: string
+  cardNumber: string
   surname: string
   name: string
-  partonimic?: string
+  patronimic?: string
   phoneNumber: string
   city?: string
   street?: string
