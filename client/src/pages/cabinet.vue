@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CabinetCashireNavbar from '../componets/cabinet-cashire-navbar.vue';
+import CabinetCashireNavbar from '../componets/cabinet-cashier-navbar.vue';
 
 </script>
 <template>

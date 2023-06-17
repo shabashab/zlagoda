@@ -4,12 +4,12 @@ import Dialog from 'primevue/dialog';
 
 import { useConfirm } from 'primevue/useconfirm';
 import { useToast } from 'primevue/usetoast';
-import CabinetCashireCheckTable from '../../../componets/cabinet-cashire-check-table.vue';
+import CabinetCashireCheckTable from '../../../componets/cabinet-cashier-check-table.vue';
 import UpcInput from '../../../componets/upc-input.vue';
 import { Check } from '../../../models/check.model';
 import { Product } from '../../../models/product.model';
-import CabinetCashireCustomerScanDialog from '../../../componets/cabinet-cashire-customer-scan-dialog.vue';
-import CabinetCashireCustomerCard from '../../../componets/cabinet-cashire-customer-card.vue';
+import CabinetCashireCustomerScanDialog from '../../../componets/cabinet-cashier-customer-scan-dialog.vue';
+import CabinetCashireCustomerCard from '../../../componets/cabinet-cashier-customer-card.vue';
 
 const confirm = useConfirm();
 const toast = useToast();

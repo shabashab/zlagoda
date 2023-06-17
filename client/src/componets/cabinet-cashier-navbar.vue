@@ -7,9 +7,14 @@ const router = useRouter();
 
 const buttons = ref<NavButton[]>([
   {
-    to: '/cabinet/cashire',
+    to: '/cabinet/cashier',
     label: 'Home',
     icon: 'pi pi-home'
+  },
+  {
+    to: '/cabinet/personal',
+    label: 'Personal cabinet',
+    icon: 'pi pi-user',
   },
   {
     to: 'test',
