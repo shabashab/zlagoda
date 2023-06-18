@@ -22,11 +22,17 @@ const check = ref<Check>({
 });
 
 const fetchProduct = async (productUpc: string): Promise<Product> => {
+  const price = (Math.random() * 1000).toFixed(2) as unknown as number
+  const promoPrice = (Math.random().toFixed(0) as unknown as number) % 2 === 0 ? (price * Math.random()).toFixed(2) as unknown as number : undefined 
+    
   return {
-    upc: productUpc,
     name: 'Test',
-    manufacture: 'TestManufacture',
-    price: (Math.random() * 100).toFixed(2) as unknown as number,
+    price: price,
+    upc: productUpc,
+    characteristics: 'hui',
+    manufacture: 'test',
+    promoPrice: promoPrice,
+    isPromo: promoPrice ? true : false 
   }
 }
 
@@ -115,7 +121,7 @@ const showScanCustomerDialog = ref<boolean>(false);
         v-model:upc="upc"
         @submit="onUpcSubmit"
       />
-      <CabinetCashireCustomerCard
+      <CabinetCashierCustomerCard
         v-if="check.customerCard"
         v-model:customer="check.customerCard"
       />
@@ -126,7 +132,7 @@ const showScanCustomerDialog = ref<boolean>(false);
           modal
           style="width: 15vw;"
         >
-          <CabinetCashireCustomerScanDialog
+          <CabinetCashierCustomerScanDialog
             v-model:customer-card="check.customerCard" 
             @close="showScanCustomerDialog = false"
           />
@@ -152,7 +158,7 @@ const showScanCustomerDialog = ref<boolean>(false);
         />
       </div>
     </div>
-    <CabinetCashireCheckTable v-model:check="check" />
+    <CabinetCashierCheckTable v-model:check="check" />
     <div class="flex justify-between">
       <div class="text-6xl font-extrabold text-green-700">
         {{ totalToPay }} UAH

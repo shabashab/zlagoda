@@ -52,14 +52,31 @@ const deleteItem = (event: any, product: Product) => {
       :scrollable="false"
     >
       <Column
-        v-for="key in Object.keys(checkValue.items[0].product)"
-        :key="key"
-        :header="key"
+        header="UPC"
+        field="product.upc"
+      />
+      <Column
+        header="Name"
+        field="product.name"
       >
-        <template #body="slotProps">
-          <div>
-            {{ slotProps.data.product[key] }}
-          </div>
+        <template #body="{data}">
+          {{ data.product.name }} {{ data.product.manufacture }} {{ data.product.characteristics }} 
+        </template>
+      </Column>
+      <Column
+        header="Price"
+        field="product.price"
+      >
+        <template #body="{ data }">
+          {{ data.product.isPromo ? data.product.promoPrice : data.product.price }}
+        </template>
+      </Column>
+      <Column>
+        <template #body="{ data }">
+          <i
+            v-if="data.product.isPromo"
+            class="pi pi-circle-fill text-red-500 "
+          />
         </template>
       </Column>
       <Column header="number">
