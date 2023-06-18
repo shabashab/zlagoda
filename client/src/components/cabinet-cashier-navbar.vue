@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { NavButton } from '../models/nav-button.model';
-
 import Button from 'primevue/button';
+import { NavButton } from '../models/nav-button.model';
 
 const router = useRouter();
 
@@ -20,6 +19,11 @@ const buttons = ref<NavButton[]>([
     to: '/cabinet/cashier/customers',
     label: 'Customers',
     icon: 'pi pi-id-card'
+  },
+  {
+    to: '/cabinet/cashier/products',
+    label: 'Products',
+    icon: 'pi pi-shopping-bag'
   },
   {
     to: '/cabinet/personal',

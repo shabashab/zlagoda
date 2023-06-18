@@ -20,7 +20,7 @@ const customerUpc = ref<string>('');
 
 const fetchCustomerCard = async () : Promise<CustomerCard> => {
   return {
-    customerUpc: customerUpc.value,
+    cardNumber: customerUpc.value,
     name: 'Danylo',
     surname: 'Khomichenko',
     phoneNumber: '0976373938',

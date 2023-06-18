@@ -52,10 +52,12 @@ onMounted(async () => {
             class="mt-10"
           >
             <div v-if="key ==='dateOfBirth' || key === 'dateOfStart'">
-              {{ key }}: <Calendar
+              {{ key }}: 
+              <Calendar
                 v-model="personalData[key]"
                 disabled
                 text
+                style="width: 110px;"
                 date-format="dd/mm/yy"
               />
             </div>

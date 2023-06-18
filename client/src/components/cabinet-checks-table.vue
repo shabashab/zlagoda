@@ -3,7 +3,6 @@ import { Check } from '../models/check.model';
 
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import CabinetCheckTableItem from './cabinet-check-table-item.vue';
 import Calendar from 'primevue/calendar';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
@@ -130,6 +129,7 @@ const searchCheckById = async () => {
         </h2>
         <div class="flex gap-5">
           <InputText
+            style="width: 250px !important;"
             v-model="idSearchInput"
             placeholder="Search check by id"
             :maxlength="10"
@@ -157,6 +157,7 @@ const searchCheckById = async () => {
       <template #filter="{ filterModel, filterCallback }">
         <InputText
           v-model="filterModel.value"
+          style="width: 200px !important;"
           :placeholder="`Filter by id { ${filterModel.matchMode} }`"
           @input="filterCallback"
         />

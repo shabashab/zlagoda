@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import CabinetChecksTable from '../../../componets/cabinet-checks-table.vue';
-import DateRangePicker from '../../../componets/date-range-picker.vue';
 
 const cashireId = '91273091723';
 

@@ -72,7 +72,7 @@ onMounted(async () => {
     filter-display="row"
     :value="customers"
     paginator
-    :rows="8"
+    :rows="7"
   >
     <template #header>
       <div class="flex justify-between items-center">

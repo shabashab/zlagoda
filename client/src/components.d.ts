@@ -7,7 +7,23 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    CabinetCabinetCashierNavbar: typeof import('./components/cabinet/cabinet-cashier-navbar.vue')['default']
+    CabinetCashierCabinetCashierNavbar: typeof import('./components/cabinet/cashier/cabinet-cashier-navbar.vue')['default']
+    CabinetCashierCheckTable: typeof import('./components/cabinet-cashier-check-table.vue')['default']
+    CabinetCashierCustomerCard: typeof import('./components/cabinet-cashier-customer-card.vue')['default']
+    CabinetCashierCustomerForm: typeof import('./components/cabinet-cashier-customer-form.vue')['default']
+    CabinetCashierCustomerScanDialog: typeof import('./components/cabinet-cashier-customer-scan-dialog.vue')['default']
+    CabinetCashierNavbar: typeof import('./components/cabinet-cashier-navbar.vue')['default']
+    CabinetCashierProductsTable: typeof import('./components/cabinet-cashier-products-table.vue')['default']
+    CabinetChecksTable: typeof import('./components/cabinet-checks-table.vue')['default']
+    CabinetCheckTableItem: typeof import('./components/cabinet-check-table-item.vue')['default']
+    CabinetCustomerPropInput: typeof import('./components/cabinet-customer-prop-input.vue')['default']
+    CabinetCustomersTable: typeof import('./components/cabinet-customers-table.vue')['default']
+    CabinetProductsCategorySelector: typeof import('./components/cabinet-products-category-selector.vue')['default']
+    DateRangePicker: typeof import('./components/date-range-picker.vue')['default']
+    Navbar: typeof import('./components/navbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    UpcInput: typeof import('./components/upc-input.vue')['default']
   }
 }
