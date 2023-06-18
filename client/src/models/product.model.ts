@@ -5,4 +5,5 @@ export interface Product {
   price: number
   promoPrice?: number
   characteristics?: string
+  isPromo: boolean
 }

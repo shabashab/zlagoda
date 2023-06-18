@@ -105,6 +105,7 @@ onMounted(async () => {
     <Column
       header="Surname"
       field="surname"
+      sortable
     >
       <template #filter="{ filterModel, filterCallback }">
         <InputText
