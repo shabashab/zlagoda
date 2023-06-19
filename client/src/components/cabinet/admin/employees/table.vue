@@ -24,7 +24,6 @@ const fetchEmployees = async () => {
       zipCode: '02059',
       phoneNumber: '0976373938',
       imgUrl: 'https://edukoht.com.ua/assets/tarasenko_artem.482eb11d.webp'
-
     })
   }
 }
