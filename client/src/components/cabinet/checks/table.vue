@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Check } from '../models/check.model';
-
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Calendar from 'primevue/calendar';
@@ -9,15 +7,19 @@ import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 
 import { FilterMatchMode } from 'primevue/api';
+import { Check } from '../../../models/check.model';
 
 const filters = ref({
   id: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
 });
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   cashireId: string,
   datesRange: Date[],
-}>();
+  isAdmin: boolean,
+}>(), {
+  isAdmin: false
+});
 
 const checks = ref<Check[]>([]);
 
@@ -63,6 +65,19 @@ const fetchChecks = async (cashireId: string) => {
       printDate: new Date(),
       sumTotatal: 800,
       VAT: 160,
+      cashier: {
+        id: '1231',
+        name: 'Taras',
+        surname: 'Artemovich',
+        city: 'Govno',
+        street: 'Mocha st.',
+        zipCode: '1231',
+        role: 'cashier',
+        dateOfBirth: new Date(1,2,2003),
+        dateOfStart: new Date(1,2,2022),
+        salary: 300,
+        phoneNumber: '0976373938'
+      }
     })
   }
 }
@@ -72,8 +87,6 @@ watch(() => props.datesRange, () => {
 }, {
   immediate: true
 });
-
-const isCheckUpcSearchDialogVisible = ref<boolean>(false);
 
 const idSearchInput = ref<string>('');
 
@@ -107,7 +120,19 @@ const fetchCheck = async () : Promise<Check> => {
     printDate: new Date(),
     sumTotatal: 802,
     VAT: 160,
-
+    cashier: {
+      id: '1231',
+      name: 'Taras',
+      surname: 'Artemovich',
+      city: 'Govno',
+      street: 'Mocha st.',
+      zipCode: '1231',
+      role: 'cashier',
+      dateOfBirth: new Date(1,2,2003),
+      dateOfStart: new Date(1,2,2022),
+      salary: 300,
+      phoneNumber: '0976373938'
+    }
   }
 }
 
@@ -133,8 +158,8 @@ const searchCheckById = async () => {
         </h2>
         <div class="flex gap-5">
           <InputText
-            style="width: 250px !important;"
             v-model="idSearchInput"
+            style="width: 250px !important;"
             placeholder="Search check by id"
             :maxlength="10"
           />
@@ -208,6 +233,18 @@ const searchCheckById = async () => {
         />
       </template>
     </Column>
+    <Column v-if="props.isAdmin">
+      <template #body="{ data }">
+        <TableButtons
+          :data="data"
+          item-to-edit="" 
+          :delete-url="``"
+          :is-edit="false"
+          token-name="id"
+          @record-deleted="fetchCheck"
+        />
+      </template>
+    </Column>
   </DataTable>
   <Dialog
     v-if="isItemsDialogVisible"
@@ -223,6 +260,12 @@ const searchCheckById = async () => {
         date-format="dd/mm/yy"
         disabled
       />
+    </div>
+    <div>
+      Cashier: {{ checkToDisplayInDialog.cashier.id }}
+    </div>
+    <div v-if="checkToDisplayInDialog.customerCard">
+      Customer: {{ checkToDisplayInDialog.customerCard.cardNumber }}
     </div>
     <div class="flex flex-col gap-2 mt-5">
       <CabinetCheckTableItem
