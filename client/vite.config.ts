@@ -30,6 +30,7 @@ export default defineConfig({
         './src/store/*',
         './src/models/**/*',
         './src/api/*',
+        './src/componets/*',
       ],
       eslintrc: {
         enabled: true, // Default `false`
