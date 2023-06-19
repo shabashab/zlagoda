@@ -74,7 +74,7 @@ const openEditDialog = (product: ProductInStore) => {
     <template #header>
       <div class="flex justify-between items-center">
         <h1>Products</h1>
-        <div>
+        <div v-if="props.isAdmin">
           <Button
             icon="pi pi-plus"
             severity="success"

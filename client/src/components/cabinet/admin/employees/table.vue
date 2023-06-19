@@ -5,6 +5,7 @@ import Calendar from 'primevue/calendar';
 import { Employee } from '../../../../models/employee.model';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
+import Dropdown from 'primevue/dropdown';
 
 const employees = ref<Employee[]>([]);
 
@@ -42,6 +43,10 @@ const openEditDialog = (employee: Employee) => {
   employeeToEdit.value = employee;
   isEditDialogVisible.value = true;
 }
+
+const filters = ref({
+  role: ''
+})
 
 </script>
 <template>
@@ -89,9 +94,16 @@ const openEditDialog = (employee: Employee) => {
       field="patronymic"
     />
     <Column
-      header="Role"
       field="role"
-    />
+      header="Role"
+    >
+      <template #filter>
+        <RoleDropdown
+          v-model:role="filters.role"
+          label=""
+        />
+      </template>
+    </Column>
     <Column
       header="Phone"
       field="phoneNumber"
