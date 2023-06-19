@@ -1,5 +1,5 @@
 import { CreateEmployeeDto } from '../../dto/create-employee.dto'
-import { User } from '../../models/user.model'
+import { PublicUser } from '../../models/user.model'
 import { createEmployee } from '../employees/repository'
 import { createUser, findUserByLogin } from './repository'
 
@@ -35,7 +35,9 @@ const createRootUser = async () => {
   })
 }
 
-export const createRootUserIfNotExists = async (): Promise<false | User> => {
+export const createRootUserIfNotExists = async (): Promise<
+  false | PublicUser
+> => {
   if (await findRootUserExists()) {
     return false
   }
