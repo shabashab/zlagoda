@@ -18,5 +18,5 @@ export const employeeTransformer: Transformer<EmployeeRaw, Employee> =
     .map('phone_number', 'phoneNumber')
     .map('zip_code', 'zipCode')
     .copy('city')
-    .copy('salary')
+    .mapTransformed('salary', 'salary', parseFloat)
     .copy('street')

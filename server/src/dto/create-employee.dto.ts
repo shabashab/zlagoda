@@ -12,3 +12,11 @@ export interface CreateEmployeeDto {
   street: string
   zipCode: string
 }
+
+export type CreateEmployeeDtoRaw = Omit<
+  CreateEmployeeDto,
+  'birthDate' | 'startDate'
+> & {
+  birthDate: string
+  startDate: string
+}

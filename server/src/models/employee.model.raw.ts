@@ -4,7 +4,7 @@ export interface EmployeeRaw {
   empl_name: string
   empl_patronymic?: string
   empl_role: 'cashier' | 'manager'
-  salary: number
+  salary: string
   date_of_birth: Date
   date_of_start: Date
   phone_number: string

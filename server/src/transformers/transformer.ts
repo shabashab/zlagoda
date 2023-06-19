@@ -175,16 +175,15 @@ const createTransformerWithActions = <TInput>(
 export const createTransformer = <TInput>() =>
   createTransformerWithActions<TInput>([])
 
-export const transformQueryResult =
-  <TInput extends QueryResultRow, TResult>(
-    transformer: Transformer<TInput, TResult>
-  ) =>
-    (queryResult: QueryResult<TInput>) => {
-      const result = []
+export const transformQueryResult = <TInput extends QueryResultRow, TResult>(
+  transformer: Transformer<TInput, TResult>,
+  queryResult: QueryResult<TInput>
+) => {
+  const result = []
 
-      for (const row of queryResult.rows) {
-        result.push(transformer.transform(row))
-      }
+  for (const row of queryResult.rows) {
+    result.push(transformer.transform(row))
+  }
 
-      return result
-    }
+  return result
+}

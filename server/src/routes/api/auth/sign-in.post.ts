@@ -9,7 +9,7 @@ import { rethrowExceptionAsync } from '../../../helpers/rethrow-exception'
 
 const BodySchema = z
   .object({
-    login: z.string().email(),
+    login: z.string(),
     password: z.string().min(8),
     as: z.union([z.literal('manager'), z.literal('cashier')])
   })

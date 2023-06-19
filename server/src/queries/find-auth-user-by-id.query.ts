@@ -7,9 +7,9 @@ import { defineQuery } from './define-query'
 export const findAuthUserByIdQuery = defineQuery<string, AuthUser, AuthUserRaw>(
   {
     query: `
-    SELECT id_employee, login, empl_role 
+    SELECT u.id_employee, u.login, e.empl_role 
     FROM "User" u JOIN "Employee" e ON u.id_employee = e.id_employee 
-    WHERE id_employee = 1
+    WHERE u.id_employee = $1
   `,
     values: (input) => [input],
     transformResult: (result) => {
