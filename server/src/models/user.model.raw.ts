@@ -8,4 +8,5 @@ export interface UserRaw {
 
 export type AuthUserRaw = Pick<UserRaw, 'id_employee' | 'login'> &
   Pick<EmployeeRaw, 'empl_role'>
-export type FullUserRaw = UserRaw & EmployeeRaw
+export type PublicUserRaw = Omit<UserRaw, 'password_hash'>
+export type FullUserRaw = PublicUserRaw & EmployeeRaw

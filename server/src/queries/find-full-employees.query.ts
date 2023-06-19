@@ -1,6 +1,6 @@
 import { Employee } from '../models/employee.model'
 import { EmployeeRaw } from '../models/employee.model.raw'
-import { employeeTransformer } from '../transformers/employee.transformer'
+import { fullEmployeeTransformer } from '../transformers/full-employee.transformer'
 import { transformQueryResult } from '../transformers/transformer'
 import { defineQuery } from './define-query'
 import { FindEmployeeQueryInput } from './types/find-employee.query-input'
@@ -11,7 +11,22 @@ export const findEmployeesQuery = defineQuery<
   EmployeeRaw
 >({
   query: (input) => {
-    let query = 'SELECT * FROM "Employee"'
+    let query = `
+      SELECT e.id_employee,
+        login,
+        empl_surname,
+        empl_name,
+        empl_patronymic,
+        empl_role,
+        salary,
+        date_of_birth,
+        date_of_start,
+        phone_number,
+        city,
+        street,
+        zip_code 
+      FROM "Employee" e LEFT JOIN "User" u ON e.id_employee = u.id_employee 
+    `
 
     if (input.role || input.surname) {
       let paramId = 1
@@ -30,8 +45,6 @@ export const findEmployeesQuery = defineQuery<
       query += ` WHERE ${conditions.join(' AND ')}`
     }
 
-    globalThis.logger.info(query)
-
     return query
   },
   values: (input) => {
@@ -43,6 +56,6 @@ export const findEmployeesQuery = defineQuery<
     return result
   },
   transformResult: (result) => {
-    return transformQueryResult(employeeTransformer, result)
+    return transformQueryResult(fullEmployeeTransformer, result)
   }
 })

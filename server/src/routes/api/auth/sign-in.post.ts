@@ -6,6 +6,8 @@ import { UnauthorizedException } from '@exceptions/unauthorized.exception'
 import { z } from 'zod'
 import { findUserByLogin } from '../../../services/users/repository'
 import { rethrowExceptionAsync } from '../../../helpers/rethrow-exception'
+import { findEmployeeById } from '../../../services/employees/repository'
+import { ForbiddenException } from '../../../exceptions/forbidden.exception'
 
 const BodySchema = z
   .object({
@@ -41,9 +43,11 @@ export const options: RouteOptions = {
       throw new UnauthorizedException()
     }
 
-    // if (body.admin && !user.isAdmin) {
-    //   throw new UnauthorizedException()
-    // }
+    const employee = await findEmployeeById(user.employeeId)
+
+    if (employee.role !== body.as) {
+      throw new ForbiddenException()
+    }
 
     const jwt = signForUser(user)
 

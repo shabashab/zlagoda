@@ -120,7 +120,7 @@ const setAction =
 const createTransformerWithActions = <TInput>(
   actions: ActionFunction[]
 ): Transformer<TInput> => {
-  const transformActions: ActionFunction[] = []
+  const transformActions: ActionFunction[] = [...actions]
 
   const transformer: Transformer<TInput> = {
     copy: (key) => {
@@ -143,7 +143,7 @@ const createTransformerWithActions = <TInput>(
       transformActions.push(setAction(key, value))
       return transformer as any
     },
-    getRawActions () {
+    getRawActions: () => {
       return transformActions
     },
     extend: (inputTransformer) => {

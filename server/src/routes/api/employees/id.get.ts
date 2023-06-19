@@ -1,6 +1,6 @@
 import { RouteOptions } from 'fastify'
 import { z } from 'zod'
-import { findEmployeeById } from '../../../services/employees/repository'
+import { findFullEmployeeById } from '../../../services/employees/repository'
 
 export const ParamsSchema = z.object({
   id: z.string()
@@ -16,6 +16,6 @@ export const options: RouteOptions = {
   },
   handler: async (req) => {
     const { id } = req.params as Params
-    return await findEmployeeById(id)
+    return await findFullEmployeeById(id)
   }
 }

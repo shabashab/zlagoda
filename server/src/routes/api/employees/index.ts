@@ -8,5 +8,6 @@ export const plugin = createPluginFromConfiguration({
     import('./id.get'),
     import('./id.patch'),
     import('./post')
-  ]
+  ],
+  plugins: [import('./user')]
 })

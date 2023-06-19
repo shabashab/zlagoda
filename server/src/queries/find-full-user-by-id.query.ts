@@ -7,10 +7,23 @@ import { defineQuery } from './define-query'
 export const findFullUserByIdQuery = defineQuery<string, FullUser, FullUserRaw>(
   {
     query: `
-    SELECT id_employee, login, empl_role 
-    FROM "User" u JOIN "Employee" e ON u.id_employee = e.id_employee 
-    WHERE id_employee = 1
-  `,
+      SELECT 
+        u.id_employee,
+        login,
+        empl_surname,
+        empl_name,
+        empl_patronymic,
+        empl_role,
+        salary,
+        date_of_birth,
+        date_of_start,
+        phone_number,
+        city,
+        street,
+        zip_code
+      FROM "User" u JOIN "Employee" e ON u.id_employee = e.id_employee 
+      WHERE u.id_employee = $1
+    `,
     values: (input) => [input],
     transformResult: (result) => {
       if (result.rowCount === 0) {
