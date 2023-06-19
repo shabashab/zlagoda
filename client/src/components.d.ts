@@ -7,6 +7,14 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    CabinetAdminEmployeesEditDialog: typeof import('./components/cabinet/admin/employees/edit-dialog.vue')['default']
+    CabinetAdminEmployeesEmployeesTable: typeof import('./components/cabinet/admin/employees/employees-table.vue')['default']
+    CabinetAdminEmployeesForm: typeof import('./components/cabinet/admin/employees/form.vue')['default']
+    CabinetAdminEmployeesNewDialog: typeof import('./components/cabinet/admin/employees/new-dialog.vue')['default']
+    CabinetAdminEmployeesTable: typeof import('./components/cabinet/admin/employees/table.vue')['default']
+    CabinetAdminEmployeeTable: typeof import('./components/cabinet/admin/employee-table.vue')['default']
+    CabinetAdminNavbar: typeof import('./components/cabinet/admin/navbar.vue')['default']
+    CabinetAdminTableButtons: typeof import('./components/cabinet/admin/table-buttons.vue')['default']
     CabinetCabinetCashierNavbar: typeof import('./components/cabinet/cabinet-cashier-navbar.vue')['default']
     CabinetCashierCabinetCashierNavbar: typeof import('./components/cabinet/cashier/cabinet-cashier-navbar.vue')['default']
     CabinetCashierCheckTable: typeof import('./components/cabinet-cashier-check-table.vue')['default']
@@ -19,11 +27,17 @@ declare module '@vue/runtime-core' {
     CabinetCheckTableItem: typeof import('./components/cabinet-check-table-item.vue')['default']
     CabinetCustomerPropInput: typeof import('./components/cabinet-customer-prop-input.vue')['default']
     CabinetCustomersTable: typeof import('./components/cabinet-customers-table.vue')['default']
+    CabinetNumberPropInput: typeof import('./components/cabinet/number-prop-input.vue')['default']
     CabinetProductsCategorySelector: typeof import('./components/cabinet-products-category-selector.vue')['default']
+    CabinetTableHeader: typeof import('./components/cabinet/table-header.vue')['default']
+    DatePropInput: typeof import('./components/date-prop-input.vue')['default']
     DateRangePicker: typeof import('./components/date-range-picker.vue')['default']
     Navbar: typeof import('./components/navbar.vue')['default']
+    NumberPropInput: typeof import('./components/number-prop-input.vue')['default']
+    RoleDropdown: typeof import('./components/role-dropdown.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TextPropInput: typeof import('./components/text-prop-input.vue')['default']
     UpcInput: typeof import('./components/upc-input.vue')['default']
   }
 }
