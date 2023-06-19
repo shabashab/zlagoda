@@ -1,22 +1,19 @@
 import { RouteOptions } from 'fastify'
 
-import { findUserByEmail } from '@services/user/repository'
 import { verifyPassword } from '@services/auth/crypto'
 import { signForUser } from '@services/auth/jwt'
 import { UnauthorizedException } from '@exceptions/unauthorized.exception'
-import { UserNotVerifiedException } from '@exceptions/user-not-verified.exception'
-import {
-  getUserHasTwoFactor,
-  validateOtpToken
-} from '../../../services/auth/two-factor'
 import { z } from 'zod'
+import { findUserByLogin } from '../../../services/users/repository'
+import { rethrowExceptionAsync } from '../../../helpers/rethrow-exception'
+import { findEmployeeById } from '../../../services/employees/repository'
+import { ForbiddenException } from '../../../exceptions/forbidden.exception'
 
 const BodySchema = z
   .object({
-    email: z.string().email(),
+    login: z.string(),
     password: z.string().min(8),
-    otp: z.string().optional(),
-    admin: z.boolean().optional()
+    as: z.union([z.literal('manager'), z.literal('cashier')])
   })
   .strict()
 
@@ -31,34 +28,25 @@ export const options: RouteOptions = {
   handler: async (request) => {
     const body = request.body as Body
 
-    const email = body.email.toLowerCase()
-    const user = await findUserByEmail(email)
-
-    if (!user) {
-      throw new UnauthorizedException()
-    }
+    const login = body.login
+    const user = await rethrowExceptionAsync(
+      async () => await findUserByLogin(login),
+      new UnauthorizedException()
+    )
 
     const verificationResult = await verifyPassword(
       body.password,
-      user.password
+      user.passwordHash
     )
 
     if (!verificationResult) {
       throw new UnauthorizedException()
     }
 
-    if (!user.isVerified) {
-      throw new UserNotVerifiedException()
-    }
+    const employee = await findEmployeeById(user.employeeId)
 
-    if (await getUserHasTwoFactor(user)) {
-      if (!body.otp || !(await validateOtpToken(user, body.otp, true))) {
-        throw new UnauthorizedException()
-      }
-    }
-
-    if (body.admin && !user.isAdmin) {
-      throw new UnauthorizedException()
+    if (employee.role !== body.as) {
+      throw new ForbiddenException()
     }
 
     const jwt = signForUser(user)

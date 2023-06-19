@@ -1,5 +1,14 @@
+import { Employee } from './employee.model'
+
 export interface User {
-  id: number
+  employeeId: string
   login: string
-  password: string
+  passwordHash: string
+}
+
+export type AuthUser = Pick<User, 'employeeId' | 'login'> &
+  Pick<Employee, 'role'>
+export type PublicUser = Omit<User, 'passwordHash'>
+export type FullUser = PublicUser & {
+  employee: Employee
 }

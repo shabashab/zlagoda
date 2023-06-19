@@ -1,9 +1,10 @@
 import * as jwt from 'jsonwebtoken'
 import { JWT_SECRET } from '../../config'
-import { getUserWithProfile } from '../user/repository'
+import { findAuthUserById } from '../users/repository'
+import { AuthUser, User } from '../../models/user.model'
 
 export interface JwtPayload {
-  sub: number
+  sub: string
 }
 
 export class JwtError extends Error {
@@ -14,7 +15,7 @@ export class JwtError extends Error {
 
 const createJwtPayload = (user: User): JwtPayload => {
   return {
-    sub: user.id
+    sub: user.employeeId
   }
 }
 
@@ -32,17 +33,17 @@ const extractPayload = (token: string): JwtPayload => {
     }
 
     return {
-      sub: +result.sub
+      sub: result.sub
     }
   } catch (e) {
     throw new JwtError()
   }
 }
 
-export const verifyAndResolveUser = async (
+export const verifyAndResolveAuthUser = async (
   token: string
-): Promise<User | null> => {
+): Promise<AuthUser> => {
   const payload = extractPayload(token)
 
-  return await getUserWithProfile(payload.sub)
+  return await findAuthUserById(payload.sub)
 }
