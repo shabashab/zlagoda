@@ -7,6 +7,11 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    CabinetAdminCategoriesEditDialog: typeof import('./components/cabinet/admin/categories/edit-dialog.vue')['default']
+    CabinetAdminCategoriesForm: typeof import('./components/cabinet/admin/categories/form.vue')['default']
+    CabinetAdminCategoriesNewDialog: typeof import('./components/cabinet/admin/categories/new-dialog.vue')['default']
+    CabinetAdminCategoriesTable: typeof import('./components/cabinet/admin/categories/table.vue')['default']
+    CabinetAdminCategoryTable: typeof import('./components/cabinet/admin/category/table.vue')['default']
     CabinetAdminCustomersTable: typeof import('./components/cabinet/admin/customers/table.vue')['default']
     CabinetAdminEmployeesEditDialog: typeof import('./components/cabinet/admin/employees/edit-dialog.vue')['default']
     CabinetAdminEmployeesEmployeesTable: typeof import('./components/cabinet/admin/employees/employees-table.vue')['default']
@@ -25,6 +30,7 @@ declare module '@vue/runtime-core' {
     CabinetCashierCustomersTable: typeof import('./components/cabinet/cashier/customers/table.vue')['default']
     CabinetCashierNavbar: typeof import('./components/cabinet-cashier-navbar.vue')['default']
     CabinetCashierProductsTable: typeof import('./components/cabinet-cashier-products-table.vue')['default']
+    CabinetCategoriesTable: typeof import('./components/cabinet/categories/table.vue')['default']
     CabinetChecksTable: typeof import('./components/cabinet-checks-table.vue')['default']
     CabinetCheckTableItem: typeof import('./components/cabinet-check-table-item.vue')['default']
     CabinetCustomerPropInput: typeof import('./components/cabinet-customer-prop-input.vue')['default']

@@ -11,6 +11,11 @@ const items = ref([
     label: 'Customers',
     icon: 'pi pi-id-card',
     to: '/cabinet/admin/customers'
+  },
+  {
+    label: 'Categories',
+    icon: 'pi pi-book',
+    to: '/cabinet/admin/categories'
   }
 ])
 </script>
