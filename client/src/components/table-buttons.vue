@@ -21,12 +21,17 @@ const sendDeleteRequest = async () => {
   return;
 }
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   data: any;
   itemToEdit: any;
   deleteUrl: string;
   tokenName: string;
-}>();
+  isEdit: boolean;
+  isDelete: boolean;
+}>(), {
+  isEdit: true,
+  isDelete: true,
+});
 
 const emits = defineEmits(['update:itemToEdit', 'openEditDialog', 'recordDeleted']);
 
@@ -49,11 +54,13 @@ const openEditDialog = (item: any) => {
 <template>
   <div class="flex justify-center gap-10">
     <Button
+      v-if="props.isEdit"
       icon="pi pi-pencil"
       severity="warning"
       @click="openEditDialog(props.data)"
     />
     <Button
+      v-if="props.isDelete"
       icon="pi pi-trash"
       severity="danger"
       @click="confirmDelete($event)"

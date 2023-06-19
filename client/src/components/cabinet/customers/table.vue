@@ -1,13 +1,17 @@
 <script setup lang="ts">
-import { CustomerCard } from '../models/customer-card.model';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import { FilterMatchMode } from 'primevue/api';
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
+import { CustomerCard } from '../../../models/customer-card.model';
 
-import CabinetCashierCustomerForm from './cabinet-cashier-customer-form.vue';
+const props = withDefaults(defineProps<{
+  isAdmin: boolean
+}>(), {
+  isAdmin: false
+})
 
 const customers = ref<CustomerCard[]>([]);
 
@@ -147,10 +151,13 @@ onMounted(async () => {
     </Column>
     <Column>
       <template #body="{ data }">
-        <Button
-          severity="warning"
-          icon="pi pi-pencil"
-          @click="openEditCustomerDialog(data)"
+        <TableButtons
+          :data="data"
+          token-name="cardNumber"
+          :item-to-edit="customerToEdit"
+          :is-delete="props.isAdmin"
+          delete-url=""
+          @open-edit-dialog="openEditCustomerDialog(data)"
         />
       </template>
     </Column>

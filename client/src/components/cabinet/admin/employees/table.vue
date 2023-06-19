@@ -6,23 +6,27 @@ import { Employee } from '../../../../models/employee.model';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
 
-const employees = ref<Employee[]>();
+const employees = ref<Employee[]>([]);
 
 const fetchEmployees = async () => {
-  employees.value = [{
-    id: 'i1289s8ad',
-    name: 'Artem',
-    surname: 'Tarasenko',
-    role: 'cashier',
-    dateOfBirth: new Date(2004, 8, 20),
-    dateOfStart: new Date(2022, 5, 13),
-    city: 'Brovari',
-    street: 'Govna',
-    salary: 300,
-    zipCode: '02059',
-    phoneNumber: '0976373938',
-    imgUrl: 'https://edukoht.com.ua/assets/tarasenko_artem.482eb11d.webp'
-  }]
+  for (let i = 0; i < 50; i++) {
+    employees.value.push({
+      id: 'i1289s8ad',
+      name: 'Artem',
+      surname: 'Tarasenko',
+      patronymic: 'test',
+      role: 'cashier',
+      dateOfBirth: new Date(2004, 8, 20),
+      dateOfStart: new Date(2022, 5, 13),
+      city: 'Brovari',
+      street: 'Govna',
+      salary: 300,
+      zipCode: '02059',
+      phoneNumber: '0976373938',
+      imgUrl: 'https://edukoht.com.ua/assets/tarasenko_artem.482eb11d.webp'
+
+    })
+  }
 }
 
 onMounted(async () => {
@@ -42,9 +46,13 @@ const openEditDialog = (employee: Employee) => {
 
 </script>
 <template>
-  <DataTable :value="employees">
+  <DataTable
+    :value="employees"
+    paginator
+    :rows="8"
+  >
     <template #header>
-      <div class="flex justify-between">
+      <div class="flex justify-between items-center">
         <h1 class="text-xl">
           Employees
         </h1>
@@ -78,8 +86,8 @@ const openEditDialog = (employee: Employee) => {
       field="surname"
     />
     <Column
-      header="Patronimic"
-      field="patronimic"
+      header="Patronymic"
+      field="patronymic"
     />
     <Column
       header="Role"
@@ -108,6 +116,7 @@ const openEditDialog = (employee: Employee) => {
           v-model:model-value="data.dateOfBirth"
           disabled
           style="width: 120px;"
+          date-format="dd/mm/yy"
         />
       </template>
     </Column>
@@ -120,12 +129,13 @@ const openEditDialog = (employee: Employee) => {
           v-model:model-value="data.dateOfStart"
           disabled
           style="width: 120px;"
+          date-format="dd/mm/yy"
         />
       </template>
     </Column>
     <Column>
       <template #body="{ data }">
-        <CabinetAdminTableButtons
+        <TableButtons
           v-model:item-to-edit="employeeToEdit"
           :data="data"
           delete-url="hz"

@@ -43,7 +43,8 @@ const fetchChecks = async (cashireId: string) => {
             name: 'Напій газ.',
             price: 100,
             manufacture: 'Scotty west',
-            characteristics: 'Імбир малина'
+            characteristics: 'Імбир малина',
+            isPromo: false
           },
           number: 2
         },
@@ -53,7 +54,8 @@ const fetchChecks = async (cashireId: string) => {
             name: 'Соус гамбургер',
             price: 200,
             manufacture: 'Develey',
-            characteristics: '410г'
+            characteristics: '410г',
+            isPromo: false
           },
           number: 3
         }
@@ -85,7 +87,8 @@ const fetchCheck = async () : Promise<Check> => {
           name: 'Напій газ.',
           price: 100,
           manufacture: 'Scotty west',
-          characteristics: 'Імбир малина2'
+          characteristics: 'Імбир малина2',
+          isPromo: false
         },
         number: 2
       },
@@ -95,7 +98,8 @@ const fetchCheck = async () : Promise<Check> => {
           name: 'Соус гамбургер2',
           price: 200,
           manufacture: 'Develey',
-          characteristics: '410г'
+          characteristics: '410г',
+          isPromo: false
         },
         number: 3
       }
