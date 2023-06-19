@@ -19,15 +19,12 @@ export const requireAuth =
       try {
         const user = await verifyAndResolveAuthUser(jwt)
 
-        globalThis.logger.info(user)
-
         if (role && user.role !== role) {
           throw new UnauthorizedException()
         }
 
         request.user = user
       } catch (e) {
-        globalThis.logger.info(e)
         throw new UnauthorizedException()
       }
     }

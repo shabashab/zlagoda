@@ -3,5 +3,10 @@ import { createPluginFromConfiguration } from '../../../helpers/createPluginFrom
 export const prefix = '/employees'
 
 export const plugin = createPluginFromConfiguration({
-  routes: [import('./get'), import('./id.get'), import('./post')]
+  routes: [
+    import('./get'),
+    import('./id.get'),
+    import('./id.patch'),
+    import('./post')
+  ]
 })
