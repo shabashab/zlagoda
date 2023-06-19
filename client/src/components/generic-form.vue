@@ -45,5 +45,6 @@ const itemValue = computed({
         :label="itemKey.label"
       />
     </div>
+    <slot />
   </div>
 </template>

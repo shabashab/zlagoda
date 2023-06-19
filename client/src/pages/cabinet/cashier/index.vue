@@ -18,7 +18,21 @@ const check = ref<Check>({
   items: [],
   printDate: new Date(),
   sumTotatal: 0,
-  VAT: 0
+  VAT: 0,
+  cashier: {
+    id: 'i1289s8ad',
+    name: 'Artem',
+    surname: 'Tarasenko',
+    role: 'cashier',
+    dateOfBirth: new Date(2004,8,20),
+    dateOfStart: new Date(2022,5,13),
+    city: 'Brovari',
+    street: 'Govna',
+    salary: 300,
+    zipCode: '02059',
+    phoneNumber: '0976373938',
+    imgUrl: 'https://edukoht.com.ua/assets/tarasenko_artem.482eb11d.webp'
+  }
 });
 
 const fetchProduct = async (productUpc: string): Promise<Product> => {

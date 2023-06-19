@@ -21,6 +21,11 @@ const items = ref([
     label: 'Checks',
     icon: 'pi pi-money-bill',
     to: '/cabinet/admin/checks'
+  },
+  {
+    label: 'Products',
+    icon: 'pi pi-store',
+    to: '/cabinet/admin/products'
   }
 ])
 </script>

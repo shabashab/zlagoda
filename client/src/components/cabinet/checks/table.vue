@@ -147,7 +147,7 @@ const searchCheckById = async () => {
     v-model:filters="filters"
     :value="checks"
     paginator
-    :rows="6"
+    :rows="isAdmin ? 5 : 6"
     data-key="id"
     filter-display="row"
   >
