@@ -1,4 +1,5 @@
 import { CreateProductDto } from '../../dto/create-product.dto'
+import { FindProductsFilterDto } from '../../dto/find-products-filter.dto'
 import { FullProduct } from '../../models/product.model'
 import { StoreProduct } from '../../models/store-product.model'
 import { createProductQuery } from '../../queries/create-product.query'
@@ -57,6 +58,8 @@ export const createProduct = async (
   return await findFullProductByUpc(storeProduct.upc)
 }
 
-export const findAllFullProducts = () => findFullProductsQuery.execute()
+export const findAllFullProducts = (
+  findProductsFilter: FindProductsFilterDto
+) => findFullProductsQuery.execute(findProductsFilter)
 export const findFullProductByUpc = (upc: string) =>
   findFullProductByUpcQuery.execute(upc)
