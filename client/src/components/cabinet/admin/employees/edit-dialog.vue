@@ -20,7 +20,7 @@ const { fetch, error, } = employees.useEditEmployees();
 const submitEdit = async () => {
   await fetch(employeeToEdit.value);
   toast.add({ severity: 'warn', summary: 'Edited', detail: 'Record edited', life: 3000 })
-  // emits('submit')
+  emits('submit')
 }
 
 </script>
