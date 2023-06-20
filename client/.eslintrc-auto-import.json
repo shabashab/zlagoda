@@ -33,6 +33,7 @@
     "defineStore": true,
     "eagerComputed": true,
     "effectScope": true,
+    "employees": true,
     "extendRef": true,
     "getActivePinia": true,
     "getCurrentInstance": true,
