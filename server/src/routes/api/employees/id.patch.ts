@@ -14,7 +14,7 @@ const BodySchema = z
   .object({
     surname: z.string(),
     name: z.string(),
-    patronymic: z.string().optional(),
+    patronymic: z.string().nullable().optional(),
     role: z.union([z.literal('cashier'), z.literal('manager')]),
     salary: z.number(),
     birthDate: z.string().datetime(),
