@@ -6,3 +6,10 @@
     <RouterView />
   </div>
 </template>
+<route lang="json">
+  {
+      "meta": {
+          "role": "manager"
+      }
+  }
+  </route>

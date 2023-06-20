@@ -6,13 +6,13 @@ import { useToast } from 'primevue/usetoast';
 const toast = useToast();
 
 const employee = ref<Employee>({
-  id: '',
+  employeeId: '',
   name: '',
   surname: '',
   role: 'cashier',
   city: '',
-  dateOfBirth: new Date(),
-  dateOfStart: new Date(),
+  birthDate: new Date(),
+  startDate: new Date(),
   phoneNumber: '',
   salary: 0,
   street: '',
@@ -22,17 +22,21 @@ const employee = ref<Employee>({
 
 const emits = defineEmits(['submit']);
 
-const sendNewEmployeeRequest = async () => {
-  return
-}
+const { fetch: createEmployee, error } = employees.useCreateEmployee()
 
 const onFormSubmit = async () => {
-  await sendNewEmployeeRequest();
+  await createEmployee(employee.value);
   toast.add({ severity: 'success', summary: 'New', detail: 'Record created', life: 3000 })
   emits('submit');
 }
 </script>
 <template>
+  {{ error }}
+  <TextPropInput
+    v-model:value="employee.employeeId"
+    class="mb-5"
+    label="Id: "
+  />
   <CabinetAdminEmployeesForm v-model:employee="employee" />
   <div class="flex justify-center mt-10">
     <Button

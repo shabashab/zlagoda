@@ -1,32 +1,31 @@
 <script setup lang="ts">
-import { Employee } from '../../../../models/employee.model';
+import { FullEmployee } from '../../../../models/employee.model';
 import Button from 'primevue/button';
 import { useToast } from 'primevue/usetoast';
 
 const toast = useToast();
 
 const props = defineProps<{
-  employee: Employee
+  employee: FullEmployee
 }>();
 
 const employeeToEdit = computed(() => {
-  return { ...props.employee };
+  return props.employee;
 }) 
 
 const emits = defineEmits(['submit']);
 
-const sendEditEmployyRequestToBackEnd = async () => {
-  return;
-}
+const { fetch, error, } = employees.useEditEmployees();
 
 const submitEdit = async () => {
-  await sendEditEmployyRequestToBackEnd();
+  await fetch(employeeToEdit.value);
   toast.add({ severity: 'warn', summary: 'Edited', detail: 'Record edited', life: 3000 })
   emits('submit')
 }
 
 </script>
 <template>
+  {{ error }}
   <CabinetAdminEmployeesForm
     v-model:employee="employeeToEdit"
   />

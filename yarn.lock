@@ -2317,6 +2317,7 @@ __metadata:
     dayjs: ^1.11.7
     eslint: ^8.33.0
     eslint-plugin-vue: ^9.9.0
+    lodash: ^4.17.21
     pinia: ^2.0.30
     postcss: ^8.4.23
     primeicons: ^6.0.1

@@ -2,44 +2,19 @@
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Calendar from 'primevue/calendar';
-import { Employee } from '../../../../models/employee.model';
+import { Employee, FullEmployee } from '../../../../models/employee.model';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
-import Dropdown from 'primevue/dropdown';
 
-const employees = ref<Employee[]>([]);
-
-const fetchEmployees = async () => {
-  for (let i = 0; i < 50; i++) {
-    employees.value.push({
-      id: 'i1289s8ad',
-      name: 'Artem',
-      surname: 'Tarasenko',
-      patronymic: 'test',
-      role: 'cashier',
-      dateOfBirth: new Date(2004, 8, 20),
-      dateOfStart: new Date(2022, 5, 13),
-      city: 'Brovari',
-      street: 'Govna',
-      salary: 300,
-      zipCode: '02059',
-      phoneNumber: '0976373938',
-      imgUrl: 'https://edukoht.com.ua/assets/tarasenko_artem.482eb11d.webp'
-    })
-  }
-}
-
-onMounted(async () => {
-  await fetchEmployees();
-});
+const { fetch: fetchEmployees, result: fullEmployees, loading } = employees.useEmployees().fetchImmediate();
 
 const isEditDialogVisible = ref(false);
 
 const isNewDialogVisible = ref(false);
 
-const employeeToEdit = ref<Employee>();
+const employeeToEdit = ref<FullEmployee>();
 
-const openEditDialog = (employee: Employee) => {
+const openEditDialog = (employee: FullEmployee) => {
   employeeToEdit.value = employee;
   isEditDialogVisible.value = true;
 }
@@ -51,8 +26,9 @@ const filters = ref({
 </script>
 <template>
   <DataTable
-    :value="employees"
+    :value="fullEmployees"
     paginator
+    :loading="loading"
     :rows="8"
   >
     <template #header>
@@ -79,7 +55,7 @@ const filters = ref({
     </template>
     <Column
       header="Id"
-      field="id"
+      field="employeeId"
     />
     <Column
       header="Name"
@@ -120,11 +96,11 @@ const filters = ref({
     />
     <Column
       header="Date of birth"
-      field="dateOfBirth"
+      field="birthDate"
     >
       <template #body="{ data }">
         <Calendar
-          v-model:model-value="data.dateOfBirth"
+          v-model:model-value="data.birthDate"
           disabled
           style="width: 120px;"
           date-format="dd/mm/yy"
@@ -133,11 +109,11 @@ const filters = ref({
     </Column>
     <Column
       header="Date of start"
-      field="dateOfStart"
+      field="startDate"
     >
       <template #body="{ data }">
         <Calendar
-          v-model:model-value="data.dateOfStart"
+          v-model:model-value="data.startDate"
           disabled
           style="width: 120px;"
           date-format="dd/mm/yy"
