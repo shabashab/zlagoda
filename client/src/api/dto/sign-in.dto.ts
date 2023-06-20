@@ -1,5 +1,5 @@
 export interface SignInDto {
-  email: string
+  login: string
   password: string
-  otp?: string
+  as: 'manager' | 'cashier'
 }

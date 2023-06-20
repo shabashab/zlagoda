@@ -6,7 +6,7 @@
 <route lang="json">
 {
     "meta": {
-        "public": true
+        "public": false
     }
 }
 </route>

@@ -17,7 +17,7 @@ const roleValue = computed({
 })
 
 const roles = [
-  'admin',
+  'manager',
   'cashier'
 ]
 

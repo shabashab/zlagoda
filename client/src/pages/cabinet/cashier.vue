@@ -8,3 +8,10 @@
     </div>
   </div>
 </template>
+<route lang="json">
+  {
+      "meta": {
+          "role": "cashier"
+      }
+  }
+  </route>

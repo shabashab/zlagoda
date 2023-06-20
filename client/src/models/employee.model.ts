@@ -1,15 +1,21 @@
+import { User } from './user.model'
+
 export interface Employee {
-  id: string
+  employeeId: string
   name: string
   surname: string
   patronymic?: string
-  role: 'cashier' | 'admin'
+  role: 'cashier' | 'manager'
   salary: number
-  dateOfBirth: Date
-  dateOfStart: Date
+  birthDate: Date
+  startDate: Date
   phoneNumber: string
   city: string
   street: string
   zipCode: string
   imgUrl?: string
+}
+
+export type FullEmployee = Employee & {
+  user: User | null
 }

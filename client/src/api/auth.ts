@@ -1,4 +1,4 @@
-import { User } from '../models/user.model'
+import { FullEmployee } from '../models/employee.model'
 import { SignInDto } from './dto/sign-in.dto'
 import { defineActionEndpoint, defineDataEndpoint } from './use-api'
 
@@ -12,7 +12,7 @@ const auth = {
     url: 'auth/sign-in',
     dataBuilder: (input) => input,
   }),
-  useUser: defineDataEndpoint<void, User>({
+  useUser: defineDataEndpoint<void, FullEmployee>({
     method: 'GET',
     url: 'auth',
     requireAuthentication: true,

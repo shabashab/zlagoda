@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="w-full h-screen grid place-items-center bg-slate-100">
+  <div class="w-full h-screen grid place-items-center ">
     <RouterView />
   </div>
 </template>

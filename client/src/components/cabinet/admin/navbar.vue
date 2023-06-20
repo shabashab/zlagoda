@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import Menubar from 'primevue/menubar';
+import Button from 'primevue/button';
+
+const authStore = useAuthStore();
 
 const items = ref([
   {
@@ -33,5 +36,13 @@ const items = ref([
   <Menubar
     :model="items"
     style="margin-top: 10px;"
-  />
+  >
+    <template #end>
+      <Button
+        label="Logout"
+        severity="danger"
+        @click="authStore.signOut()"
+      />
+    </template>
+  </Menubar>
 </template>
