@@ -6,6 +6,7 @@ import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import { CustomerCard } from '../../../models/customer-card.model';
+import { customers } from '../../../api/customers';
 
 const props = withDefaults(defineProps<{
   isAdmin: boolean
@@ -13,44 +14,17 @@ const props = withDefaults(defineProps<{
   isAdmin: false
 })
 
-const customers = ref<CustomerCard[]>([]);
 
 const filters = ref({
   cardNumber: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
   surname: { value: null, matchMode: FilterMatchMode.STARTS_WITH }
 });
 
-const fetchCustomers = async () => {
-  for (let i = 0; i < 100; i++) {
-
-    customers.value.push({
-      cardNumber: (Math.random() * 1000000).toFixed(0),
-      name: 'Danylo',
-      surname: 'Khomichenko',
-      patronimic: 'Why not????',
-      phoneNumber: '0976373938',
-      city: 'Govno',
-      street: 'SAjd',
-      zipCode: '122',
-      persent: 2
-    })
-  }
-}
+const { fetch: fetchCustomers, result: customersValue, loading } = customers.useCustomers().fetchImmediate();
 
 const customerToEdit = ref<CustomerCard>();
 const isCustomerEditDialogVisible = ref<boolean>(false);
 
-const newCustomer = ref<CustomerCard>({
-  cardNumber: '',
-  name: '',
-  surname: '',
-  patronimic: '',
-  phoneNumber: '',
-  city: '',
-  street: '',
-  zipCode: '',
-  persent: 0,
-})
 
 const isNewCustomer = ref<boolean>(false);
 
@@ -61,20 +35,28 @@ const openEditCustomerDialog = (customer: CustomerCard) => {
 }
 
 const openNewCustomerDialog = () => {
-  customerToEdit.value = newCustomer.value;
+  customerToEdit.value = {
+    cardNumber: '',
+    name: '',
+    surname: '',
+    patronymic: '',
+    phoneNumber: '',
+    city: '',
+    street: '',
+    zipCode: '',
+    percent: 0,
+  };
   isNewCustomer.value = true;
   isCustomerEditDialogVisible.value = true;
 }
 
-onMounted(async () => {
-  await fetchCustomers();
-})
 </script>
 <template>
   <DataTable
     v-model:filters="filters"
     filter-display="row"
-    :value="customers"
+    :value="customersValue"
+    :loading="loading"
     paginator
     :rows="7"
   >
@@ -153,11 +135,10 @@ onMounted(async () => {
       <template #body="{ data }">
         <TableButtons
           :data="data"
-          token-name="cardNumber"
           :item-to-edit="customerToEdit"
           :is-delete="props.isAdmin"
-          delete-url=""
           @open-edit-dialog="openEditCustomerDialog(data)"
+          @delete="123"
         />
       </template>
     </Column>

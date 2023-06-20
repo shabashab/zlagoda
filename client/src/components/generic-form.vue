@@ -36,6 +36,7 @@ const itemValue = computed({
       />
       <DatePropInput
         v-else-if="itemKey.type === 'Date'"
+        :key="itemValue[itemKey.key]"
         v-model:value="itemValue[itemKey.key]"
         :label="itemKey.label"
       />
