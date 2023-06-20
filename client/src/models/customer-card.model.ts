@@ -2,10 +2,10 @@ export interface CustomerCard {
   cardNumber: string
   surname: string
   name: string
-  patronimic?: string
+  patronymic?: string
   phoneNumber: string
   city?: string
   street?: string
   zipCode?: string
-  persent: number
+  percent: number
 }

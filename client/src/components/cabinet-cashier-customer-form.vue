@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import Button from 'primevue/button';
 import CabinetCustomerPropInput from './cabinet-customer-prop-input.vue';
+import { useToast } from 'primevue/usetoast';
 
 import { CustomerCard } from '../models/customer-card.model';
+import { customers } from '../api/customers';
 
 const props = defineProps<{
   customer: CustomerCard;
@@ -20,21 +22,27 @@ const customerCard = computed({
   }
 });
 
-const sendCustomerEditRequestToBackend = async () => {
-  return
-}
+const toast = useToast();
 
-const sendNewCustomerRequestToBackend = async () => {
-  return
-}
+const { fetch: editCustomer, error: editCustomerError } = customers.useEditCustomer();
+
+const { fetch: createCustomer, error: createCustomerError } = customers.useCreateCustomer();
+
 
 const onEditFormSubmit = async () => {
-  await sendCustomerEditRequestToBackend();
+  await editCustomer(customerCard.value).catch((editCustomerError) => {
+    toast.add({ severity: 'error', summary: 'Errror', detail: editCustomerError, life: 3000 })
+    return;
+  });
+  toast.add({ severity: 'success', summary: 'Edited', life: 3000 });
   emits('close');
 }
 
 const onNewCustomerFormSubmit = async () => {
-  await sendCustomerEditRequestToBackend();
+  await createCustomer(customerCard.value).catch((createCustomerError) => {
+    toast.add({ severity: 'error', summary: 'Errror', detail: createCustomerError, life: 3000 })
+  });
+  toast.add({ severity: 'success', summary: 'Created', life: 3000 });
   emits('close');
 }
 
