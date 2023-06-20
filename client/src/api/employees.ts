@@ -1,5 +1,6 @@
-import _ from 'lodash'
+import _, { omit } from 'lodash'
 import { Employee, FullEmployee } from '../models/employee.model'
+import { User } from '../models/user.model'
 
 export const employees = {
   useEmployees: defineDataEndpoint<void, FullEmployee[]>({
@@ -55,6 +56,16 @@ export const employees = {
         birthDate: inputData.birthDate.toISOString(),
         startDate: inputData.startDate.toISOString(),
       }
+    },
+  }),
+  useNewUser: defineActionEndpoint<User, User>({
+    method: 'POST',
+    url: (input) => {
+      return `/employees/${input.employeeId}/user`
+    },
+    requireAuthentication: true,
+    dataBuilder(inputData) {
+      return omit(inputData, ['employeeId'])
     },
   }),
 }

@@ -16,6 +16,7 @@ declare module '@vue/runtime-core' {
     CabinetAdminEmployeesEditDialog: typeof import('./components/cabinet/admin/employees/edit-dialog.vue')['default']
     CabinetAdminEmployeesForm: typeof import('./components/cabinet/admin/employees/form.vue')['default']
     CabinetAdminEmployeesNewDialog: typeof import('./components/cabinet/admin/employees/new-dialog.vue')['default']
+    CabinetAdminEmployeesNewUserDialog: typeof import('./components/cabinet/admin/employees/new-user-dialog.vue')['default']
     CabinetAdminEmployeesTable: typeof import('./components/cabinet/admin/employees/table.vue')['default']
     CabinetAdminNavbar: typeof import('./components/cabinet/admin/navbar.vue')['default']
     CabinetAdminProductsEditDialog: typeof import('./components/cabinet/admin/products/edit-dialog.vue')['default']

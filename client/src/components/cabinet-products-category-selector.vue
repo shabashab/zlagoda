@@ -12,17 +12,9 @@ const categories = ref<Category[]>([]);
 const fetchAllCategories = async () => {
   categories.value = [
     {
-      categoryNumber: 12312,
+      id: 12312,
       name: 'Test'
-    },
-    {
-      categoryNumber: 12312,
-      name: 'Test2'
-    },
-    {
-      categoryNumber: 12312,
-      name: 'Test3'
-    },
+    }
   ]
 }
 

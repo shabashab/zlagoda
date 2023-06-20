@@ -19,7 +19,6 @@ const onFormSubmit = async () => {
   await createCategory(category.value);
   toast.add({ severity: 'success', summary: 'New', detail: 'Record created', life: 3000 })
   emits('submit');
-  
 }
 
 </script>
