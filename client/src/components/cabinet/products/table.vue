@@ -20,8 +20,10 @@ const filters = ref({
 const props = withDefaults(defineProps<{
   selectedCategory: Category | undefined
   isAdmin: boolean
+  isReport: boolean
 }>(), {
-  isAdmin: false
+  isAdmin: false,
+  isReport: true
 });
 
 
@@ -50,7 +52,7 @@ const openEditDialog = (product: Product) => {
   <DataTable
     v-model:filters="filters"
     :value="productsValue"
-    paginator
+    :paginator="!props.isReport"
     filter-display="row"
     :rows="isAdmin ? 6 : 10"
   >

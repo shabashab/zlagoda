@@ -17,8 +17,14 @@ const props = withDefaults(defineProps<{
   cashireId: string,
   datesRange: Date[],
   isAdmin: boolean,
+  isReport: boolean
 }>(), {
-  isAdmin: false
+  isAdmin: false,
+  isReport: false,
+  cashireId: '',
+  datesRange: () => {
+    return [new Date(0,0,1900), new Date()]
+  }
 });
 
 const checks = ref<Check[]>([]);
@@ -146,7 +152,7 @@ const searchCheckById = async () => {
   <DataTable
     v-model:filters="filters"
     :value="checks"
-    paginator
+    :paginator="!props.isReport"
     :rows="isAdmin ? 5 : 6"
     data-key="id"
     filter-display="row"
@@ -156,7 +162,7 @@ const searchCheckById = async () => {
         <h2 class="text-xl text-black">
           Checks
         </h2>
-        <div class="flex gap-5">
+        <div v-if="!props.isReport" class="flex gap-5">
           <InputText
             v-model="idSearchInput"
             style="width: 250px !important;"
