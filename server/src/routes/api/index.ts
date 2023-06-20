@@ -7,6 +7,7 @@ export const plugin = createPluginFromConfiguration({
     import('./auth'),
     import('./employees'),
     import('./customers'),
-    import('./categories')
+    import('./categories'),
+    import('./products')
   ]
 })
