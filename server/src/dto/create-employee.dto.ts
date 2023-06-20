@@ -2,7 +2,7 @@ export interface CreateEmployeeDto {
   employeeId: string
   surname: string
   name: string
-  patronymic?: string
+  patronymic?: string | null
   role: 'cashier' | 'manager'
   salary: number
   birthDate: Date

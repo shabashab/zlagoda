@@ -3,5 +3,10 @@ import { createPluginFromConfiguration } from '@helpers/createPluginFromConfigur
 export const prefix = '/api'
 
 export const plugin = createPluginFromConfiguration({
-  plugins: [import('./auth'), import('./employees'), import('./customers')]
+  plugins: [
+    import('./auth'),
+    import('./employees'),
+    import('./customers'),
+    import('./categories')
+  ]
 })
