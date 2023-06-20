@@ -2,7 +2,7 @@
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Calendar from 'primevue/calendar';
-import { Employee } from '../../../../models/employee.model';
+import { Employee, FullEmployee } from '../../../../models/employee.model';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
 
@@ -12,9 +12,9 @@ const isEditDialogVisible = ref(false);
 
 const isNewDialogVisible = ref(false);
 
-const employeeToEdit = ref<Employee>();
+const employeeToEdit = ref<FullEmployee>();
 
-const openEditDialog = (employee: Employee) => {
+const openEditDialog = (employee: FullEmployee) => {
   employeeToEdit.value = employee;
   isEditDialogVisible.value = true;
 }
