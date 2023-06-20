@@ -19,11 +19,6 @@ const categoryValue = computed({
 
 const data = ref<FormItem[]>([
   {
-    key: 'categoryNumber',
-    label: 'Number',
-    type: 'number'
-  },
-  {
     label: 'Name',
     key: 'name',
     type: 'string'

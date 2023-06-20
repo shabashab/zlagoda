@@ -2,6 +2,7 @@
 import { Category } from '../../../../models/category.model';
 import Button from 'primevue/button';
 import { useToast } from 'primevue/usetoast';
+import { categories } from '../../../../api/categories';
 
 const toast = useToast();
 
@@ -15,12 +16,11 @@ const categoryValue = computed(() => {
   return props.category;
 });
 
-const sendEditCategoryRequest = async () => {
-  return
-}
+const { fetch: editCateogory } = categories.useEditCategory();
+
 
 const onFormSubmit = async () => {
-  await sendEditCategoryRequest();
+  await editCateogory(categoryValue.value);
   toast.add({ severity: 'warn', summary: 'Edit', detail: 'Record edited', life: 3000 });
   emits('submit');
 }
