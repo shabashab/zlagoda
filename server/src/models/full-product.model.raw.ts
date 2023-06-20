@@ -5,4 +5,5 @@ export interface FullProductRaw extends ProductRaw {
   products_number: string
   selling_price: string
   promo_price?: string
+  category_name: string
 }

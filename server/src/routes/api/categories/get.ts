@@ -5,7 +5,7 @@ import { findAllCategories } from '../../../services/categories/repository'
 export const options: RouteOptions = {
   url: '/',
   method: 'GET',
-  preHandler: [requireAuth('manager')],
+  preHandler: [requireAuth()],
   handler: async (req) => {
     return await findAllCategories()
   }

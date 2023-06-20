@@ -12,4 +12,5 @@ export const fullProductTransformer: Transformer<FullProductRaw, FullProduct> =
     .mapTransformed('promo_price', 'promoPrice', (value) =>
       value ? parseFloat(value) : null
     )
+    .map('category_name', 'categoryName')
     .set('isPromo', (_input, prevValue) => !!prevValue.promoPrice)

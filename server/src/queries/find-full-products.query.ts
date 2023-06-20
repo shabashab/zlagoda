@@ -15,6 +15,7 @@ export const findFullProductsQuery = defineQuery<
       SELECT 
         p.id_product,
         p.category_number,
+        c.category_name,
         p.product_name,
         p.characteristics,
         sp."UPC",
@@ -23,6 +24,7 @@ export const findFullProductsQuery = defineQuery<
         sp_promo.selling_price as promo_price
       FROM "Product" p 
         JOIN "Store_Product" sp ON p."id_product" = sp."id_product"
+        JOIN "Category" c ON p."category_number" = c."category_number"
         LEFT JOIN "Store_Product" sp_promo ON sp."UPC_prom" = sp_promo."UPC"
     `
 

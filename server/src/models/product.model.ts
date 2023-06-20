@@ -13,4 +13,5 @@ export interface FullProduct extends Product {
   price: number
   promoPrice?: Nullish<number>
   isPromo: boolean
+  categoryName: string
 }
