@@ -17,9 +17,14 @@ const sendEditProductRequest = async () => {
 }
 
 const onFormSubmit = async () => {
-  await sendEditProductRequest();
-  toast.add({ severity: 'warn', summary: 'Edited', detail: 'Record edited', life: 3000 })
-  emits('submit')
+  try{
+    await sendEditProductRequest();
+    toast.add({ severity: 'warn', summary: 'Edited', detail: 'Record edited', life: 3000 })
+    emits('submit')
+  }catch(error) {
+    toast.add({ severity: 'error', summary: 'Error', detail: error, life: 3000 });
+  }
+
 }
 
 </script>

@@ -45,4 +45,16 @@ export const employees = {
       }
     },
   }),
+  useDeleteEmployee: defineActionEndpoint<Employee, FullEmployee>({
+    method: 'DELETE',
+    url: '/employees',
+    requireAuthentication: true,
+    dataBuilder(inputData) {
+      return {
+        ...inputData,
+        birthDate: inputData.birthDate.toISOString(),
+        startDate: inputData.startDate.toISOString(),
+      }
+    },
+  }),
 }

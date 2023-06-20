@@ -10,22 +10,17 @@ const confirmDelete = (event: any) => {
   confirm.require({
     target: event.currentTarget,
     message: 'Are you sure you want to delete?',
-    accept: async () => {
-      await sendDeleteRequest();
-      toast.add({ severity: 'info', summary: 'Deleted', detail: 'Record deleted', life: 3000 })
+    accept: () => {
+      itemToEditValue.value = props.data;
+      emits('delete');
     }
   })
 }
 
-const sendDeleteRequest = async () => {
-  return;
-}
 
 const props = withDefaults(defineProps<{
   data: any;
   itemToEdit: any;
-  deleteUrl: string;
-  tokenName: string;
   isEdit: boolean;
   isDelete: boolean;
 }>(), {
@@ -33,7 +28,7 @@ const props = withDefaults(defineProps<{
   isDelete: true,
 });
 
-const emits = defineEmits(['update:itemToEdit', 'openEditDialog', 'recordDeleted']);
+const emits = defineEmits(['update:itemToEdit', 'openEditDialog', 'delete']);
 
 const itemToEditValue = computed({
   get() {
