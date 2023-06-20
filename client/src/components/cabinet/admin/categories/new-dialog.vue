@@ -2,29 +2,28 @@
 import { Category } from '../../../../models/category.model';
 import Button from 'primevue/button';
 import { useToast } from 'primevue/usetoast';
+import { categories } from '../../../../api/categories';
 
 const toast = useToast();
 
 const category = ref<Category>({
   name: '',
-  categoryNumber: 0,
+  id: 0,
 });
 
 const emits = defineEmits(['submit']);
 
-const sendNewCategoryRequest = async () => {
-  return
-}
+const { fetch: createCategory } = categories.useCreateCategory();
 
 const onFormSubmit = async () => {
-  await sendNewCategoryRequest();
+  await createCategory(category.value);
   toast.add({ severity: 'success', summary: 'New', detail: 'Record created', life: 3000 })
   emits('submit');
-  
 }
 
 </script>
 <template>
+  {{ category }}
   <CabinetAdminCategoriesForm :category="category" />
   <div class="mt-10 flex justify-center">
     <Button

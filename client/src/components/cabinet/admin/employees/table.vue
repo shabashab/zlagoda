@@ -39,6 +39,13 @@ const filters = ref({
   role: ''
 })
 
+const isUserDialogVisible = ref(false);
+
+const openUserDialog = (employee: FullEmployee) => {
+  employeeToEdit.value = employee;
+  isUserDialogVisible.value = true;
+}
+
 </script>
 <template>
   <DataTable
@@ -138,6 +145,28 @@ const filters = ref({
     </Column>
     <Column>
       <template #body="{ data }">
+        <i
+          v-if="data.user"
+          class="pi pi-check-circle text-green-500"
+        />
+        <div
+          v-else
+          class="flex justify-start gap-5 items-center"
+        >
+          <i
+            class="pi pi-minus-circle text-red-500"
+          />
+          <Button
+            icon="pi pi-plus"
+            text
+            rounded
+            @click="openUserDialog(data)"
+          />
+        </div>
+      </template>
+    </Column>
+    <Column>
+      <template #body="{ data }">
         <TableButtons
           v-model:item-to-edit="employeeToEdit"
           :data="data"
@@ -157,6 +186,18 @@ const filters = ref({
     <CabinetAdminEmployeesEditDialog
       :employee="employeeToEdit"
       @submit="isEditDialogVisible = false; fetchEmployees()"
+    />
+  </Dialog>
+  <Dialog
+    v-if="employeeToEdit"
+    v-model:visible="isUserDialogVisible"
+    modal
+    :header="`Add user to employee ${employeeToEdit.surname} ${employeeToEdit.name}`"
+    style="width: 30vw"
+  >
+    <CabinetAdminEmployeesNewUserDialog
+      :employee="employeeToEdit"
+      @submit="isUserDialogVisible = false; fetchEmployees()"
     />
   </Dialog>
 </template>

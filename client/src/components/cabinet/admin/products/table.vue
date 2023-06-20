@@ -6,7 +6,7 @@ const selectedCategory = ref<Category>();
 </script>
 <template>
   <div class="my-5">
-    <CabinetProductsCategorySelector :category="selectedCategory" />
+    <CabinetProductsCategorySelector v-model:category="selectedCategory" />
   </div>
   <CabinetProductsTable
     :is-admin="true"

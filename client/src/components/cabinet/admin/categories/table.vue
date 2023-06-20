@@ -4,22 +4,9 @@ import Column from 'primevue/column';
 import { Category } from '../../../../models/category.model';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
+import { categories } from '../../../../api/categories';
 
-
-const categories = ref<Category[]>([]);
-
-const fetchCategories = async () => {
-  for (let i = 0; i < 10; i++){
-    categories.value.push({
-      categoryNumber: 12,
-      name: 'Govno',
-    })
-  }
-}
-
-onMounted(async () => {
-  await fetchCategories();
-})
+const { fetch: fetchCategories, result: categoriesValue, loading } = categories.useCategories().fetchImmediate();
 
 const isNewCategoryDialogVisible = ref(false);
 
@@ -30,7 +17,8 @@ const isEditCategoryDiaglogVisible = ref(false);
 </script>
 <template>
   <DataTable
-    :value="categories"
+    :value="categoriesValue"
+    :loading="loading"
     paginator
     :rows="7"
   >
@@ -58,7 +46,7 @@ const isEditCategoryDiaglogVisible = ref(false);
     <Column
       sortable
       header="Number"
-      field="categoryNumber"
+      field="id"
     />
     <Column
       sortable
@@ -70,9 +58,8 @@ const isEditCategoryDiaglogVisible = ref(false);
         <TableButtons
           v-model:item-to-edit="categoryToEdit"
           :data="data"
-          delete-url=""
-          token-name="categoryNumber"
           @open-edit-dialog="isEditCategoryDiaglogVisible = true"
+          @delete="12"
         />
       </template>
     </Column>

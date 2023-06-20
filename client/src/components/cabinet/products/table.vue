@@ -45,6 +45,7 @@ const fetchProducts = async () => {
 }
 
 watch(() => props.selectedCategory, async () => {
+  console.log(1);
   await fetchProducts();
 }, {
   deep: true,

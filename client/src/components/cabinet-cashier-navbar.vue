@@ -2,6 +2,8 @@
 import Button from 'primevue/button';
 import { NavButton } from '../models/nav-button.model';
 
+const authStore = useAuthStore();
+
 const router = useRouter();
 
 const buttons = ref<NavButton[]>([
@@ -30,11 +32,6 @@ const buttons = ref<NavButton[]>([
     label: 'Personal cabinet',
     icon: 'pi pi-user',
   },
-  {
-    to: 'test',
-    label: 'Log out',
-    severity: 'danger'
-  },
 ])
 </script>
 <template>
@@ -47,6 +44,11 @@ const buttons = ref<NavButton[]>([
       :label="button.label"
       :icon="button.icon"
       @click="router.push(button.to)"
+    />
+    <Button
+      severity="danger"
+      label="Log out"
+      @click="authStore.signOut()"
     />
   </div>
 </template>
