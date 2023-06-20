@@ -1,11 +1,17 @@
 import { RouteOptions } from 'fastify'
-import { z } from 'zod'
 import { requireAuth } from '@hooks/require-auth.pre-handler'
-import { createCategory } from '@services/categories/repository'
+import { z } from 'zod'
+import { createProduct } from '@services/products/repository'
 
 const BodySchema = z
   .object({
-    name: z.string().max(50)
+    upc: z.string().min(12).max(13),
+    categoryId: z.number(),
+    number: z.number(),
+    price: z.number(),
+    isPromo: z.boolean().optional(),
+    name: z.string(),
+    characteristics: z.string()
   })
   .strict()
 
@@ -20,6 +26,6 @@ export const options: RouteOptions = {
   },
   handler: async (req) => {
     const body = req.body as Body
-    return await createCategory(body)
+    return await createProduct(body)
   }
 }
