@@ -10,11 +10,9 @@ export const updateCategoryQuery = defineQuery<
   CategoryRaw
 >({
   query: `
-    UPDATE "Category" SET (
-      "category_name"
-    ) = (
-      $2
-    ) WHERE "category_number" = $1 
+    UPDATE "Category" SET 
+      "category_name" = $2
+    WHERE "category_number" = $1 
     RETURNING *
   `,
   values: (input) => [input[0], input[1].name],
