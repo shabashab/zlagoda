@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { customers } from '../api/customers';
 import { CustomerCard } from '../models/customer-card.model';
 import UpcInput from './upc-input.vue';
 
@@ -18,18 +19,11 @@ const customer = computed({
 
 const customerUpc = ref<string>('');
 
-const fetchCustomerCard = async () : Promise<CustomerCard> => {
-  return {
-    cardNumber: customerUpc.value,
-    name: 'Danylo',
-    surname: 'Khomichenko',
-    phoneNumber: '0976373938',
-    persent: 2
-  }
-}
+
+const { fetch: fetchCustomerCard } = customers.useCustomer();
 
 const submitCustomerUpc = async () => {
-  customer.value = await fetchCustomerCard();
+  customer.value = await fetchCustomerCard(customerUpc.value);
   emits('close');
 }
 </script>

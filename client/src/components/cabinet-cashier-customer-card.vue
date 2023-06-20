@@ -29,7 +29,7 @@ const isEditCustomerCardDiaglogVisible = ref<boolean>(false);
     </span>
     <span>
       <i class="pi pi-percentage" />
-      {{ customerCard.persent }}
+      {{ customerCard.percent }}
     </span>
     <Button
       icon="pi pi-pencil"

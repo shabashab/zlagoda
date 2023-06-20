@@ -2,6 +2,8 @@
 import { ProductInStore } from '../../../../models/product-in-store.model';
 import Button from 'primevue/button';
 import { useToast } from 'primevue/usetoast';
+import { Product } from '../../../../models/product.model';
+import { products } from '../../../../api/products';
 
 
 const emits = defineEmits(['submit']);
@@ -9,16 +11,14 @@ const emits = defineEmits(['submit']);
 const toast = useToast();
 
 const props = defineProps<{
-  product: ProductInStore
+  product: Product
 }>();
 
-const sendEditProductRequest = async () => {
-  return
-}
+const { fetch: editProduct } = products.useEditProduct();
 
 const onFormSubmit = async () => {
   try{
-    await sendEditProductRequest();
+    await editProduct(props.product);
     toast.add({ severity: 'warn', summary: 'Edited', detail: 'Record edited', life: 3000 })
     emits('submit')
   }catch(error) {

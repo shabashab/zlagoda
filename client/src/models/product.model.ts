@@ -6,4 +6,6 @@ export interface Product {
   promoPrice?: number
   characteristics?: string
   isPromo: boolean
+  number: number
+  categoryId: number
 }

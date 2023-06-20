@@ -4,9 +4,12 @@ import { Category } from '../models/category.model';
 
 import Dropdown from 'primevue/dropdown';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   category: Category | undefined
-}>();
+  showClear: boolean
+}>(), {
+  showClear: true
+});
 
 const { result: categoriesValue } = categories.useCategories().fetchImmediate();
 
@@ -30,6 +33,6 @@ const categoryValue = computed({
     option-label="name"
     placeholder="Select category"
     style="width: 200px"
-    show-clear 
+    :show-clear="props.showClear"
   />
 </template>

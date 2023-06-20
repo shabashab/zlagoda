@@ -6,6 +6,7 @@ import { useConfirm } from 'primevue/useconfirm';
 import { useToast } from 'primevue/usetoast';
 import { Check } from '../../../models/check.model';
 import { Product } from '../../../models/product.model';
+import { products } from '../../../api/products';
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -35,20 +36,7 @@ const check = ref<Check>({
   }
 });
 
-const fetchProduct = async (productUpc: string): Promise<Product> => {
-  const price = (Math.random() * 1000).toFixed(2) as unknown as number
-  const promoPrice = (Math.random().toFixed(0) as unknown as number) % 2 === 0 ? (price * Math.random()).toFixed(2) as unknown as number : undefined 
-    
-  return {
-    name: 'Test',
-    price: price,
-    upc: productUpc,
-    characteristics: 'hui',
-    manufacture: 'test',
-    promoPrice: promoPrice,
-    isPromo: promoPrice ? true : false 
-  }
-}
+const { fetch: fetchProduct } = products.useProduct();
 
 const addProductToCheck = (product: Product) => {
   const findedItemRef = check.value.items.find(item => {

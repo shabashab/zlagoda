@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Category } from '../../../../models/category.model';
 import { FormItem } from '../../../../models/form-item.model';
 import { ProductInStore } from '../../../../models/product-in-store.model';
 import { Product } from '../../../../models/product.model';
@@ -7,7 +8,7 @@ import Checkbox from 'primevue/checkbox';
 
 
 const props = defineProps<{
-  product: ProductInStore;
+  product: Product;
 }>();
 
 const emits = defineEmits(['update:product']);
@@ -33,11 +34,6 @@ const data = ref<FormItem[]>([
     type: 'string'
   },
   {
-    label: 'Manufacture',
-    key: 'manufacture',
-    type: 'string',
-  },
-  {
     label: 'Characteristics',
     key: 'characteristics',
     type: 'string',
@@ -49,12 +45,17 @@ const data = ref<FormItem[]>([
   }
 ]);
 
+const selectedCategory = ref<Category>();
+
+watch(() => selectedCategory.value, () => {
+  productValue.value.categoryId = selectedCategory.value!.id;
+}, {})
 
 </script>
 <template>
   <GenericForm
     :data="data"
-    :item="props.product.product"
+    :item="props.product"
   >
     <NumberPropInput
       v-model:value="productValue.number"
@@ -67,15 +68,14 @@ const data = ref<FormItem[]>([
         </label>
         <Checkbox
           id="isPromo"
-          v-model="productValue.product.isPromo"
+          v-model="productValue.isPromo"
           :binary="true"
         />
       </div>
     </div>
-    <NumberPropInput
-      v-if="productValue.product.isPromo"
-      v-model:value="productValue.product.promoPrice"
-      label="Promo price"
+    <CabinetProductsCategorySelector
+      v-model:category="selectedCategory"
+      :show-clear="false"
     />
   </GenericForm>
 </template>
