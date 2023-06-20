@@ -25,9 +25,14 @@ const emits = defineEmits(['submit']);
 const { fetch: createEmployee, error } = employees.useCreateEmployee()
 
 const onFormSubmit = async () => {
-  await createEmployee(employee.value);
-  toast.add({ severity: 'success', summary: 'New', detail: 'Record created', life: 3000 })
-  emits('submit');
+  try{
+    await createEmployee(employee.value);
+    toast.add({ severity: 'success', summary: 'New', detail: 'Record created', life: 3000 })
+    emits('submit');
+  }catch(error) {
+    toast.add({ severity: 'error', summary: 'Error', detail: error, life: 3000 });
+  }
+
 }
 </script>
 <template>

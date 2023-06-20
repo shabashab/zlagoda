@@ -5,14 +5,30 @@ import Calendar from 'primevue/calendar';
 import { Employee, FullEmployee } from '../../../../models/employee.model';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
+import { useToast } from 'primevue/usetoast';
+
+
+const toast = useToast()
 
 const { fetch: fetchEmployees, result: fullEmployees, loading } = employees.useEmployees().fetchImmediate();
+
+const { fetch: deleteEmployee, error: deleteEmployeeError } = employees.useDeleteEmployee();
 
 const isEditDialogVisible = ref(false);
 
 const isNewDialogVisible = ref(false);
 
 const employeeToEdit = ref<FullEmployee>();
+
+const onDeleteEmployee = async (data: FullEmployee) => {
+  try {
+    await deleteEmployee(data);
+    toast.add({ severity: 'success', summary: 'Deleted', detail: 'record deleted', life: 3000 });
+  } catch (deleteEmployeeError) {
+    
+    toast.add({ severity: 'error', summary: 'Error', detail: deleteEmployeeError, life: 3000 });
+  }
+}
 
 const openEditDialog = (employee: FullEmployee) => {
   employeeToEdit.value = employee;
@@ -125,10 +141,8 @@ const filters = ref({
         <TableButtons
           v-model:item-to-edit="employeeToEdit"
           :data="data"
-          delete-url="hz"
-          token-name="id"
           @open-edit-dialog="openEditDialog(data)"
-          @record-deleted="fetchEmployees()"
+          @delete="onDeleteEmployee(data)"
         />
       </template>
     </Column>
