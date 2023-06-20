@@ -8,11 +8,11 @@ const BodySchema = z
     cardNumber: z.string(),
     name: z.string(),
     surname: z.string(),
-    patronymic: z.string().optional(),
+    patronymic: z.string().nullable().optional(),
     phoneNumber: z.string(),
-    city: z.string().optional(),
-    street: z.string().optional(),
-    zipCode: z.string().optional(),
+    city: z.string().nullable().optional(),
+    street: z.string().nullable().optional(),
+    zipCode: z.string().nullable().optional(),
     percent: z.number().min(0).max(100)
   })
   .strict()
