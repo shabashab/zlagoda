@@ -1,7 +1,7 @@
 import { RouteOptions } from 'fastify'
 import { requireAuth } from '../../../hooks/require-auth.pre-handler'
 import { z } from 'zod'
-import { deleteEmployeeQuery } from '../../../queries/delete-employee.query'
+import { deleteEmployeeById } from '../../../services/employees/repository'
 
 export const ParamsSchema = z.object({
   id: z.string()
@@ -18,6 +18,6 @@ export const options: RouteOptions = {
   },
   handler: async (req) => {
     const { id } = req.params as Params
-    return await deleteEmployeeQuery.execute(id)
+    return await deleteEmployeeById(id)
   }
 }
