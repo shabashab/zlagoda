@@ -14,6 +14,7 @@ export interface Employee {
   street: string
   zipCode: string
   imgUrl?: string
+  soldTotal?: number
 }
 
 export type FullEmployee = Employee & {
