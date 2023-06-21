@@ -12,9 +12,13 @@ const password = ref('');
 const role = ref<'cashier' | 'manager'>('cashier');
 
 const signIn = async () => {
-  await authStore.signIn({ login: login.value, password: password.value, as: role.value });
-  router.push('/cabinet');
-  toast.add({ severity: 'success', summary: 'Log in', life: 3000 })
+  try {
+    await authStore.signIn({ login: login.value, password: password.value, as: role.value });
+    router.push('/cabinet');
+    toast.add({ severity: 'success', summary: 'Log in', life: 3000 })
+  } catch(error) {
+    toast.add({ severity: 'error', summary: error, life: 3000 })
+  }
 }
 
 </script>
