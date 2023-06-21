@@ -1,3 +1,4 @@
+import { NotFoundException } from '../exceptions/not-found.exception'
 import { FullProductRaw } from '../models/full-product.model.raw'
 import { FullProduct } from '../models/product.model'
 import { fullProductTransformer } from '../transformers/full-product.transformer'
@@ -26,5 +27,11 @@ export const findFullProductByUpcQuery = defineQuery<
     WHERE sp."UPC" = $1
   `,
   values: (input) => [input],
-  transformResult: (result) => fullProductTransformer.transform(result.rows[0])
+  transformResult: (result) => {
+    if (result.rowCount < 1) {
+      throw new NotFoundException()
+    }
+
+    return fullProductTransformer.transform(result.rows[0])
+  }
 })
