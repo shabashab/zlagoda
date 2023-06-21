@@ -49,7 +49,6 @@ const openNewCustomerDialog = () => {
     street: '',
     zipCode: '',
     percent: 0,
-    totalPurchased: 0
   };
   isNewCustomer.value = true;
   isCustomerEditDialogVisible.value = true;
