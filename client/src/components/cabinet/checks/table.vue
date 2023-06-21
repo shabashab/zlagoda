@@ -46,6 +46,7 @@ const { fetch: fetchCheck } = checks.useCheck();
 watch(() => [props.datesRange, props.cashireId], () => {
   fetchChecks({ selectedDates: props.datesRange, cachierId: props.cashireId });
 }, {
+  immediate: props.isReport
 });
 
 const idSearchInput = ref<string>('');
@@ -74,7 +75,7 @@ const getSum = () => {
     :paginator="!props.isReport"
     :rows="isAdmin ? 5 : 6"
     data-key="id"
-    filter-display="row"
+    filter-display="menu"
   >
     <template #header>
       <div class="flex justify-between items-center">

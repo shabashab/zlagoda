@@ -56,7 +56,7 @@ const openEditDialog = (product: Product) => {
     v-model:filters="filters"
     :value="productsValue"
     :paginator="!props.isReport"
-    filter-display="row"
+    filter-display="menu"
     :rows="isAdmin ? 6 : 10"
   >
     <template #header>
