@@ -19,9 +19,9 @@ const upcValue = computed({
     const upcPattern = /^[0-9]+$/
     if ((upcPattern.test(value as string) && value.length <= 13) || value.length === 0) {
       emits('update:upc', value);
-      if (value.length === 13) {
-        emits('submit')
-      }
+      // if (value.length === 13) {
+      //   emits('submit')
+      // }
     }
   }
 })
