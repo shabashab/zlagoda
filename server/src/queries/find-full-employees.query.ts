@@ -1,5 +1,5 @@
-import { Employee } from '../models/employee.model'
-import { EmployeeRaw } from '../models/employee.model.raw'
+import { FullEmployee } from '../models/employee.model'
+import { FullEmployeeRaw } from '../models/full-employee.model.raw'
 import { fullEmployeeTransformer } from '../transformers/full-employee.transformer'
 import { transformQueryResult } from '../transformers/transformer'
 import { defineQuery } from './define-query'
@@ -7,12 +7,32 @@ import { FindEmployeeQueryInput } from './types/find-employee.query-input'
 
 export const findEmployeesQuery = defineQuery<
   FindEmployeeQueryInput,
-  Employee[],
-  EmployeeRaw
+  FullEmployee[],
+  FullEmployeeRaw
 >({
   query: (input) => {
-    let query = `
-      SELECT e.id_employee,
+    const queryBase = `
+    SELECT e.id_employee,
+      login,
+      empl_surname,
+      empl_name,
+      empl_patronymic,
+      empl_role,
+      salary,
+      date_of_birth,
+      date_of_start,
+      phone_number,
+      city,
+      street,
+      zip_code,
+      SUM("sum_total") as "sold_total"
+      FROM "Employee" e
+        LEFT JOIN "Check" c ON c."id_employee" = e."id_employee"
+        LEFT JOIN "User" u ON u."id_employee" = e."id_employee"
+    `
+
+    const queryGroupBy = `
+      GROUP BY e.id_employee,
         login,
         empl_surname,
         empl_name,
@@ -24,9 +44,10 @@ export const findEmployeesQuery = defineQuery<
         phone_number,
         city,
         street,
-        zip_code 
-      FROM "Employee" e LEFT JOIN "User" u ON e.id_employee = u.id_employee 
+        zip_code
     `
+
+    let queryConditions = ''
 
     if (input.role || input.surname) {
       let paramId = 1
@@ -42,10 +63,10 @@ export const findEmployeesQuery = defineQuery<
         conditions.push(`"empl_surname" = $${paramId}`)
       }
 
-      query += ` WHERE ${conditions.join(' AND ')}`
+      queryConditions += ` WHERE ${conditions.join(' AND ')}`
     }
 
-    return query
+    return queryBase + queryConditions + queryGroupBy
   },
   values: (input) => {
     const result = []
