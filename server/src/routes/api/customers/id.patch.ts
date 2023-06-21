@@ -1,7 +1,7 @@
 import { RouteOptions } from 'fastify'
 import { requireAuth } from '@hooks/require-auth.pre-handler'
 import { z } from 'zod'
-import { updateCustomerById } from '../../../services/customers/repository'
+import { updateCustomerById } from '@services/customers/repository'
 
 const ParamsSchema = z
   .object({
