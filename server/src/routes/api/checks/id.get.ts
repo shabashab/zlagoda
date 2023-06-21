@@ -1,6 +1,6 @@
 import { RouteOptions } from 'fastify'
 import { requireAuth } from '@hooks/require-auth.pre-handler'
-import { findFullCheckById } from '../../../services/checks/repository'
+import { findFullCheckById } from '@services/checks/repository'
 import { z } from 'zod'
 
 const ParamsSchema = z.object({

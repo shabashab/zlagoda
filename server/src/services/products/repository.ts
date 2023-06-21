@@ -8,6 +8,7 @@ import { createStoreProductQuery } from '../../queries/create-store-product.quer
 import { deleteStoreProductQuery } from '../../queries/delete-store-product.query'
 import { findFullProductByUpcQuery } from '../../queries/find-full-product-by-upc.query'
 import { findFullProductsQuery } from '../../queries/find-full-products.query'
+import { findProductSoldCountQuery } from '../../queries/find-product-sold-count.query'
 import { findStoreProductByUpcQuery } from '../../queries/find-store-product-by-upc.query'
 import { updateProductQuery } from '../../queries/update-product.query'
 import { updateStoreProductQuery } from '../../queries/update-store-product.query'
@@ -128,4 +129,18 @@ export const updateProduct = async (
   }
 
   return await findFullProductByUpc(upc)
+}
+
+export const findStatsForUpc = async (findStatsForUpcDto: {
+  upc: string
+  from: Date
+  to: Date
+}) => {
+  const count = await findProductSoldCountQuery.execute(findStatsForUpcDto)
+  const fullProduct = await findFullProductByUpc(findStatsForUpcDto.upc)
+
+  return {
+    product: fullProduct,
+    number: count
+  }
 }
