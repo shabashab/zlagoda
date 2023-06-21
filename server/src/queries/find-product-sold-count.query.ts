@@ -12,7 +12,7 @@ export const findProductSoldCountQuery = defineQuery<
   }
 >({
   query: `
-    SELECT SUM("product_number") as total_number
+    SELECT SUM("product_nuber") as total_number
     FROM "Sale"
     WHERE "UPC" = $1 AND "print_date" > $2 AND "print_date" < $3
     GROUP BY "UPC"
