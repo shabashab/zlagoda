@@ -9,6 +9,7 @@
     "auth": true,
     "autoResetRef": true,
     "categories": true,
+    "checks": true,
     "computed": true,
     "computedAsync": true,
     "computedEager": true,
