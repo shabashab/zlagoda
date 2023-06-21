@@ -8,6 +8,7 @@ import InputText from 'primevue/inputtext';
 
 import { FilterMatchMode } from 'primevue/api';
 import { Check } from '../../../models/check.model';
+import { checks } from '../../../api/checks';
 
 const filters = ref({
   id: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -27,131 +28,34 @@ const props = withDefaults(defineProps<{
   }
 });
 
-const checks = ref<Check[]>([]);
-
 const isItemsDialogVisible = ref<boolean>(false);
 
-const checkToDisplayInDialog = ref<Check>(checks.value[0]);
+const checkToDisplayInDialog = ref<Check>();
 
 const openCheckDialog = (check: Check) => {
   checkToDisplayInDialog.value = check;
   isItemsDialogVisible.value = true;
 }
 
-const isUserDialogVisible = ref<boolean>(false);
-
-const fetchChecks = async (cashireId: string) => {
-  for (let i = 0; i < 100; i++) {
-    checks.value.push({
-      id: (Math.random() * 128312327).toFixed(0),
-      items: [
-        {
-          product: {
-            upc: '4779038123734',
-            name: 'Напій газ.',
-            price: 100,
-            manufacture: 'Scotty west',
-            characteristics: 'Імбир малина',
-            isPromo: false
-          },
-          number: 2
-        },
-        {
-          product: {
-            upc: '5449064244221',
-            name: 'Соус гамбургер',
-            price: 200,
-            manufacture: 'Develey',
-            characteristics: '410г',
-            isPromo: false
-          },
-          number: 3
-        }
-      ],
-      printDate: new Date(),
-      sumTotatal: 800,
-      VAT: 160,
-      cashier: {
-        id: '1231',
-        name: 'Taras',
-        surname: 'Artemovich',
-        city: 'Govno',
-        street: 'Mocha st.',
-        zipCode: '1231',
-        role: 'cashier',
-        dateOfBirth: new Date(1,2,2003),
-        dateOfStart: new Date(1,2,2022),
-        salary: 300,
-        phoneNumber: '0976373938'
-      }
-    })
-  }
-}
+const { fetch: fetchChecks, result: checksValue } = checks.useChecks();
 
 watch(() => props.datesRange, () => {
-  fetchChecks(props.cashireId);
+  fetchChecks();
 }, {
   immediate: true
 });
 
 const idSearchInput = ref<string>('');
 
-const fetchCheck = async () : Promise<Check> => {
-  return {
-    id: (Math.random() * 128312327).toFixed(0),
-    items: [
-      {
-        product: {
-          upc: '4779038123734',
-          name: 'Напій газ.',
-          price: 100,
-          manufacture: 'Scotty west',
-          characteristics: 'Імбир малина2',
-          isPromo: false
-        },
-        number: 2
-      },
-      {
-        product: {
-          upc: '5449064244221',
-          name: 'Соус гамбургер2',
-          price: 200,
-          manufacture: 'Develey',
-          characteristics: '410г',
-          isPromo: false
-        },
-        number: 3
-      }
-    ],
-    printDate: new Date(),
-    sumTotatal: 802,
-    VAT: 160,
-    cashier: {
-      id: '1231',
-      name: 'Taras',
-      surname: 'Artemovich',
-      city: 'Govno',
-      street: 'Mocha st.',
-      zipCode: '1231',
-      role: 'cashier',
-      dateOfBirth: new Date(1,2,2003),
-      dateOfStart: new Date(1,2,2022),
-      salary: 300,
-      phoneNumber: '0976373938'
-    }
-  }
-}
-
 const searchCheckById = async () => {
-  console.log(1);
-  checkToDisplayInDialog.value = await fetchCheck();
+  // checkToDisplayInDialog.value = await fetchCheck();
   isItemsDialogVisible.value = true;
 }
 </script>
 <template>
   <DataTable
     v-model:filters="filters"
-    :value="checks"
+    :value="checksValue"
     :paginator="!props.isReport"
     :rows="isAdmin ? 5 : 6"
     data-key="id"
@@ -162,7 +66,10 @@ const searchCheckById = async () => {
         <h2 class="text-xl text-black">
           Checks
         </h2>
-        <div v-if="!props.isReport" class="flex gap-5">
+        <div
+          v-if="!props.isReport"
+          class="flex gap-5"
+        >
           <InputText
             v-model="idSearchInput"
             style="width: 250px !important;"
@@ -247,13 +154,13 @@ const searchCheckById = async () => {
           :delete-url="``"
           :is-edit="false"
           token-name="id"
-          @record-deleted="fetchCheck"
+          @record-deleted="fetchChecks()"
         />
       </template>
     </Column>
   </DataTable>
   <Dialog
-    v-if="isItemsDialogVisible"
+    v-if="isItemsDialogVisible && checkToDisplayInDialog"
     v-model:visible="isItemsDialogVisible"
     :header="'Check: №' + checkToDisplayInDialog.id"
     style="min-width: 30vw;"
@@ -268,7 +175,7 @@ const searchCheckById = async () => {
       />
     </div>
     <div>
-      Cashier: {{ checkToDisplayInDialog.cashier.id }}
+      Cashier: {{ checkToDisplayInDialog.cashier.employeeId }}
     </div>
     <div v-if="checkToDisplayInDialog.customerCard">
       Customer: {{ checkToDisplayInDialog.customerCard.cardNumber }}
