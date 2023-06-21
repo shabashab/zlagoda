@@ -44,9 +44,13 @@ const addProductToCheck = (product: Product) => {
 }
 
 const onUpcSubmit = async () => {
-  product.value = await fetchProduct(upc.value);
+  try {
+    product.value = await fetchProduct(upc.value);
+    addProductToCheck(product.value);
+  } catch(error) {
+    toast.add({ severity: 'error', summary: 'Error', detail: error as string, life: 3000 })
+  }
   upc.value = '';
-  addProductToCheck(product.value);
 }
 
 const { fetch:createCheck } = checks.useCreateCheck();
