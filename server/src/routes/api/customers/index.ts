@@ -8,6 +8,7 @@ export const plugin = createPluginFromConfiguration({
     import('./id.get'),
     import('./id.patch'),
     import('./post'),
-    import('./category-lovers.get')
+    import('./category-lovers.get'),
+    import('./id.delete')
   ]
 })
