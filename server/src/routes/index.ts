@@ -2,6 +2,8 @@ import { ZodError, ZodSchema } from 'zod'
 import { HttpException } from '../exceptions/http-exception'
 import { UnprocessableEntityException } from '../exceptions/unprocessable-entity.exception'
 import { createPluginFromConfiguration } from '../helpers/createPluginFromConfiguration'
+import { DatabaseError } from 'pg'
+import { ConflictException } from '../exceptions/conflict-exception'
 
 export const routesPlugin = createPluginFromConfiguration({
   plugins: [import('./api')],
@@ -21,25 +23,33 @@ export const routesPlugin = createPluginFromConfiguration({
       }
     })
 
-    fastify.setErrorHandler<HttpException>(async (error, request, reply) => {
-      if (!('status' in error)) {
-        reply.status(500)
+    fastify.setErrorHandler<HttpException | DatabaseError>(
+      async (error, request, reply) => {
+        if ('code' in error) {
+          if (error.code === '23505' || error.code === '23514') {
+            error = new ConflictException()
+          }
+        }
 
-        request.server.log.error(error)
+        if (!('status' in error)) {
+          reply.status(500)
+
+          request.server.log.error(error)
+
+          return {
+            status: 500,
+            message: 'Server e'
+          }
+        }
+
+        reply.status(error.status)
 
         return {
-          status: 500,
-          message: 'Server e'
+          status: error.status,
+          message: error.message,
+          details: error.details
         }
       }
-
-      reply.status(error.status)
-
-      return {
-        status: error.status,
-        message: error.message,
-        details: error.details
-      }
-    })
+    )
   }
 })
