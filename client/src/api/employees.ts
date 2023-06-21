@@ -48,7 +48,9 @@ export const employees = {
   }),
   useDeleteEmployee: defineActionEndpoint<Employee, FullEmployee>({
     method: 'DELETE',
-    url: '/employees',
+    url: (input) => {
+      return `/employees/${input.employeeId}`
+    },
     requireAuthentication: true,
     dataBuilder(inputData) {
       return {
