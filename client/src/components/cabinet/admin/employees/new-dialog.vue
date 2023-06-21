@@ -34,15 +34,20 @@ const onFormSubmit = async () => {
   }
 
 }
+
+const isError = ref(false);
 </script>
 <template>
-  {{ error }}
   <TextPropInput
     v-model:value="employee.employeeId"
     class="mb-5"
     label="Id: "
+    :error="employee.employeeId === ''"
   />
-  <CabinetAdminEmployeesForm v-model:employee="employee" />
+  <CabinetAdminEmployeesForm
+    v-model:employee="employee"
+    v-model:is-error="isError"
+  />
   <div class="flex justify-center mt-10">
     <Button
       label="Submit"
