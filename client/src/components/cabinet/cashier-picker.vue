@@ -4,45 +4,22 @@ import { Employee } from '../../models/employee.model';
 
 
 const props = defineProps<{
-  cashierId: string
+  cashier: Employee | undefined
 }>();
 
-const emits = defineEmits(['update:cashierId']);
+const emits = defineEmits(['update:cashier']);
 
 const cashierIdValue = computed({
   get() {
-    return props.cashierId
+    return props.cashier
   },
   set(value) {
-    emits('update:cashierId', value); 
+    emits('update:cashier', value); 
   }
 });
 
-const cashiers = ref<Employee[]>([]);
+const { fetch: fetchCshiers, result: cashiersValue } = employees.useEmployees().fetchImmediate();
 
-const fetchCashiers = async () => {
-  for (let i = 0; i < 10; i++) {
-    cashiers.value.push({
-      id: '1231',
-      name: 'Taras',
-      surname: 'Artemovich',
-      city: 'Govno',
-      street: 'Mocha st.',
-      zipCode: '1231',
-      role: 'cashier',
-      dateOfBirth: new Date(1,2,2003),
-      dateOfStart: new Date(1,2,2022),
-      salary: 300,
-      phoneNumber: '0976373938',
-      patronymic: 'G',
-
-    })
-  }
-}
-
-onMounted(async () => {
-  await fetchCashiers();
-})
 </script>
 <template>
   <div class="w-30 h-full">
@@ -51,8 +28,7 @@ onMounted(async () => {
       id="dropDown"
       v-model:model-value="cashierIdValue"
       style="width: 100%; height: 50px;"
-      :options="cashiers"
-      option-value="id"
+      :options="cashiersValue?.filter((el) => {return el.role === 'cashier'})"
       option-label="surname"
       filter
       show-clear
@@ -63,13 +39,8 @@ onMounted(async () => {
             {{ slotProps.option.surname }} {{ slotProps.option.name }} {{ slotProps.option.patronymic }}
           </div>
           <div class="text-black/30">
-            (id: {{ slotProps.option.id }} )
+            (id: {{ slotProps.option.employeeId }} )
           </div>
-        </div>
-      </template>
-      <template #value="slotProps">
-        <div class="flex justify-start gap-5">
-          {{ slotProps.value }}
         </div>
       </template>
     </Dropdown>

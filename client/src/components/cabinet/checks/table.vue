@@ -32,24 +32,40 @@ const isItemsDialogVisible = ref<boolean>(false);
 
 const checkToDisplayInDialog = ref<Check>();
 
-const openCheckDialog = (check: Check) => {
-  checkToDisplayInDialog.value = check;
+const openCheckDialog = async (check: Check) => {
+  checkToDisplayInDialog.value = await fetchCheck({
+    checkId: check.id ?? ''
+  });
   isItemsDialogVisible.value = true;
 }
 
 const { fetch: fetchChecks, result: checksValue } = checks.useChecks();
 
-watch(() => props.datesRange, () => {
-  fetchChecks();
+const { fetch: fetchCheck } = checks.useCheck();
+
+watch(() => [props.datesRange, props.cashireId], () => {
+  fetchChecks({ selectedDates: props.datesRange, cachierId: props.cashireId });
 }, {
-  immediate: true
+  immediate: props.isReport
 });
 
 const idSearchInput = ref<string>('');
 
 const searchCheckById = async () => {
-  // checkToDisplayInDialog.value = await fetchCheck();
+  checkToDisplayInDialog.value = await fetchCheck({
+    checkId: idSearchInput.value
+  });
   isItemsDialogVisible.value = true;
+}
+
+const getSum = () => {
+  if (checksValue.value) {
+    const sum = checksValue.value.reduce((sum, el) => {
+      return sum + el.totalSum
+    }, 0)
+
+    return sum
+  }
 }
 </script>
 <template>
@@ -59,13 +75,16 @@ const searchCheckById = async () => {
     :paginator="!props.isReport"
     :rows="isAdmin ? 5 : 6"
     data-key="id"
-    filter-display="row"
+    filter-display="menu"
   >
     <template #header>
       <div class="flex justify-between items-center">
         <h2 class="text-xl text-black">
           Checks
         </h2>
+        <div>
+          Sum: {{ getSum() }}
+        </div>
         <div
           v-if="!props.isReport"
           class="flex gap-5"
@@ -120,17 +139,17 @@ const searchCheckById = async () => {
       </template>
     </Column>
     <Column
-      field="sumTotal"
+      field="totalSum"
       header="Sum total"
       sortable
     >
       <template #body="slotProps">
         <div class="flex flex-col text-end">
           <div class="text-2xl font-extrabold">
-            SUM: {{ slotProps.data.sumTotatal }}
+            SUM: {{ slotProps.data.totalSum }}
           </div>
           <div class="text-xs">
-            VAT(20%): {{ slotProps.data.VAT }}
+            VAT(20%): {{ slotProps.data.vat }}
           </div>
         </div>
       </template>
@@ -154,7 +173,7 @@ const searchCheckById = async () => {
           :delete-url="``"
           :is-edit="false"
           token-name="id"
-          @record-deleted="fetchChecks()"
+          @record-deleted="fetchChecks({cachierId: props.cashireId, selectedDates: props.datesRange})"
         />
       </template>
     </Column>
@@ -189,10 +208,10 @@ const searchCheckById = async () => {
       <div class="flex justify-end mt-10">
         <div class="flex flex-col text-end">
           <div class="text-2xl font-extrabold">
-            SUM: {{ checkToDisplayInDialog.sumTotatal }}
+            SUM: {{ checkToDisplayInDialog.totalSum }}
           </div>
           <div class="text-xs">
-            VAT(20%): {{ checkToDisplayInDialog.VAT }}
+            VAT(20%): {{ checkToDisplayInDialog.vat }}
           </div>
         </div>
       </div>

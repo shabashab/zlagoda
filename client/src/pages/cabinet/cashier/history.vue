@@ -1,6 +1,5 @@
 <script setup lang="ts">
-
-const cashireId = '91273091723';
+const authStore = useAuthStore();
 
 const datesRange = ref<Date[]>([]);
 
@@ -14,7 +13,7 @@ const datesRange = ref<Date[]>([]);
       v-model:dates-range="datesRange"
     /> 
     <CabinetChecksTable
-      :cashire-id="cashireId"
+      :cashire-id="authStore.currentUser?.employeeId"
       :dates-range="datesRange"
     />
   </div>

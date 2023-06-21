@@ -58,7 +58,7 @@ const openNewCustomerDialog = () => {
 <template>
   <DataTable
     v-model:filters="filters"
-    filter-display="row"
+    filter-display="menu"
     :value="customersValue"
     :loading="loading"
     :paginator="!props.isReport"

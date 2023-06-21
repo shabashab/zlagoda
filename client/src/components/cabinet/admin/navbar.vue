@@ -27,7 +27,7 @@ const items = ref([
   },
   {
     label: 'Products',
-    icon: 'pi pi-store',
+    icon: 'pi pi-shopping-bag',
     to: '/cabinet/admin/products'
   },
   {

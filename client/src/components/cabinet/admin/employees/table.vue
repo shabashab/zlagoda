@@ -64,7 +64,7 @@ const openUserDialog = (employee: FullEmployee) => {
     :paginator="!props.isReport"
     :loading="loading"
     :rows="8"
-    filter-display="row"
+    filter-display="menu"
   >
     <template #header>
       <div class="flex justify-between items-center">
