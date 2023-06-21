@@ -33,6 +33,7 @@ const onDeleteEmployee = async (data: FullEmployee) => {
   try {
     await deleteEmployee(data);
     toast.add({ severity: 'success', summary: 'Deleted', detail: 'record deleted', life: 3000 });
+    await fetchEmployees()
   } catch (deleteEmployeeError) {
     
     toast.add({ severity: 'error', summary: 'Error', detail: deleteEmployeeError, life: 3000 });
