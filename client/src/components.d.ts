@@ -21,6 +21,7 @@ declare module '@vue/runtime-core' {
     CabinetAdminNavbar: typeof import('./components/cabinet/admin/navbar.vue')['default']
     CabinetAdminProductsEditDialog: typeof import('./components/cabinet/admin/products/edit-dialog.vue')['default']
     CabinetAdminProductsForm: typeof import('./components/cabinet/admin/products/form.vue')['default']
+    CabinetAdminProductsMisticDialog: typeof import('./components/cabinet/admin/products/mistic-dialog.vue')['default']
     CabinetAdminProductsNewDialog: typeof import('./components/cabinet/admin/products/new-dialog.vue')['default']
     CabinetAdminProductsTable: typeof import('./components/cabinet/admin/products/table.vue')['default']
     CabinetCashierCheckTable: typeof import('./components/cabinet-cashier-check-table.vue')['default']
