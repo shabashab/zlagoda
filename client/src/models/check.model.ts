@@ -10,6 +10,6 @@ export interface Check {
   }[]
   customerCard?: CustomerCard
   printDate: Date
-  sumTotatal: number
-  VAT: number
+  totalSum: number
+  vat: number
 }

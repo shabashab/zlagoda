@@ -32,23 +32,28 @@ const isItemsDialogVisible = ref<boolean>(false);
 
 const checkToDisplayInDialog = ref<Check>();
 
-const openCheckDialog = (check: Check) => {
-  checkToDisplayInDialog.value = check;
+const openCheckDialog = async (check: Check) => {
+  checkToDisplayInDialog.value = await fetchCheck({
+    checkId: check.id ?? ''
+  });
   isItemsDialogVisible.value = true;
 }
 
 const { fetch: fetchChecks, result: checksValue } = checks.useChecks();
 
+const { fetch: fetchCheck } = checks.useCheck();
+
 watch(() => props.datesRange, () => {
   fetchChecks();
 }, {
-  immediate: true
 });
 
 const idSearchInput = ref<string>('');
 
 const searchCheckById = async () => {
-  // checkToDisplayInDialog.value = await fetchCheck();
+  checkToDisplayInDialog.value = await fetchCheck({
+    checkId: idSearchInput.value
+  });
   isItemsDialogVisible.value = true;
 }
 </script>
@@ -120,17 +125,17 @@ const searchCheckById = async () => {
       </template>
     </Column>
     <Column
-      field="sumTotal"
+      field="totalSum"
       header="Sum total"
       sortable
     >
       <template #body="slotProps">
         <div class="flex flex-col text-end">
           <div class="text-2xl font-extrabold">
-            SUM: {{ slotProps.data.sumTotatal }}
+            SUM: {{ slotProps.data.totalSum }}
           </div>
           <div class="text-xs">
-            VAT(20%): {{ slotProps.data.VAT }}
+            VAT(20%): {{ slotProps.data.vat }}
           </div>
         </div>
       </template>
@@ -189,10 +194,10 @@ const searchCheckById = async () => {
       <div class="flex justify-end mt-10">
         <div class="flex flex-col text-end">
           <div class="text-2xl font-extrabold">
-            SUM: {{ checkToDisplayInDialog.sumTotatal }}
+            SUM: {{ checkToDisplayInDialog.totalSum }}
           </div>
           <div class="text-xs">
-            VAT(20%): {{ checkToDisplayInDialog.VAT }}
+            VAT(20%): {{ checkToDisplayInDialog.vat }}
           </div>
         </div>
       </div>

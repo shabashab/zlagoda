@@ -14,4 +14,11 @@ export const checks = {
     url: 'checks',
     requireAuthentication: true,
   }),
+  useCheck: defineDataEndpoint<{ checkId: string }, any>({
+    method: 'GET',
+    url: (input) => {
+      return `checks/${input.checkId}`
+    },
+    requireAuthentication: true,
+  }),
 }
