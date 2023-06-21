@@ -5,6 +5,11 @@ import { Category } from '../../../../models/category.model';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
 import { categories } from '../../../../api/categories';
+import { useToast } from 'primevue/usetoast';
+
+const toast = useToast();
+
+const { fetch: deleteCategory } = categories.useDeleteCategory();
 
 const { fetch: fetchCategories, result: categoriesValue, loading } = categories.useCategories().fetchImmediate();
 
@@ -20,6 +25,16 @@ const props = withDefaults(defineProps<{
 }>(), {
   isReport: false
 })
+
+const onDelete = async (data: Category) => {
+  try {
+    await deleteCategory(data);
+    toast.add({ severity: 'success', summary: 'Deleted', detail: 'Record deleted', life: 3000 })
+    await fetchCategories();
+  } catch(error) {
+    toast.add({ severity: 'error', summary: 'Error', detail: error as string, life: 3000 })
+  }
+}
 </script>
 <template>
   <DataTable
@@ -65,7 +80,7 @@ const props = withDefaults(defineProps<{
           v-model:item-to-edit="categoryToEdit"
           :data="data"
           @open-edit-dialog="isEditCategoryDiaglogVisible = true"
-          @delete="12"
+          @delete="onDelete(data)"
         />
       </template>
     </Column>

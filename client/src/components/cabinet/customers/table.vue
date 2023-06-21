@@ -8,6 +8,9 @@ import InputText from 'primevue/inputtext';
 import InputNumber from 'primevue/inputnumber';
 import { CustomerCard } from '../../../models/customer-card.model';
 import { customers } from '../../../api/customers';
+import { useToast } from 'primevue/usetoast';
+
+const toast = useToast();
 
 const props = withDefaults(defineProps<{
   isAdmin: boolean,
@@ -24,6 +27,7 @@ const filters = ref({
   percent: { value: null, matchMode: FilterMatchMode.EQUALS }
 });
 
+const { fetch: deleteCustomer } = customers.useDeleteCustomer();
 const { fetch: fetchCustomers, result: customersValue, loading } = customers.useCustomers().fetchImmediate();
 
 const customerToEdit = ref<CustomerCard>();
@@ -52,6 +56,17 @@ const openNewCustomerDialog = () => {
   };
   isNewCustomer.value = true;
   isCustomerEditDialogVisible.value = true;
+}
+
+
+const onDelete = async (data: CustomerCard) => {
+  try {
+    await deleteCustomer(data)
+    toast.add({ severity: 'success', summary: 'Deleted', detail: 'Record deleted', life: 3000 })
+    await fetchCustomers();
+  } catch(error) {
+    toast.add({ severity: 'error', summary: 'Error', detail: error as string, life: 3000 })
+  }
 }
 
 </script>
@@ -160,7 +175,7 @@ const openNewCustomerDialog = () => {
           :item-to-edit="customerToEdit"
           :is-delete="props.isAdmin"
           @open-edit-dialog="openEditCustomerDialog(data)"
-          @delete="123"
+          @delete="onDelete(data)"
         />
       </template>
     </Column>
