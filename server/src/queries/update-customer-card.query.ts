@@ -11,7 +11,6 @@ export const updateCustomerCard = defineQuery<
 >({
   query: `
     UPDATE "Customer_Card" SET (
-      "card_number",
       "cust_surname",
       "cust_name",
       "cust_patronymic",
@@ -21,8 +20,9 @@ export const updateCustomerCard = defineQuery<
       "zip_code",
       "percent"
     ) = (
-      $1, $2, $3, $4, $5, $6, $7, $8, $9
-    ) RETURNING *
+      $2, $3, $4, $5, $6, $7, $8, $9
+    ) WHERE "card_number" = $1 
+    RETURNING *
   `,
   values: (input) => [
     input[0],
