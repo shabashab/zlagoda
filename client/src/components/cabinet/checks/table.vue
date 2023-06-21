@@ -56,6 +56,16 @@ const searchCheckById = async () => {
   });
   isItemsDialogVisible.value = true;
 }
+
+const getSum = () => {
+  if (checksValue.value) {
+    const sum = checksValue.value.reduce((sum, el) => {
+      return sum + el.totalSum
+    }, 0)
+
+    return sum
+  }
+}
 </script>
 <template>
   <DataTable
@@ -71,6 +81,9 @@ const searchCheckById = async () => {
         <h2 class="text-xl text-black">
           Checks
         </h2>
+        <div>
+          Sum: {{ getSum() }}
+        </div>
         <div
           v-if="!props.isReport"
           class="flex gap-5"

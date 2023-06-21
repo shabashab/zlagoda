@@ -31,7 +31,9 @@ const props = withDefaults(defineProps<{
 const { fetch: fetchProducts, result: productsValue } = products.useProducts();
 
 watch(() => props.selectedCategory, async () => {
-  await fetchProducts();
+  await fetchProducts({
+    categoryId: props.selectedCategory?.id as unknown as string
+  });
 }, {
   deep: true,
   immediate: true,
@@ -71,7 +73,7 @@ const openEditDialog = (product: Product) => {
             header="New product"
             modal
           >
-            <CabinetAdminProductsNewDialog @submit="isNewProductDialogOpen = false; fetchProducts()" />
+            <CabinetAdminProductsNewDialog @submit="isNewProductDialogOpen = false; fetchProducts({categoryId: props.selectedCategory?.id as unknown as string})" />
           </Dialog>
         </div>
       </div>
@@ -157,7 +159,7 @@ const openEditDialog = (product: Product) => {
           delete-url=""
           :item-to-edit="productToEdit"
           @open-edit-dialog="openEditDialog(data)"
-          @record-deleted="fetchProducts()"
+          @record-deleted="fetchProducts({categoryId: props.selectedCategory?.id as unknown as string})"
         />
       </template>
     </Column>
@@ -171,7 +173,7 @@ const openEditDialog = (product: Product) => {
     <CabinetAdminProductsEditDialog
       v-if="productToEdit"
       :product="productToEdit"
-      @submit="isEditProductDialogOpen = false; fetchProducts()"
+      @submit="isEditProductDialogOpen = false; fetchProducts({categoryId: props.selectedCategory?.id as unknown as string})"
     />
   </Dialog>
 </template>

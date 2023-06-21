@@ -15,7 +15,7 @@ export const checks = {
     selectedDates?: Date[]
     cachierId: string
   },
-  any
+  any[]
   >({
     method: 'GET',
     url: 'checks',

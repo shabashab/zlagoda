@@ -1,10 +1,13 @@
 import { Product } from '../models/product.model'
 
 export const products = {
-  useProducts: defineDataEndpoint<void, Product[]>({
+  useProducts: defineDataEndpoint<{ categoryId?: string }, Product[]>({
     method: 'GET',
     url: 'products',
     requireAuthentication: true,
+    queryBuilder(inputData) {
+      return inputData
+    },
   }),
   useEditProduct: defineActionEndpoint<Product, Product>({
     method: 'PATCH',
