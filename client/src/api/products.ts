@@ -1,3 +1,4 @@
+import { omit } from 'lodash'
 import { Product } from '../models/product.model'
 
 export const products = {
@@ -16,7 +17,7 @@ export const products = {
     },
     requireAuthentication: true,
     dataBuilder(inputData) {
-      return inputData
+      return omit(inputData, ['id', 'upc', 'promoPrice', 'categoryName'])
     },
   }),
   useCreateProduct: defineActionEndpoint<Product, Product>({

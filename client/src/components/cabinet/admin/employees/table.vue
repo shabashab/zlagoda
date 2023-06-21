@@ -196,8 +196,8 @@ const openUserDialog = (employee: FullEmployee) => {
         </div>
       </template>
     </Column>
-    <Columm
-      field="soldTotal"
+    <Column
+      field="totalSold"
       header="Total sold"
     />
     <Column v-if="!props.isReport">
