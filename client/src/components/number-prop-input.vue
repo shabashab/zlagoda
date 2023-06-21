@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import InputNumber from 'primevue/inputnumber';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   label: string
   value: number | undefined
-}>();
+  error: boolean
+}>(), {
+  error: false
+});
 
 const emits = defineEmits(['update:value']);
 

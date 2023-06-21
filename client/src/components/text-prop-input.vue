@@ -2,10 +2,13 @@
 import InputText from 'primevue/inputtext';
 
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   label: string
   value: string | undefined
-}>();
+  error: boolean
+}>(), {
+  error: false
+});
 
 const emits = defineEmits(['update:value']);
 
@@ -24,6 +27,7 @@ const propValue = computed({
     <InputText
       id="input"
       v-model="propValue"
+      :class="{'p-invalid': props.error}"
       style="width: 100%;"
     />
   </div>

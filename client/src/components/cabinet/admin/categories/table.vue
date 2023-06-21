@@ -14,12 +14,18 @@ const categoryToEdit = ref<Category>();
 
 const isEditCategoryDiaglogVisible = ref(false);
 
+
+const props = withDefaults(defineProps<{
+  isReport: boolean
+}>(), {
+  isReport: false
+})
 </script>
 <template>
   <DataTable
     :value="categoriesValue"
     :loading="loading"
-    paginator
+    :paginator="!props.isReport"
     :rows="7"
   >
     <template #header>
@@ -27,7 +33,7 @@ const isEditCategoryDiaglogVisible = ref(false);
         <h1 class="text-xl">
           Categories
         </h1>
-        <div>
+        <div v-if="!props.isReport">
           <Button
             severity="success"
             icon="pi pi-plus"
@@ -53,7 +59,7 @@ const isEditCategoryDiaglogVisible = ref(false);
       header="Name"
       field="name"
     />
-    <Column>
+    <Column v-if="!props.isReport">
       <template #body="{ data }">
         <TableButtons
           v-model:item-to-edit="categoryToEdit"

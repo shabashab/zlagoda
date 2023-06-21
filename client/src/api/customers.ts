@@ -32,4 +32,11 @@ export const customers = {
     },
     requireAuthentication: true,
   }),
+  useCustomer: defineDataEndpoint<string, CustomerCard>({
+    method: 'GET',
+    url: (input) => {
+      return `customers/${input}`
+    },
+    requireAuthentication: true,
+  }),
 }

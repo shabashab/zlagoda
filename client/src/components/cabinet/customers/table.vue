@@ -9,9 +9,11 @@ import { CustomerCard } from '../../../models/customer-card.model';
 import { customers } from '../../../api/customers';
 
 const props = withDefaults(defineProps<{
-  isAdmin: boolean
+  isAdmin: boolean,
+  isReport: boolean
 }>(), {
-  isAdmin: false
+  isAdmin: false,
+  isReport: false
 })
 
 
@@ -57,7 +59,7 @@ const openNewCustomerDialog = () => {
     filter-display="row"
     :value="customersValue"
     :loading="loading"
-    paginator
+    :paginator="!props.isReport"
     :rows="7"
   >
     <template #header>
@@ -65,7 +67,7 @@ const openNewCustomerDialog = () => {
         <h1 class="text-2xl text-black">
           Customers
         </h1>
-        <div>
+        <div v-if="!props.isReport">
           <Button
             icon="pi pi-plus"
             severity="success"
@@ -93,7 +95,9 @@ const openNewCustomerDialog = () => {
       field="surname"
       sortable
     >
-      <template #filter="{ filterModel, filterCallback }">
+      <template
+        #filter="{ filterModel, filterCallback }"
+      >
         <InputText
           v-model="filterModel.value"
           style="width: 250px !important;"
@@ -121,17 +125,17 @@ const openNewCustomerDialog = () => {
       </template>
     </Column>
     <Column
-      header="Persent"
-      field="persent"
+      header="Percent"
+      field="percent"
     >
       <template #body="{ data }">
         <div class="text-2xl">
-          {{ data.persent }}
+          {{ data.percent }}
           <i class="pi pi-percentage" />
         </div>
       </template>
     </Column>
-    <Column>
+    <Column v-if="!props.isReport">
       <template #body="{ data }">
         <TableButtons
           :data="data"

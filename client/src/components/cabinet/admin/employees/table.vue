@@ -8,6 +8,12 @@ import Button from 'primevue/button';
 import { useToast } from 'primevue/usetoast';
 
 
+const props = withDefaults(defineProps<{
+  isReport: boolean
+}>(), {
+  isReport: false
+})
+
 const toast = useToast()
 
 const { fetch: fetchEmployees, result: fullEmployees, loading } = employees.useEmployees().fetchImmediate();
@@ -50,7 +56,7 @@ const openUserDialog = (employee: FullEmployee) => {
 <template>
   <DataTable
     :value="fullEmployees"
-    paginator
+    :paginator="!props.isReport"
     :loading="loading"
     :rows="8"
   >
@@ -59,7 +65,7 @@ const openUserDialog = (employee: FullEmployee) => {
         <h1 class="text-xl">
           Employees
         </h1>
-        <div>
+        <div v-if="!props.isReport">
           <Button
             icon="pi pi-plus"
             severity="success"
@@ -143,7 +149,7 @@ const openUserDialog = (employee: FullEmployee) => {
         />
       </template>
     </Column>
-    <Column>
+    <Column v-if="!props.isReport">
       <template #body="{ data }">
         <i
           v-if="data.user"
@@ -165,7 +171,7 @@ const openUserDialog = (employee: FullEmployee) => {
         </div>
       </template>
     </Column>
-    <Column>
+    <Column v-if="!props.isReport">
       <template #body="{ data }">
         <TableButtons
           v-model:item-to-edit="employeeToEdit"

@@ -7,7 +7,7 @@ const props = withDefaults(defineProps<{
   value: Date | undefined
   error: boolean
 }>(), {
-  error: false 
+  error: false
 });
 
 const emits = defineEmits(['update:value']);

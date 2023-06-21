@@ -2,12 +2,13 @@
 import { FormItem } from '../models/form-item.model';
 import RoleDropdown from './role-dropdown.vue';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   item: any,
   data: FormItem[]
-}>();
+}>(),{
+});
 
-const emits = defineEmits(['update:item']);
+const emits = defineEmits(['update:item', 'update:isError']);
 
 const itemValue = computed({
   get() {
@@ -28,17 +29,20 @@ const itemValue = computed({
         v-if="itemKey.type === 'string'"
         v-model:value="itemValue[itemKey.key]"
         :label="itemKey.label"
+        :error="itemKey.error"
       />
       <NumberPropInput
         v-else-if="itemKey.type === 'number'"
         v-model:value="itemValue[itemKey.key]"
         :label="itemKey.label"
+        :error="itemKey.error"
       />
       <DatePropInput
         v-else-if="itemKey.type === 'Date'"
         :key="itemValue[itemKey.key]"
         v-model:value="itemValue[itemKey.key]"
         :label="itemKey.label"
+        :error="itemKey.error"
       />
       <RoleDropdown
         v-else-if="itemKey.type === 'role'"

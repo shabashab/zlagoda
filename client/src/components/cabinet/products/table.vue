@@ -8,44 +8,28 @@ import { ProductInStore } from '../../../models/product-in-store.model';
 import { Category } from '../../../models/category.model';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
+import { Product } from '../../../models/product.model';
+import { products } from '../../../api/products';
 
 
 const filters = ref({
-  'product.name': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-  'product.isPromo': { value: null, matchMode: FilterMatchMode.EQUALS },
+  'name': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  'isPromo': { value: null, matchMode: FilterMatchMode.EQUALS },
 });
 
 const props = withDefaults(defineProps<{
   selectedCategory: Category | undefined
   isAdmin: boolean
+  isReport: boolean
 }>(), {
-  isAdmin: false
+  isAdmin: false,
+  isReport: true
 });
 
-const products = ref<ProductInStore[]>([]);
 
-const fetchProducts = async () => {
-  for (let i = 0; i < 100; i++) {
-    const price = (Math.random() * 1000).toFixed(2) as unknown as number
-    const promoPrice = (Math.random().toFixed(0) as unknown as number) % 2 === 0 ? (price * Math.random()).toFixed(2) as unknown as number : undefined 
-    products.value.push(
-      {
-        product: {
-          name: `test${i}`,
-          price: price,
-          upc: (Math.random() * 100000000000000).toFixed(0),
-          characteristics: 'hui',
-          manufacture: 'test',
-          promoPrice: promoPrice,
-          isPromo: promoPrice ? true : false 
-        },
-        number: (Math.random() * 100).toFixed(0) as unknown as number
-      });
-  }  
-}
+const { fetch: fetchProducts, result: productsValue } = products.useProducts();
 
 watch(() => props.selectedCategory, async () => {
-  console.log(1);
   await fetchProducts();
 }, {
   deep: true,
@@ -56,9 +40,9 @@ const isEditProductDialogOpen = ref(false);
 
 const isNewProductDialogOpen = ref(false);
 
-const productToEdit = ref<ProductInStore>();
+const productToEdit = ref<Product>();
 
-const openEditDialog = (product: ProductInStore) => {
+const openEditDialog = (product: Product) => {
   productToEdit.value = product;
   isEditProductDialogOpen.value = true;
 }
@@ -67,8 +51,8 @@ const openEditDialog = (product: ProductInStore) => {
 <template>
   <DataTable
     v-model:filters="filters"
-    :value="products"
-    paginator
+    :value="productsValue"
+    :paginator="!props.isReport"
     filter-display="row"
     :rows="isAdmin ? 6 : 10"
   >
@@ -94,12 +78,12 @@ const openEditDialog = (product: ProductInStore) => {
     <Column
       sortable
       header="UPC"
-      field="product.upc"
+      field="upc"
     />
     <Column
       sortable
       header="Name"
-      field="product.name"
+      field="name"
       style="width: 320px;"
     >
       <template #filter="{ filterModel, filterCallback }">
@@ -114,16 +98,16 @@ const openEditDialog = (product: ProductInStore) => {
     <Column
       sortable
       header="Price"
-      field="product.price"
+      field="price"
     />
     <Column
       header="Promo price"
-      field="product.promoPrice"
+      field="promoPrice"
     />
     <Column
       sortable
       header="Is Promo?"
-      field="product.isPromo"
+      field="isPromo"
     >
       <template #filter="{ filterModel, filterCallback }">
         <TriStateCheckbox
@@ -133,7 +117,7 @@ const openEditDialog = (product: ProductInStore) => {
       </template>
       <template #body="{ data }">
         <i
-          v-if="data.product.isPromo"
+          v-if="data.isPromo"
           class="pi pi-check-circle text-green-500"
         />
         <i
@@ -149,12 +133,12 @@ const openEditDialog = (product: ProductInStore) => {
     />
     <Column
       sortable
-      header="Manufacture"
-      field="product.manufacture"
+      header="Category id"
+      field="categoryId"
     />
     <Column
       header="Characteristics"
-      field="product.characteristics"
+      field="characteristics"
     />
     <Column v-if="isAdmin">
       <template #body="{ data }">
@@ -162,7 +146,6 @@ const openEditDialog = (product: ProductInStore) => {
           :data="data"
           delete-url=""
           :item-to-edit="productToEdit"
-          token-name="product.upc"
           @open-edit-dialog="openEditDialog(data)"
           @record-deleted="fetchProducts()"
         />
