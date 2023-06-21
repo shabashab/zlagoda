@@ -107,7 +107,7 @@ export const createCheck = async (
     employeeId,
     id: generateCheckId(),
     printDate: new Date(),
-    totalSum: rawSum * 1.2,
+    totalSum: rawSum,
     vat: rawSum * 0.2
   })
 
