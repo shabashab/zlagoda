@@ -8,4 +8,5 @@ export interface CustomerCard {
   street?: string
   zipCode?: string
   percent: number
+  totalPurchased?: number
 }

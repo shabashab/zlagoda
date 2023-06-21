@@ -127,6 +127,10 @@ const openNewCustomerDialog = () => {
       </template>
     </Column>
     <Column
+      header="Total purchased"
+      field="totalPurchased"
+    />
+    <Column
       header="Percent"
       field="percent"
     >
