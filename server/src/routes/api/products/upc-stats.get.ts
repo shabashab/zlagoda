@@ -17,7 +17,7 @@ const QuerySchema = z.object({
 type Query = z.infer<typeof QuerySchema>
 
 export const options: RouteOptions = {
-  url: '/:id/stats',
+  url: '/:upc/stats',
   method: 'GET',
   preHandler: [requireAuth('manager')],
   schema: {
