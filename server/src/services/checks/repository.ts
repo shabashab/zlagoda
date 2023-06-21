@@ -1,3 +1,4 @@
+import { ChecksFilter } from '../../dto/checks-filter.dto'
 import { CreateCheckDto } from '../../dto/create-check.dto'
 import { CreateSaleDto } from '../../dto/create-sale.dto'
 import { ConflictException } from '../../exceptions/conflict-exception'
@@ -168,4 +169,5 @@ export const findFullCheckById = async (id: string): Promise<FullCheck> => {
   }
 }
 
-export const findAllChecks = async () => findChecksWithCashierQuery.execute()
+export const findAllChecks = async (checksFilter: ChecksFilter) =>
+  findChecksWithCashierQuery.execute(checksFilter)
