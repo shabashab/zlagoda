@@ -1,43 +1,17 @@
 <script setup lang="ts">
 import Calendar from 'primevue/calendar';
+import { Employee } from '../../../models/employee.model';
+import { omit } from 'lodash';
 
-import { Employee } from '../../models/employee.model';
 
-const fetchPersonalData = async () : Promise<Employee> => {
-  return {
-    id: 'i1289s8ad',
-    name: 'Artem',
-    surname: 'Tarasenko',
-    role: 'cashier',
-    dateOfBirth: new Date(2004,8,20),
-    dateOfStart: new Date(2022,5,13),
-    city: 'Brovari',
-    street: 'Govna',
-    salary: 300,
-    zipCode: '02059',
-    phoneNumber: '0976373938',
-    imgUrl: 'https://edukoht.com.ua/assets/tarasenko_artem.482eb11d.webp'
-  }
-}
+const authStore = useAuthStore();
 
-const personalData = ref<Employee>();
-
-onMounted(async () => {
-  personalData.value = await fetchPersonalData();
-})
+const personalData = ref<any>(omit(authStore.currentUser, ['user']));
 </script>
 <template>
   <div
     v-if="personalData"
-    class="grid grid-cols-[1fr,2fr] gap-24"
   >
-    <div>
-      <img
-        class="mt-20"
-        :src="personalData?.imgUrl"
-        :alt="personalData?.surname"
-      >
-    </div>
     <div>
       <div class="text-6xl font-extrabold border-b border-black/30 pb-2">
         {{ personalData?.surname }} {{ personalData?.name }} {{ personalData?.patronymic }}
@@ -51,13 +25,13 @@ onMounted(async () => {
             v-if="key !== 'name' && key !== 'surname' && key !== 'patronymic' && key !== 'imgUrl'"
             class="mt-10"
           >
-            <div v-if="key ==='dateOfBirth' || key === 'dateOfStart'">
+            <div v-if="key ==='birthDate' || key === 'startDate'">
               {{ key }}: 
               <Calendar
                 v-model="personalData[key]"
                 disabled
                 text
-                style="width: 110px;"
+                style="width: 140px;"
                 date-format="dd/mm/yy"
               />
             </div>

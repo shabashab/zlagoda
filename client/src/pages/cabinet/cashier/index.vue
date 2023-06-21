@@ -68,17 +68,22 @@ const setDefaultValues = () => {
 }
 
 const checkOut = async () => {
-  console.log(check.value);
-  await createCheck({
-    customerId: check.value.customerCard?.cardNumber,
-    entries: check.value.items.map((item) => {
-      return {
-        upc: item.product.upc,
-        number: item.number
-      }
-    })
-  });
-  // setDefaultValues();
+  try {
+    await createCheck({
+      customerId: check.value.customerCard?.cardNumber,
+      entries: check.value.items.map((item) => {
+        return {
+          upc: item.product.upc,
+          number: item.number
+        }
+      })
+    });
+    
+    toast.add({ severity: 'success', summary: 'Closed', detail: 'Check was created', life: 3000 });
+    setDefaultValues();
+  }catch (error) {
+    toast.add({ severity: 'error', summary: 'Error', detail: error, life: 3000 });
+  }
 }
 
 const confirmCloseCheck = (event: any) => {
