@@ -17,7 +17,7 @@ const signIn = async () => {
     router.push('/cabinet');
     toast.add({ severity: 'success', summary: 'Log in', life: 3000 })
   } catch(error) {
-    toast.add({ severity: 'error', summary: error as string, life: 3000 })
+    toast.add({ severity: 'error', summary: error.status === 401 ? 'Incorrect login or password': error.status === 403 ? 'Incorrect role' : error as string, life: 3000 })
   }
 }
 
