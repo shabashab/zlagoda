@@ -8,4 +8,6 @@ export interface CustomerCardRaw {
   street?: string
   zip_code?: string
   percent: number
+  avg_products_per_check: string | null
+  purchased_total: string | null
 }

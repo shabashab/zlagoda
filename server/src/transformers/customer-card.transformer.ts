@@ -15,3 +15,11 @@ export const customerCardTransformer: Transformer<
   .copy('city')
   .copy('street')
   .copy('percent')
+  .mapTransformed(
+    'avg_products_per_check',
+    'averageProductsPerCheck',
+    (value) => (value ? parseFloat(value) : null)
+  )
+  .mapTransformed('purchased_total', 'purchasedTotal', (value) =>
+    value ? parseFloat(value) : null
+  )

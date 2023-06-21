@@ -26,10 +26,11 @@ export const findFullProductsQuery = defineQuery<
         JOIN "Store_Product" sp ON p."id_product" = sp."id_product"
         JOIN "Category" c ON p."category_number" = c."category_number"
         LEFT JOIN "Store_Product" sp_promo ON sp."UPC_prom" = sp_promo."UPC"
+      WHERE sp."promotional_product" = false
     `
 
     if (typeof input.categoryId === 'number') {
-      query += ' WHERE p.category_number = $1'
+      query += ' AND p.category_number = $1'
     }
 
     return query
