@@ -40,7 +40,7 @@ export const products = {
     upc: string
     selectedDates: Date[]
   },
-  Product
+  any
   >({
     method: 'GET',
     url: (input) => {

@@ -10,6 +10,7 @@ const { fetch, result } = products.useStats();
 
 const submit = async () => {
   try {
+    result.value = undefined;
     await fetch({ upc: upc.value, selectedDates: datesRange.value });
   } catch(error) {
     console.log(error);
@@ -27,5 +28,12 @@ const submit = async () => {
       />
     </div>
   </div>
-  {{ result }}
+  <div v-if="result" class="grid grid-cols-2 text-xl mt-10 border border-black/30 p-10 rounded-xl">
+    <div>
+      Name: {{ result?.product.name }}
+    </div>
+    <div>
+      Number: {{ result.number }}
+    </div>
+  </div>
 </template>

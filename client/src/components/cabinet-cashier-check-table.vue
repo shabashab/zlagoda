@@ -46,6 +46,7 @@ const deleteItem = (event: any, product: Product) => {
 </script>
 <template>
   <div class="h-[100%] overflow-y-scroll">
+    {{ checkValue.items[0] }}
     <DataTable
       v-if="checkValue.items[0]"
       :value="checkValue.items"
