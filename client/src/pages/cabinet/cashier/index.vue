@@ -7,6 +7,7 @@ import { useToast } from 'primevue/usetoast';
 import { Check } from '../../../models/check.model';
 import { Product } from '../../../models/product.model';
 import { products } from '../../../api/products';
+import { checks } from '../../../api/check';
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -21,12 +22,12 @@ const check = ref<Check>({
   sumTotatal: 0,
   VAT: 0,
   cashier: {
-    id: 'i1289s8ad',
+    employeeId: 'i1289s8ad',
     name: 'Artem',
     surname: 'Tarasenko',
     role: 'cashier',
-    dateOfBirth: new Date(2004,8,20),
-    dateOfStart: new Date(2022,5,13),
+    birthDate: new Date(2004,8,20),
+    startDate: new Date(2022,5,13),
     city: 'Brovari',
     street: 'Govna',
     salary: 300,
@@ -58,9 +59,8 @@ const onUpcSubmit = async () => {
   addProductToCheck(product.value);
 }
 
-const sendCheckOutToBackEnd = async () => {
-  return
-}
+const { fetch:createCheck } = checks.useCreateCheck();
+
 
 const setDefaultValues = () => {
   check.value.items = [];
@@ -68,8 +68,17 @@ const setDefaultValues = () => {
 }
 
 const checkOut = async () => {
-  await sendCheckOutToBackEnd;
-  setDefaultValues();
+  console.log(check.value);
+  await createCheck({
+    customerId: check.value.customerCard?.cardNumber,
+    entries: check.value.items.map((item) => {
+      return {
+        upc: item.product.upc,
+        number: item.number
+      }
+    })
+  });
+  // setDefaultValues();
 }
 
 const confirmCloseCheck = (event: any) => {
@@ -99,7 +108,7 @@ const sum = computed(() => {
 
 const customerDiscountPersent = computed(() => {
   if (check.value.customerCard) {
-    return check.value.customerCard.persent
+    return check.value.customerCard.percent
   } else {
     return 0;
   }
