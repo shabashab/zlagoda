@@ -6,12 +6,14 @@ import { getRequestUserOrThrow } from '../../../helpers/getRequestUserOrThrow'
 
 const BodySchema = z.object({
   customerId: z.string().optional(),
-  entries: z.array(
-    z.object({
-      upc: z.string().min(12).max(13),
-      number: z.number().int().min(1)
-    })
-  )
+  entries: z
+    .array(
+      z.object({
+        upc: z.string().min(12).max(13),
+        number: z.number().int().min(1)
+      })
+    )
+    .min(1)
 })
 
 type Body = z.infer<typeof BodySchema>

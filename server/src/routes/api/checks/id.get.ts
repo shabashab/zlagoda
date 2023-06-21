@@ -1,21 +1,24 @@
 import { RouteOptions } from 'fastify'
+import { requireAuth } from '@hooks/require-auth.pre-handler'
+import { findFullCheckById } from '../../../services/checks/repository'
 import { z } from 'zod'
-import { findFullEmployeeById } from '@services/employees/repository'
 
-export const ParamsSchema = z.object({
-  id: z.string()
+const ParamsSchema = z.object({
+  id: z.string().max(10)
 })
 
 type Params = z.infer<typeof ParamsSchema>
 
 export const options: RouteOptions = {
-  method: 'GET',
   url: '/:id',
+  method: 'GET',
+  preHandler: [requireAuth()],
   schema: {
     params: ParamsSchema
   },
   handler: async (req) => {
     const { id } = req.params as Params
-    return await findFullEmployeeById(id)
+
+    return await findFullCheckById(id)
   }
 }
