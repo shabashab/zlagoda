@@ -11,4 +11,5 @@ export interface EmployeeRaw {
   city: string
   street: string
   zip_code: string
+  sold_total: string
 }

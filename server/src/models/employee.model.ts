@@ -17,4 +17,5 @@ export interface Employee {
 
 export type FullEmployee = Employee & {
   user: PublicUser | null
+  totalSold: number
 }

@@ -10,6 +10,7 @@ export const fullEmployeeTransformer: Transformer<
   FullEmployee
 > = createTransformer<FullEmployeeRaw>()
   .extend(employeeTransformer)
+  .mapTransformed('sold_total', 'totalSold', parseFloat)
   .set('user', (input) => {
     if (!input.login) {
       return null
