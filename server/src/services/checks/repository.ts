@@ -99,7 +99,9 @@ export const createCheck = async (
     rawSum +=
       (entryProduct.isPromo && entryProduct.promoPrice
         ? entryProduct.promoPrice
-        : entryProduct.price) * personalDiscountCoefficient
+        : entryProduct.price) *
+      personalDiscountCoefficient *
+      checkEntry.number
   }
 
   const check = await createCheckQuery.execute({
