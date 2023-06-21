@@ -9,4 +9,9 @@ export const checks = {
     },
     requireAuthentication: true,
   }),
+  useChecks: defineDataEndpoint<void, any>({
+    method: 'GET',
+    url: 'checks',
+    requireAuthentication: true,
+  }),
 }
