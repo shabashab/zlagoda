@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   datesRange: Date[],
-  cashierId: string,
+  cashierId: string | undefined,
 }>();
 </script>
 <template>

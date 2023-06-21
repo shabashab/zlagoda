@@ -7,10 +7,13 @@ import { useToast } from 'primevue/usetoast';
 import { Check } from '../../../models/check.model';
 import { Product } from '../../../models/product.model';
 import { products } from '../../../api/products';
-import { checks } from '../../../api/check';
+import { checks } from '../../../api/checks';
+import { omit } from 'lodash';
 
 const confirm = useConfirm();
 const toast = useToast();
+
+const authStore = useAuthStore();
 
 const upc = ref<string>('');
 
@@ -19,22 +22,9 @@ const product = ref<Product>();
 const check = ref<Check>({
   items: [],
   printDate: new Date(),
-  sumTotatal: 0,
-  VAT: 0,
-  cashier: {
-    employeeId: 'i1289s8ad',
-    name: 'Artem',
-    surname: 'Tarasenko',
-    role: 'cashier',
-    birthDate: new Date(2004,8,20),
-    startDate: new Date(2022,5,13),
-    city: 'Brovari',
-    street: 'Govna',
-    salary: 300,
-    zipCode: '02059',
-    phoneNumber: '0976373938',
-    imgUrl: 'https://edukoht.com.ua/assets/tarasenko_artem.482eb11d.webp'
-  }
+  totalSum: 0,
+  vat: 0,
+  cashier: omit(authStore.currentUser)
 });
 
 const { fetch: fetchProduct } = products.useProduct();

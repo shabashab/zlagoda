@@ -43,8 +43,8 @@ const { fetch: fetchChecks, result: checksValue } = checks.useChecks();
 
 const { fetch: fetchCheck } = checks.useCheck();
 
-watch(() => props.datesRange, () => {
-  fetchChecks();
+watch(() => [props.datesRange, props.cashireId], () => {
+  fetchChecks({ selectedDates: props.datesRange, cachierId: props.cashireId });
 }, {
 });
 
@@ -159,7 +159,7 @@ const searchCheckById = async () => {
           :delete-url="``"
           :is-edit="false"
           token-name="id"
-          @record-deleted="fetchChecks()"
+          @record-deleted="fetchChecks({cachierId: props.cashireId, selectedDates: props.datesRange})"
         />
       </template>
     </Column>

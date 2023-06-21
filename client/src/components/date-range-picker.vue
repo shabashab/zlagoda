@@ -25,10 +25,16 @@ const getYesterday = (): Date => {
   return today;
 }
 
+const getToday = () : Date => {
+  const today = new Date;
+  today.setDate(today.getDate() - 1);
+  return today
+}
+
 const presetedOptions = ref<DatePreset[]>([
   {
     label: 'Today',
-    datesRange: [new Date, new Date],
+    datesRange: [getToday(), getToday()],
   },
   {
     label: 'Yesterday',
