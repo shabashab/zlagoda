@@ -8,8 +8,10 @@ import { updateCategoryQuery } from '../../queries/update-category.query'
 export const createCategory = (
   createCategoryDto: CreateCategoryDto
 ): Promise<Category> => createCategoryQuery.execute(createCategoryDto)
+
 export const findAllCategories = (): Promise<Category[]> =>
   findCategoriesQuery.execute()
+
 export const updateCategoryById = (
   id: number,
   updateCategoryDto: UpdateCategoryDto
