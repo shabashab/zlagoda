@@ -18,11 +18,11 @@ const props = defineProps<{
         {{ item.product.name }} {{ item.product.manufacture }}
       </div>
       <div>
-        {{ item.number }} шт. x {{ item.product.price }} = 
+        {{ item.number }} шт. x {{ props.item.soldPrice }} = 
       </div>
     </div>
     <div>
-      {{ item.product.price * item.number }}
+      {{ props.item.soldPrice * item.number }}
     </div>
   </div>
 </template>
