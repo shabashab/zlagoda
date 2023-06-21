@@ -50,6 +50,9 @@ const openEditDialog = (product: Product) => {
   isEditProductDialogOpen.value = true;
 }
 
+
+const isMisticDialogVisible = ref(false);
+
 </script>
 <template>
   <DataTable
@@ -68,12 +71,24 @@ const openEditDialog = (product: Product) => {
             severity="success"
             @click="isNewProductDialogOpen = true"
           />
+          <Button
+            style="margin-left: 30px;"
+            icon="pi pi-star"
+            @click="isMisticDialogVisible = true"
+          />
           <Dialog
             v-model:visible="isNewProductDialogOpen"
             header="New product"
             modal
           >
             <CabinetAdminProductsNewDialog @submit="isNewProductDialogOpen = false; fetchProducts({categoryId: props.selectedCategory?.id as unknown as string})" />
+          </Dialog>
+          <Dialog
+            v-model:visible="isMisticDialogVisible"
+            modal
+            header="Stats"
+          >
+            <CabinetAdminProductsMisticDialog />
           </Dialog>
         </div>
       </div>

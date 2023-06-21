@@ -35,4 +35,23 @@ export const products = {
     },
     requireAuthentication: true,
   }),
+  useStats: defineDataEndpoint<
+  {
+    upc: string
+    selectedDates: Date[]
+  },
+  Product
+  >({
+    method: 'GET',
+    url: (input) => {
+      return `/products/${input.upc}/stats`
+    },
+    queryBuilder(inputData) {
+      return {
+        from: inputData.selectedDates[0].setUTCHours(0, 1),
+        to: inputData.selectedDates[1].setUTCHours(23, 59),
+      }
+    },
+    requireAuthentication: true,
+  }),
 }
