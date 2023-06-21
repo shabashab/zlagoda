@@ -1,3 +1,4 @@
+import { omit } from 'lodash'
 import { Category } from '../models/category.model'
 
 export const categories = {
@@ -11,7 +12,7 @@ export const categories = {
     url: 'categories',
     requireAuthentication: true,
     dataBuilder(inputData) {
-      return inputData
+      return omit(inputData, 'id')
     },
   }),
   useEditCategory: defineActionEndpoint<Category, Category>({

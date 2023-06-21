@@ -23,7 +23,6 @@ const onFormSubmit = async () => {
 
 </script>
 <template>
-  {{ category }}
   <CabinetAdminCategoriesForm :category="category" />
   <div class="mt-10 flex justify-center">
     <Button
