@@ -128,7 +128,11 @@ const openNewCustomerDialog = () => {
     </Column>
     <Column
       header="Total purchased"
-      field="totalPurchased"
+      field="purchasedTotal"
+    />
+    <Column
+      header="Average Products per Check"
+      field="averageProductsPerCheck"
     />
     <Column
       header="Percent"

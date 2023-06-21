@@ -39,4 +39,14 @@ export const customers = {
     },
     requireAuthentication: true,
   }),
+  useLovers: defineDataEndpoint<string, CustomerCard[]>({
+    method: 'GET',
+    url: 'customers/category-lovers',
+    queryBuilder(inputData) {
+      return {
+        categoryId: inputData,
+      }
+    },
+    requireAuthentication: true,
+  }),
 }
