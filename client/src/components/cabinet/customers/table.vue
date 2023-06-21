@@ -5,6 +5,7 @@ import { FilterMatchMode } from 'primevue/api';
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
+import InputNumber from 'primevue/inputnumber';
 import { CustomerCard } from '../../../models/customer-card.model';
 import { customers } from '../../../api/customers';
 
@@ -19,7 +20,8 @@ const props = withDefaults(defineProps<{
 
 const filters = ref({
   cardNumber: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-  surname: { value: null, matchMode: FilterMatchMode.STARTS_WITH }
+  surname: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  percent: { value: null, matchMode: FilterMatchMode.EQUALS }
 });
 
 const { fetch: fetchCustomers, result: customersValue, loading } = customers.useCustomers().fetchImmediate();
@@ -128,6 +130,14 @@ const openNewCustomerDialog = () => {
       header="Percent"
       field="percent"
     >
+      <template #filter="{ filterModel, filterCallback }">
+        <InputNumber
+          v-model="filterModel.value"
+          style="width: 100px !important;"
+          show-buttons
+          @input="filterCallback()"
+        />
+      </template>
       <template #body="{ data }">
         <div class="text-2xl">
           {{ data.percent }}

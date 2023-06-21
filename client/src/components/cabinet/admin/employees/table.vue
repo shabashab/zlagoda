@@ -6,6 +6,9 @@ import { Employee, FullEmployee } from '../../../../models/employee.model';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
 import { useToast } from 'primevue/usetoast';
+import { FilterMatchMode } from 'primevue/api';
+import Dropdown from 'primevue/dropdown';
+import InputText from 'primevue/inputtext';
 
 
 const props = withDefaults(defineProps<{
@@ -42,7 +45,8 @@ const openEditDialog = (employee: FullEmployee) => {
 }
 
 const filters = ref({
-  role: ''
+  surname: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  role: { value: null, matchMode: FilterMatchMode.EQUALS }
 })
 
 const isUserDialogVisible = ref(false);
@@ -55,10 +59,12 @@ const openUserDialog = (employee: FullEmployee) => {
 </script>
 <template>
   <DataTable
+    v-model:filters="filters"
     :value="fullEmployees"
     :paginator="!props.isReport"
     :loading="loading"
     :rows="8"
+    filter-display="row"
   >
     <template #header>
       <div class="flex justify-between items-center">
@@ -85,33 +91,49 @@ const openUserDialog = (employee: FullEmployee) => {
     <Column
       header="Id"
       field="employeeId"
+      sortable
     />
     <Column
       header="Name"
       field="name"
+      sortable
     />
     <Column
       header="Surname"
       field="surname"
-    />
+      sortable
+    >
+      <template #filter="{ filterModel, filterCallback }">
+        <InputText
+          v-model="filterModel.value"
+          style="width: 220px !important;"
+          @input="filterCallback"
+        />
+      </template>
+    </Column>
     <Column
       header="Patronymic"
       field="patronymic"
+      sortable
     />
     <Column
       field="role"
       header="Role"
+      sortable
     >
-      <template #filter>
-        <RoleDropdown
-          v-model:role="filters.role"
-          label=""
+      <template #filter="{ filterModel, filterCallback }">
+        <Dropdown
+          v-model="filterModel.value"
+          :options="['cashier', 'manager']"
+          show-clear
+          @change="filterCallback()"
         />
       </template>
     </Column>
     <Column
       header="Phone"
       field="phoneNumber"
+      sortable
     />
     <Column header="Adress">
       <template #body="{ data }">
@@ -122,10 +144,12 @@ const openUserDialog = (employee: FullEmployee) => {
     <Column
       header="Salary"
       field="salary"
+      sortable
     />
     <Column
       header="Date of birth"
       field="birthDate"
+      sortable
     >
       <template #body="{ data }">
         <Calendar
@@ -139,6 +163,7 @@ const openUserDialog = (employee: FullEmployee) => {
     <Column
       header="Date of start"
       field="startDate"
+      sortable
     >
       <template #body="{ data }">
         <Calendar

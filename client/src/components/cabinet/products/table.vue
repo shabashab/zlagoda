@@ -13,6 +13,7 @@ import { products } from '../../../api/products';
 
 
 const filters = ref({
+  'upc': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
   'name': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
   'isPromo': { value: null, matchMode: FilterMatchMode.EQUALS },
 });
@@ -79,7 +80,16 @@ const openEditDialog = (product: Product) => {
       sortable
       header="UPC"
       field="upc"
-    />
+    >
+      <template #filter="{ filterModel, filterCallback }">
+        <InputText
+          v-model="filterModel.value"
+          style="width: 200px !important;"
+          :placeholder="`Filter by upc`"
+          @input="filterCallback"
+        />
+      </template>
+    </Column>
     <Column
       sortable
       header="Name"
@@ -90,7 +100,7 @@ const openEditDialog = (product: Product) => {
         <InputText
           v-model="filterModel.value"
           style="width: 200px !important;"
-          :placeholder="`Filter by id { ${filterModel.matchMode} }`"
+          :placeholder="`Filter by name`"
           @input="filterCallback"
         />
       </template>
