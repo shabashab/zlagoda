@@ -34,6 +34,10 @@ const items = ref([
     label: 'Reports',
     icon: 'pi pi-reply',
     to: '/cabinet/admin/reports'
+  },
+  {
+    label: 'Lovers',
+    to: '/cabinet/admin/lovers'
   }
 ])
 </script>
