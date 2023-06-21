@@ -43,6 +43,7 @@ const upcValue = computed({
       icon="pi pi-user"
       autofocus
       style="width: 165px !important"
+      @keyup.enter="emits('submit')"
     />
   </span>
 </template>

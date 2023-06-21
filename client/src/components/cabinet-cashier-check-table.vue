@@ -46,7 +46,6 @@ const deleteItem = (event: any, product: Product) => {
 </script>
 <template>
   <div class="h-[100%] overflow-y-scroll">
-    {{ checkValue.items[0] }}
     <DataTable
       v-if="checkValue.items[0]"
       :value="checkValue.items"
@@ -93,6 +92,7 @@ const deleteItem = (event: any, product: Product) => {
             decrement-button-icon="pi pi-minus"
             prefix="№"
             :min="1"
+            :max="slotProps.data.product.number"
           />
         </template>
       </Column>

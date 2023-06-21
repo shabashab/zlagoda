@@ -34,7 +34,9 @@ const addProductToCheck = (product: Product) => {
     return item.product.upc === product.upc
   });
   if (findedItemRef) {
-    findedItemRef.number++;
+    if (findedItemRef.number < findedItemRef.product.number) {
+      findedItemRef.number++;
+    }
   } else {
     check.value?.items.push({
       product: product,
@@ -48,7 +50,7 @@ const onUpcSubmit = async () => {
     product.value = await fetchProduct(upc.value);
     addProductToCheck(product.value);
   } catch(error) {
-    toast.add({ severity: 'error', summary: 'Error', detail: error as string, life: 3000 })
+    toast.add({ severity: 'error', summary: 'Error', detail: error.status === 404 ? 'Not found' : error, life: 3000 })
   }
   upc.value = '';
 }
