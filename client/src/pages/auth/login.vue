@@ -2,6 +2,7 @@
 import Button from 'primevue/button';
 import { router } from '../../router';
 import { useToast } from 'primevue/usetoast';
+import Password from 'primevue/password';
 
 const toast = useToast();
 
@@ -32,10 +33,16 @@ const signIn = async () => {
       v-model:value="login"
       label="Enter login"
     />
-    <TextPropInput
-      v-model:value="password"
-      label="Enter password"
-    />
+    <div>
+      <label for="password">Enter password</label>
+      <Password
+        v-model="password"
+        placeholder="password"
+        style="width: 100% !important"
+        input-style="width: 100%"
+        :feedback="false"
+      />
+    </div>
     <RoleDropdown
       v-model:role="role"
       label="Select role"
