@@ -3,5 +3,5 @@ import { createPluginFromConfiguration } from '@helpers/createPluginFromConfigur
 export const prefix = '/checks'
 
 export const plugin = createPluginFromConfiguration({
-  routes: [import('./post')]
+  routes: [import('./post'), import('./get'), import('./id.get')]
 })

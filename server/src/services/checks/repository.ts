@@ -2,11 +2,17 @@ import { CreateCheckDto } from '../../dto/create-check.dto'
 import { CreateSaleDto } from '../../dto/create-sale.dto'
 import { ConflictException } from '../../exceptions/conflict-exception'
 import { Check } from '../../models/check.model'
+import { FullCheck, FullCheckEntry } from '../../models/full-check.model'
 import { FullProduct } from '../../models/product.model'
+import { Sale } from '../../models/sale.model'
 import { createCheckQuery } from '../../queries/create-check.query'
 import { createSaleQuery } from '../../queries/create-sale.query'
+import { findCheckByIdQuery } from '../../queries/find-check-by-id.query'
+import { findChecksWithCashierQuery } from '../../queries/find-checks-with-casher.query'
 import { findCustomerCardByIdQuery } from '../../queries/find-customer-card-by-id.query'
 import { findFullProductsByIdsQuery } from '../../queries/find-full-products-by-ids.query'
+import { findSalesByCheckIdQuery } from '../../queries/find-sales-by-check-id.query'
+import { findEmployeeById } from '../employees/repository'
 import { updateProduct } from '../products/repository'
 
 type UpcFullProductMap = Map<string, FullProduct>
@@ -129,3 +135,37 @@ export const createCheck = async (
 
   return check
 }
+
+export const findFullCheckById = async (id: string): Promise<FullCheck> => {
+  const check = await findCheckByIdQuery.execute(id)
+  const sales = await findSalesByCheckIdQuery.execute(check.id)
+
+  const upcSaleMap = new Map<string, Sale>()
+
+  for (const sale of sales) {
+    upcSaleMap.set(sale.upc, sale)
+  }
+
+  const upcs = sales.map((sale) => sale.upc)
+  const fullProducts = await findFullProductsByIdsQuery.execute(upcs)
+
+  const items = fullProducts.map<FullCheckEntry>((fullProduct) => {
+    const sale = upcSaleMap.get(fullProduct.upc) as Sale
+
+    return {
+      product: fullProduct,
+      number: sale.productNumber,
+      soldPrice: sale.productPrice
+    }
+  })
+
+  const cashier = await findEmployeeById(check.employeeId)
+
+  return {
+    ...check,
+    cashier,
+    items
+  }
+}
+
+export const findAllChecks = async () => findChecksWithCashierQuery.execute()
