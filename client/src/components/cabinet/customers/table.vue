@@ -49,6 +49,7 @@ const openNewCustomerDialog = () => {
     street: '',
     zipCode: '',
     percent: 0,
+    totalPurchased: 0
   };
   isNewCustomer.value = true;
   isCustomerEditDialogVisible.value = true;
@@ -126,6 +127,10 @@ const openNewCustomerDialog = () => {
         {{ slotProps.data.zipCode ?? '' }}
       </template>
     </Column>
+    <Column
+      header="Total purchased"
+      field="totalPurchased"
+    />
     <Column
       header="Percent"
       field="percent"
