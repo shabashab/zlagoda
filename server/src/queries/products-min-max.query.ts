@@ -25,17 +25,17 @@ export const productsMinMaxQuery = defineQuery<
       sp.selling_price,
       sp_promo.selling_price as promo_price
     FROM "Product" p
-      JOIN "Category" c ON p.category_number = c.category_number
-      JOIN "Store_Product" sp ON sp.id_product = "Product".id_product
+      JOIN "Category" c ON c.category_number = p.category_number
+      LEFT JOIN "Store_Product" sp ON sp.id_product = p.id_product
       LEFT JOIN "Store_Product" sp_promo ON sp."UPC_prom" = sp_promo."UPC"
-    WHERE c.category_name = $1
+    WHERE c.category_number = $1
       AND NOT EXISTS (
-        SELECT * From "Store_Product" 
-        WHERE selling_price > $2
+        SELECT * From "Store_Product" spp
+        WHERE selling_price > $2 AND sp."UPC" = spp."UPC"
       ) AND NOT EXISTS (
-        SELECT * From "Store_Product"
-        WHERE selling_price < $3
-      )
+        SELECT * From "Store_Product" spp
+        WHERE selling_price < $3 AND sp."UPC" = spp."UPC"
+      ) AND sp."promotional_product" = false
   `,
   values: (input) => [input.categoryId, input.max, input.min],
   transformResult: (result) =>

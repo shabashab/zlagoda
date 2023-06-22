@@ -8,6 +8,7 @@ export const plugin = createPluginFromConfiguration({
     import('./get'),
     import('./upc.get'),
     import('./upc.patch'),
-    import('./upc-stats.get')
+    import('./upc-stats.get'),
+    import('./min-max.get')
   ]
 })
