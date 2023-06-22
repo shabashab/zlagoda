@@ -38,6 +38,10 @@ const items = ref([
   {
     label: 'Lovers',
     to: '/cabinet/admin/lovers'
+  },
+  {
+    label: 'Filter products',
+    to: '/cabinet/admin/filters'
   }
 ])
 </script>

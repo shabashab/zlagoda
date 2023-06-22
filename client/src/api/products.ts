@@ -1,5 +1,6 @@
 import { omit } from 'lodash'
 import { Product } from '../models/product.model'
+import { Category } from '../models/category.model'
 
 export const products = {
   useProducts: defineDataEndpoint<{ categoryId?: string }, Product[]>({
@@ -53,5 +54,22 @@ export const products = {
       }
     },
     requireAuthentication: true,
+  }),
+  useMinMax: defineDataEndpoint<
+  {
+    category: Category
+    range: number[]
+  },
+  Product
+  >({
+    method: 'GET',
+    url: '/products/min-max',
+    queryBuilder(inputData) {
+      return {
+        categoryId: inputData.category.id,
+        min: inputData.range[0],
+        max: inputData.range[1],
+      }
+    },
   }),
 }

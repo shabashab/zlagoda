@@ -10,7 +10,7 @@ declare global {
   const auth: typeof import('./api/auth')['default']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
   const categories: typeof import('./api/categories')['categories']
-  const checks: typeof import('./api/check')['checks']
+  const checks: typeof import('./api/checks')['checks']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
   const computedEager: typeof import('@vueuse/core')['computedEager']
