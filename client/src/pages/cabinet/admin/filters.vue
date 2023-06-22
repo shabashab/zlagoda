@@ -4,14 +4,20 @@ import InputNumber from 'primevue/inputnumber';
 import Slider from 'primevue/slider';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import Button from 'primevue/button';
+
 
 const selectedCategory = ref<Category>();
 const range = ref<number[]>([]);
 
-const { fetch: fetchProducts, result: productsValue } = products.useMinMax().fetchImmediate({
-  category: selectedCategory.value!,
-  range: range.value
-});
+const { fetch: fetchProducts, result: productsValue } = products.useMinMax();
+
+const onClick = async () => {
+  await fetchProducts({
+    category: selectedCategory.value!,
+    range: range.value
+  });
+}
 
 </script>
 <template>
@@ -50,6 +56,10 @@ const { fetch: fetchProducts, result: productsValue } = products.useMinMax().fet
         />
       </div>
     </div>
+    <Button
+      icon="pi pi-star"
+      @click="onClick()"
+    />
     <DataTable :value="productsValue">
       <Column
         header="Name"

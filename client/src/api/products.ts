@@ -71,5 +71,6 @@ export const products = {
         max: inputData.range[1],
       }
     },
+    requireAuthentication: true,
   }),
 }
