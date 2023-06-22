@@ -40,7 +40,7 @@ const items = ref([
     to: '/cabinet/admin/lovers'
   },
   {
-    label: 'Filter products',
+    label: 'Products min max',
     to: '/cabinet/admin/filters'
   }
 ])
