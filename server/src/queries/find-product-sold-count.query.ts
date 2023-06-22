@@ -19,6 +19,8 @@ export const findProductSoldCountQuery = defineQuery<
   `,
   values: (input) => [input.upc, input.from, input.to],
   transformResult: (result) => {
+    if (!result.rows[0]?.total_number) return 0
+
     return parseInt(result.rows[0].total_number)
   }
 })

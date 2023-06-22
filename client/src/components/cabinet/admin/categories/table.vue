@@ -32,7 +32,7 @@ const onDelete = async (data: Category) => {
     toast.add({ severity: 'success', summary: 'Deleted', detail: 'Record deleted', life: 3000 })
     await fetchCategories();
   } catch(error) {
-    toast.add({ severity: 'error', summary: 'Error', detail: error as string, life: 3000 })
+    toast.add({ severity: 'error', summary: 'Error', detail: 'Could not delete category. It is used', life: 3000 })
   }
 }
 </script>

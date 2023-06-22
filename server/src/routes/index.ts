@@ -26,7 +26,11 @@ export const routesPlugin = createPluginFromConfiguration({
     fastify.setErrorHandler<HttpException | DatabaseError>(
       async (error, request, reply) => {
         if ('code' in error) {
-          if (error.code === '23505' || error.code === '23514') {
+          if (
+            error.code === '23505' ||
+            error.code === '23514' ||
+            error.code === '23503'
+          ) {
             error = new ConflictException()
           }
         }
