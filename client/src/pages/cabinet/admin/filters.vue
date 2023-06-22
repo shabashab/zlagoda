@@ -8,7 +8,10 @@ import Column from 'primevue/column';
 const selectedCategory = ref<Category>();
 const range = ref<number[]>([]);
 
-const { fetch: fetchProducts, result: productsValue } = products.useProducts().fetchImmediate();
+const { fetch: fetchProducts, result: productsValue } = products.useMinMax().fetchImmediate({
+  category: selectedCategory.value!,
+  range: range.value
+});
 
 </script>
 <template>
